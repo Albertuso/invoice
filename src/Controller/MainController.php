@@ -18,7 +18,7 @@ use App\Entity\User;
 
 class MainController extends AbstractController{
     /**
-     * @Route("/main", name="main")
+     * @Route("/", name="main")
      */
     public function index(){
         return $this->render('main/index.html.twig', [
