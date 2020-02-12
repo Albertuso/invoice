@@ -1,21 +1,31 @@
 {% extends 'base.html.twig' %}
 
- {% block stylesheets %}
-       
-    {% endblock %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+{% endblock %}
 
-{% block title %}Register{% endblock %}
+{% block title %}
+  Register
+{% endblock %}
 
 {% block body %}
-
-    <h1>Register</h1>
-    <div class="form">
+  <h1>
+    Register
+  </h1>
+  <div id="form">
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    <h3>
+      {{ form_row(registrationForm.username) }}
+    </h3>
+    <h2>
+      {{ form_row(registrationForm.plainPassword) }}
+    </h3>
+    {{ form_row(registrationForm.agreeTerms) }}
 
-        <button class="btn">Register</button>
+    <button class="btn">
+      Register
+    </button>
     {{ form_end(registrationForm) }}
-    </div>
+  </div>
 {% endblock %}
