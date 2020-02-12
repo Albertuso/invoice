@@ -20,7 +20,6 @@ class EnterpriseType extends AbstractType
             ->add('logo')
             ->add('footer')
             ->add('customer')
-            ->add('user')
         ;
     }
 

@@ -31,6 +31,30 @@ easy_admin:
         Client:
             class: App\Entity\Client
             label: 'Cliente'
+            list:
+                fields:
+                    - { property: 'name', label: 'Nombre'} 
+                    - { property: 'address', label: 'Dirección'} 
+                    - { property: 'nif', label: 'Nº nif'}
+                    - { property: 'email', label: 'email'} 
+                    - { property: 'telephone', label: 'Nº telefono'} 
+                    - { property: 'web', label: 'URL web'}
+            edit:
+                fields:
+                    - { property: 'name', label: 'Nombre'} 
+                    - { property: 'address', label: 'Dirección'} 
+                    - { property: 'nif', label: 'Nº nif'}
+                    - { property: 'email', label: 'email'} 
+                    - { property: 'telephone', label: 'Nº telefono'} 
+                    - { property: 'web', label: 'URL web'}
+            new:
+                fields: 
+                    - { property: 'name', label: 'Nombre'} 
+                    - { property: 'address', label: 'Dirección'} 
+                    - { property: 'nif', label: 'Nº nif'}
+                    - { property: 'email', label: 'email'} 
+                    - { property: 'telephone', label: 'Nº telefono'} 
+                    - { property: 'web', label: 'URL web'}
         Company:
             class: App\Entity\Enterprise
             label: 'Empresa'

@@ -43,7 +43,7 @@ class User implements UserInterface
     private $max;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Enterprise", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Enterprise", mappedBy="user", cascade={"persist"})
      */
     private $enterprises;
 

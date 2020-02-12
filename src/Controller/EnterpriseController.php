@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/enterprise")
@@ -27,25 +28,36 @@ class EnterpriseController extends AbstractController
 
     /**
      * @Route("/new", name="enterprise_new", methods={"GET","POST"})
+     * 
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
-        $enterprise = new Enterprise();
-        $form = $this->createForm(EnterpriseType::class, $enterprise);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($enterprise);
-            $entityManager->flush();
+        $user = $this->getUser();
 
-            return $this->redirectToRoute('enterprise_index');
+        if ($user->getMax() > count($user->getEnterprises())) {
+            $enterprise = new Enterprise();
+            $form = $this->createForm(EnterpriseType::class, $enterprise);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $this->getUser()->addEnterprise($enterprise);
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('enterprise_index');
+            }
+
+            return $this->render('enterprise/new.html.twig', [
+                'enterprise' => $enterprise,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            return $this->render('enterprise/errormax.html.twig');
+
         }
-
-        return $this->render('enterprise/new.html.twig', [
-            'enterprise' => $enterprise,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -83,7 +95,7 @@ class EnterpriseController extends AbstractController
      */
     public function delete(Request $request, Enterprise $enterprise): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$enterprise->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $enterprise->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($enterprise);
             $entityManager->flush();
