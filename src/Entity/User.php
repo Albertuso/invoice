@@ -50,7 +50,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->max = 0;
-        $this->setRoles(['ROL_USER']);
+        $this->setRoles(['ROLE_USER']);
         $this->enterprises = new ArrayCollection();
     }
 
