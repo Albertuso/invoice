@@ -27,7 +27,7 @@ class MainController extends AbstractController{
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $this->getUser(),
-            'users' => $users,
+            'users' => $users
         ]);
         //vista principal donde apareceran las empresas del usuario
     }
