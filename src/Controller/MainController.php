@@ -18,11 +18,16 @@ use App\Entity\User;
 
 class MainController extends AbstractController{
     /**
-     * @Route("/main", name="main")
+     * @Route("/", name="main")
      */
     public function index(){
+        $repositoryUsers = $this->getDoctrine()->getRepository(User::class);
+        $users = $repositoryUsers->findAll();
+
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
+            'user' => $this->getUser(),
+            'users' => $users
         ]);
         //vista principal donde apareceran las empresas del usuario
     }

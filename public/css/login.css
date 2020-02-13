@@ -104,9 +104,15 @@ body,
 }
 
 #login {
+<<<<<<< HEAD
     align-items: center;
     text-align: -webkit-center;
     background-color: lightskyblue;
+=======
+        align-items: center;
+        text-align: center;
+        background-color: lightskyblue;
+>>>>>>> develop
 }
 
 #login input {

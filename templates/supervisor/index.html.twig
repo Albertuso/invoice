@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supervisor index{% endblock %}
+
+{% block body %}
+    <h1>Supervisor index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Telephone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for supervisor in supervisors %}
+            <tr>
+                <td>{{ supervisor.id }}</td>
+                <td>{{ supervisor.name }}</td>
+                <td>{{ supervisor.telephone }}</td>
+                <td>
+                    <a href="{{ path('supervisor_show', {'id': supervisor.id}) }}">show</a>
+                    <a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('supervisor_new') }}">Create new</a>
+{% endblock %}
