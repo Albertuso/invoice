@@ -1,35 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Network index{% endblock %}
+{% block title %}Listado de redes sociales{% endblock %}
 
 {% block body %}
-    <h1>Network index</h1>
+    <h1>Listado de redes sociales</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for network in networks %}
             <tr>
-                <td>{{ network.id }}</td>
                 <td>{{ network.name }}</td>
                 <td>
-                    <a href="{{ path('network_show', {'id': network.id}) }}">show</a>
-                    <a href="{{ path('network_edit', {'id': network.id}) }}">edit</a>
+                    <a href="{{ path('network_show', {'id': network.id}) }}">Mostrar</a>
+                    <a href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No se han encontrado resultados</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('network_new') }}">Create new</a>
+    <a href="{{ path('network_new') }}">Crear nueva red social</a>
 {% endblock %}

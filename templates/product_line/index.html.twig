@@ -1,43 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ProductLine index{% endblock %}
+{% block title %}Listado de detalles de factura{% endblock %}
 
 {% block body %}
-    <h1>ProductLine index</h1>
+    <h1>Listado de detalles de factura</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Vat</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>IVA</th>
+                <th>Nombre</th>
             </tr>
         </thead>
         <tbody>
         {% for product_line in product_lines %}
             <tr>
-                <td>{{ product_line.id }}</td>
                 <td>{{ product_line.description }}</td>
                 <td>{{ product_line.quantity }}</td>
                 <td>{{ product_line.price }}</td>
                 <td>{{ product_line.vat }}</td>
                 <td>{{ product_line.name }}</td>
                 <td>
-                    <a href="{{ path('product_line_show', {'id': product_line.id}) }}">show</a>
-                    <a href="{{ path('product_line_edit', {'id': product_line.id}) }}">edit</a>
+                    <a href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
+                    <a href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">No se han encontrado detalles de factura</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('product_line_new') }}">Create new</a>
+    <a href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
 {% endblock %}
