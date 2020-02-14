@@ -1,28 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enterprise index{% endblock %}
+{% block title %}Listado de empresas{% endblock %}
 
 {% block body %}
-    <h1>Enterprise index</h1>
+    <h1>Listado de empresas</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Email</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>E-mail</th>
                 <th>Web</th>
-                <th>Nif</th>
+                <th>DNI</th>
                 <th>Logo</th>
-                <th>Footer</th>
-                <th>actions</th>
+                <th>Pie de pag</th>
             </tr>
         </thead>
         <tbody>
         {% for enterprise in enterprises %}
             <tr>
-                <td>{{ enterprise.id }}</td>
                 <td>{{ enterprise.name }}</td>
                 <td>{{ enterprise.address }}</td>
                 <td>{{ enterprise.email }}</td>
@@ -31,17 +28,17 @@
                 <td>{{ enterprise.logo }}</td>
                 <td>{{ enterprise.footer }}</td>
                 <td>
-                    <a href="{{ path('enterprise_show', {'id': enterprise.id}) }}">show</a>
-                    <a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">edit</a>
+                    <a href="{{ path('enterprise_show', {'id': enterprise.id}) }}">mostrar</a>
+                    <a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">No se han encontrado registros</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('enterprise_new') }}">Create new</a>
+    <a href="{{ path('enterprise_new') }}">Crear nuevo</a>
 {% endblock %}

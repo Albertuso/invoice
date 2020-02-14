@@ -1,27 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Invoice index{% endblock %}
+{% block title %}Indice de facturas{% endblock %}
 
 {% block body %}
-    <h1>Invoice index</h1>
+    <h1>Listado de facturas</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Invoicenumber</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Footer</th>
+                <th>Numero de factura</th>
+                <th>Fecha</th>
+                <th>Descripcion</th>
+                <th>Pie de pag</th>
                 <th>Subtotal</th>
                 <th>Total</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for invoice in invoices %}
             <tr>
-                <td>{{ invoice.id }}</td>
                 <td>{{ invoice.invoicenumber }}</td>
                 <td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
                 <td>{{ invoice.description }}</td>
@@ -29,17 +26,17 @@
                 <td>{{ invoice.subtotal }}</td>
                 <td>{{ invoice.total }}</td>
                 <td>
-                    <a href="{{ path('invoice_show', {'id': invoice.id}) }}">show</a>
-                    <a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
+                    <a href="{{ path('invoice_show', {'id': invoice.id}) }}">Mostrar</a>
+                    <a href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">No se han encontrado registros</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('invoice_new') }}">Create new</a>
+    <a href="{{ path('invoice_new') }}">Crear nueva factura</a>
 {% endblock %}

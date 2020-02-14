@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/enterprise")
+ * @IsGranted("ROLE_USER")
  */
 class EnterpriseController extends AbstractController
 {
@@ -29,7 +30,6 @@ class EnterpriseController extends AbstractController
     /**
      * @Route("/new", name="enterprise_new", methods={"GET","POST"})
      * 
-     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {

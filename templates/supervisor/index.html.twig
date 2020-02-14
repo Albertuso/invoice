@@ -1,37 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Supervisor index{% endblock %}
+{% block title %}Indice de Supervisores{% endblock %}
 
 {% block body %}
-    <h1>Supervisor index</h1>
+    <h1>Indice de Supervisores</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Telephone</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for supervisor in supervisors %}
             <tr>
-                <td>{{ supervisor.id }}</td>
                 <td>{{ supervisor.name }}</td>
                 <td>{{ supervisor.telephone }}</td>
                 <td>
-                    <a href="{{ path('supervisor_show', {'id': supervisor.id}) }}">show</a>
-                    <a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">edit</a>
+                    <a href="{{ path('supervisor_show', {'id': supervisor.id}) }}">Mostrar</a>
+                    <a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No se han encontrado resultados</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('supervisor_new') }}">Create new</a>
+    <a href="{{ path('supervisor_new') }}">Crear nuevo supervisor</a>
 {% endblock %}

@@ -1,30 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Invoice{% endblock %}
+{% block title %}Factura{% endblock %}
 
 {% block body %}
-    <h1>Invoice</h1>
+    <h1>Factura</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ invoice.id }}</td>
-            </tr>
-            <tr>
-                <th>Invoicenumber</th>
+                <th>Numero de factura</th>
                 <td>{{ invoice.invoicenumber }}</td>
             </tr>
             <tr>
-                <th>Date</th>
+                <th>Fecha</th>
                 <td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Descripcion</th>
                 <td>{{ invoice.description }}</td>
             </tr>
             <tr>
-                <th>Footer</th>
+                <th>Pie de pag</th>
                 <td>{{ invoice.footer }}</td>
             </tr>
             <tr>
@@ -38,9 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('invoice_index') }}">back to list</a>
+    <a href="{{ path('invoice_index') }}">Regresar al listado de facturas</a>
 
-    <a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
+    <a href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
 
     {{ include('invoice/_delete_form.html.twig') }}
 {% endblock %}
