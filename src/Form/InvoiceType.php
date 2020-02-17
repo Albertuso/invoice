@@ -12,12 +12,12 @@ class InvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('invoicenumber')
-            ->add('date')
-            ->add('description')
-            ->add('footer')
-            ->add('subtotal')
-            ->add('total')
+            ->add('invoicenumber',null, array('label' => 'Numero de factura'))
+            ->add('date',null, array('label' => 'Fecha'))
+            ->add('description',null, array('label' => 'Descripcion'))
+            ->add('footer',null, array('label' => 'Pie de pagina'))
+            ->add('subtotal',null, array('label' => 'Subtotal'))
+            ->add('total',null, array('label' => 'Total'))
         ;
     }
 

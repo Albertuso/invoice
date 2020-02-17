@@ -12,12 +12,12 @@ class ProductLineType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description')
-            ->add('quantity')
-            ->add('price')
-            ->add('vat')
-            ->add('name')
-            ->add('invoice')
+            ->add('description',null, array('label' => 'Descripcion'))
+            ->add('quantity',null, array('label' => 'Cantidad'))
+            ->add('price',null, array('label' => 'Precio'))
+            ->add('vat',null, array('label' => 'IVA'))
+            ->add('name',null, array('label' => 'Nombre'))
+            ->add('invoice',null, array('label' => 'Factura (Creo que este no vale)'))
         ;
     }
 

@@ -12,8 +12,8 @@ class SocialNetworkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('url')
-            ->add('network')
+            ->add('url',null, array('label' => 'Url rrss'))
+            ->add('network',null, array('label' => 'Otro que creo que aqui no iria...'))
         ;
     }
 

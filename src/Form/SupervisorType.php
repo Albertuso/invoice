@@ -12,8 +12,8 @@ class SupervisorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('telephone')
+            ->add('name',null, array('label' => 'Nombre'))
+            ->add('telephone',null, array('label' => 'Telefono'))
         ;
     }
 

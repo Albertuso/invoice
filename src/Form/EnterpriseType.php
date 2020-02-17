@@ -12,14 +12,14 @@ class EnterpriseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('address')
-            ->add('email')
-            ->add('web')
-            ->add('nif')
-            ->add('logo')
-            ->add('footer')
-            ->add('customer')
+            ->add('name',null, array('label' => 'Nombre'))
+            ->add('address',null, array('label' => 'Direccion'))
+            ->add('email',null, array('label' => 'E-mail'))
+            ->add('web',null, array('label' => 'Web'))
+            ->add('nif',null, array('label' => 'DNI'))
+            ->add('logo',null, array('label' => 'Logotipo'))
+            ->add('footer',null, array('label' => 'Pie de pagina'))
+            ->add('customer',null, array('label' => 'Cliente'))
         ;
     }
 

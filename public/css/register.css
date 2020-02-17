@@ -1,0 +1,33 @@
+#form {
+    box-shadow: 2px 2px 12px 0px black;
+    width: 300px;
+    height: 300px;
+    border: 1px solid;
+    align-items: center;
+    text-align: -webkit-center;
+    background-color: lightskyblue;
+    display: table;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+h1 {
+    color: red;
+}
+
+.btn {
+    border-radius: 10px;
+    background-color: royalblue;
+}
+
+#registration_form_plainPassword {
+    outline: none;
+    width: 250px;
+    border-radius: 10px;
+}
+
+#registration_form_username {
+    outline: none;
+    width: 250px;
+    border-radius: 10px;
+}
