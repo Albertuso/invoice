@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">Usuario: {{ user.username}}</a>  
+</nav>
+
+
+
+<div class="container mt-2">
+  <h2>Seleccione una empresa</h2>
+  <div class="d-flex justify-content-around mb-2 flex-wrap">
+
+  {# huecos empresas #}
+  {% for enterprise in user.enterprises %}
+    <div class="p-2 bg-primary m-10">{{ enterprise.name }} <br/><a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
+<a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a></div>
+  {% endfor %}
+
+  {# huecos vacios #}
+  {% if user.enterprises|length < user.max %} 
+    {% for i in range(user.enterprises|length + 1, user.max) %}
+    <div class="p-2 bg-primary m-10 "><a href="{{path('enterprise_new')}}">Añadir empresa</a></div>
+    {% endfor %}  
+  {% endif %} 
+  
+  </div>
+</div>
+

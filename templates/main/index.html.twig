@@ -30,19 +30,8 @@
           {% endfor %}
         {% endfor %}
       {% else %}
-        {# ... o un usuario #} 
-        <p>
-            <a href="{{path('enterprise_new')}}">Añadir empresa</a>
-        </p>
-        
-
-        {% for enterprise in user.enterprises %}
-        {# listado de empresas #}
-        {{ enterprise.name }} - <a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
-        <a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a>
-        
-        </br>
-        {% endfor %}
+          {{ include('main/user.html.twig') }}
+       
       {% endif %}
       {% else %}
           {# no tiene roles #}
