@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
 /**
  * @Route("/enterprise")
  * @IsGranted("ROLE_USER")
+
  */
 class EnterpriseController extends AbstractController
 {
@@ -29,7 +31,6 @@ class EnterpriseController extends AbstractController
 
     /**
      * @Route("/new", name="enterprise_new", methods={"GET","POST"})
-     * 
      */
     public function new(Request $request): Response
     {
@@ -95,7 +96,7 @@ class EnterpriseController extends AbstractController
      */
     public function delete(Request $request, Enterprise $enterprise): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $enterprise->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$enterprise->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($enterprise);
             $entityManager->flush();

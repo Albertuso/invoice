@@ -49,13 +49,15 @@ class Client
     private $web;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Enterprise", mappedBy="customer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Enterprise", inversedBy="clients")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $enterprises;
+    private $enterprise;
+
 
     public function __construct()
     {
-        $this->enterprises = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -135,38 +137,20 @@ class Client
         return $this;
     }
 
-    /**
-     * @return Collection|Enterprise[]
-     */
-    public function getEnterprises(): Collection
-    {
-        return $this->enterprises;
-    }
-
-    public function addEnterprise(Enterprise $enterprise): self
-    {
-        if (!$this->enterprises->contains($enterprise)) {
-            $this->enterprises[] = $enterprise;
-            $enterprise->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEnterprise(Enterprise $enterprise): self
-    {
-        if ($this->enterprises->contains($enterprise)) {
-            $this->enterprises->removeElement($enterprise);
-            // set the owning side to null (unless already changed)
-            if ($enterprise->getCustomer() === $this) {
-                $enterprise->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getEnterprise(): ?Enterprise
+    {
+        return $this->enterprise;
+    }
+
+    public function setEnterprise(?Enterprise $enterprise): self
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
     }
 }

@@ -54,12 +54,6 @@ class Enterprise
     private $footer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="enterprises")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $customer;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="enterprise")
      */
     private $products;
@@ -70,9 +64,15 @@ class Enterprise
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client", mappedBy="enterprise")
+     */
+    private $clients;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,18 +164,6 @@ class Enterprise
         return $this;
     }
 
-    public function getCustomer(): ?Client
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Client $customer): self
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Product[]
      */
@@ -221,5 +209,36 @@ class Enterprise
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Client[]
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Client $client): self
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients[] = $client;
+            $client->setEnterprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $client): self
+    {
+        if ($this->clients->contains($client)) {
+            $this->clients->removeElement($client);
+            // set the owning side to null (unless already changed)
+            if ($client->getEnterprise() === $this) {
+                $client->setEnterprise(null);
+            }
+        }
+
+        return $this;
     }
 }
