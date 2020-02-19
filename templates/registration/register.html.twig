@@ -16,11 +16,14 @@
       Por favor registrese
     </h2>
     {{ form_start(registrationForm) }}
-    <h3>
+    <h3><i class="fa fa-signature"></i>
       {{ form_row(registrationForm.username) }}
+
     </h3>
+
     <h3>
       {{ form_row(registrationForm.plainPassword) }}
+      <i class="fa fa-key"></i>
     </h3>
     {{ form_row(registrationForm.agreeTerms) }}
 
