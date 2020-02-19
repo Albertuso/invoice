@@ -16,7 +16,6 @@ class ProductType extends AbstractType
             ->add('price',null, array('label' => 'Precio'))
             ->add('vat',null, array('label' => 'IVA'))
             ->add('description',null, array('label' => 'Descripcion'))
-            ->add('enterprise',null, array('label' => 'Empresa (otro que no va aqui?)'))
         ;
     }
 

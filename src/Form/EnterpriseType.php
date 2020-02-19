@@ -19,7 +19,6 @@ class EnterpriseType extends AbstractType
             ->add('nif',null, array('label' => 'DNI'))
             ->add('logo',null, array('label' => 'Logotipo'))
             ->add('footer',null, array('label' => 'Pie de pagina'))
-            ->add('customer',null, array('label' => 'Cliente'))
         ;
     }
 

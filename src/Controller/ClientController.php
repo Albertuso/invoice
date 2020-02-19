@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Enterprise;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,40 +21,52 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ClientController extends AbstractController
 {
     /**
-     * @Route("/", name="client_index", methods={"GET"})
+     * @Route("/enterprise/{idempresa}", name="client_index", methods={"GET"})
      */
-    public function index(ClientRepository $clientRepository): Response
+    public function index(ClientRepository $clientRepository, $idempresa): Response
     {
+        $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'clients' => $clientRepository->findByEnterpriseId($idempresa),
+            'id_empresa' => $idempresa,
+            'enterprise' => $enterpriseRepository->findOneByid($idempresa),
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
     /**
-     * @Route("/new", name="client_new", methods={"GET","POST"})
+     * @Route("/new/enterprise/{idempresa}", name="client_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $idempresa): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+            $enterprise = $repositoryEnterprise->findOneById($idempresa);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($client);
+            $client->setEnterprise($enterprise);
             $entityManager->flush();
 
-            return $this->redirectToRoute('client_index');
+            // return $this->redirectToRoute('client_index');  
+            return $this->redirectToRoute('client_index', ['idempresa' => $idempresa]);
         }
 
         return $this->render('client/new.html.twig', [
             'client' => $client,
             'form' => $form->createView(),
+            'id_empresa' => $idempresa,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="client_show", methods={"GET"})
+     * @Route("/show/{client}", name="client_show", methods={"GET"})
      */
     public function show(Client $client): Response
     {
@@ -68,12 +81,13 @@ class ClientController extends AbstractController
     public function edit(Request $request, Client $client): Response
     {
         $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request);
+        $form->handleRequest($request); 
+                
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('client_index');
+            return $this->redirectToRoute('client_index', ['idempresa' => $client->getEnterprise()->getId()]);
         }
 
         return $this->render('client/edit.html.twig', [
@@ -88,7 +102,7 @@ class ClientController extends AbstractController
      */
     public function delete(Request $request, Client $client): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($client);
             $entityManager->flush();

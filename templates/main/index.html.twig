@@ -11,7 +11,6 @@
     2px 6px; }
   </style>
 
-  <div class="example-wrapper">
     {% set admin = false %}
     {% if user.roles is defined %}
       {% for rol in user.roles %}
@@ -21,22 +20,14 @@
       {% endfor %}
       {% if admin == true %}
         {# verificamos si es un administrador.... #}
-        {% for listuser in users %}
-          {% for rol in listuser.roles %}
-            {% if rol == 'ROLE_USER' %}
-              {# aqui menu admin #}
-              {{ listuser.username }} - max empresas = {{ listuser.max }}
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
+        {{ include('main/admin.html.twig') }}        
       {% else %}
-          {{ include('main/user.html.twig') }}
-       
+        {{ include('main/user.html.twig') }}       
       {% endif %}
       {% else %}
-          {# no tiene roles #}
-          registrate y esas cosas
-           <a href="{{path('app_login')}}">registro</a>
+        {# no tiene roles #}
+        {{ include('main/register.html.twig') }}
+          
     {% endif %}
-  </div>
+
 {% endblock %}

@@ -26,6 +26,7 @@ class EnterpriseController extends AbstractController
     {
         return $this->render('enterprise/index.html.twig', [
             'enterprises' => $enterpriseRepository->findAll(),
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
@@ -68,6 +69,7 @@ class EnterpriseController extends AbstractController
     {
         return $this->render('enterprise/show.html.twig', [
             'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 

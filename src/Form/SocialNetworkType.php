@@ -13,7 +13,6 @@ class SocialNetworkType extends AbstractType
     {
         $builder
             ->add('url',null, array('label' => 'Url rrss'))
-            ->add('network',null, array('label' => 'Otro que creo que aqui no iria...'))
         ;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Enterprise;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,35 +19,48 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="product_index", methods={"GET"})
+     * @Route("/enterprise/{idempresa}", name="product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, $idempresa): Response
     {
+        $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
+
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findByEnterpriseId($idempresa),
+            'id_empresa' => $idempresa,
+            'enterprise' => $enterpriseRepository->findOneByid($idempresa),
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
     /**
-     * @Route("/new", name="product_new", methods={"GET","POST"})
+     * @Route("/new/enterprise/{idempresa}", name="product_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $idempresa): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+            $enterprise = $repositoryEnterprise->findOneById($idempresa);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
+            $product->setEnterprise($enterprise);
             $entityManager->flush();
 
-            return $this->redirectToRoute('product_index');
+            // return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('product_index', ['idempresa' => $idempresa]);
         }
 
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'id_empresa' => $idempresa,
         ]);
     }
 
@@ -85,7 +99,7 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, Product $product): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();
