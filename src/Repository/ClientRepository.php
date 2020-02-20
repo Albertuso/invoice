@@ -47,4 +47,26 @@ class ClientRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByEnterpriseId($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.enterprise = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findOneByid($value): ?Client
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

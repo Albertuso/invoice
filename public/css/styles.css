@@ -1,5 +1,12 @@
 a,
 a:hover {
   text-decoration: none;
-  color: white;
+  color: grey;
+}
+
+/* navbar a la derecha */
+.mobileNav {
+	position: absolute;
+	right: 20px;
+	top: 0px;
 }

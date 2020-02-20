@@ -21,25 +21,14 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container mt-2">
-  <h2>Seleccione una empresa</h2>
-  <div class="d-flex justify-content-around mb-2 flex-wrap">
-
-  {# huecos empresas #}
-  {% for enterprise in user.enterprises %}
-    <div class="p-2 bg-light m-10"><a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a><br/><a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
-<a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a></div>
+<div class="example-wrapper">
+  {% for listuser in users %}
+    {% for rol in listuser.roles %}
+      {% if rol == 'ROLE_USER' %}
+        {# aqui menu admin #}
+        {{ listuser.username }} - max empresas = {{ listuser.max }}
+      {% endif %}
+    {% endfor %}
   {% endfor %}
-
-  {# huecos vacios #}
-  {% if user.enterprises|length < user.max %} 
-    {% for i in range(user.enterprises|length + 1, user.max) %}
-    <div class="p-2 bg-light m-10 "><a href="{{path('enterprise_new')}}"><img src="{{ asset('img/add.png') }}" width = '150px' /></a></div>
-    {% endfor %}  
-  {% endif %} 
-  
-  </div>
-</div>
-
 {% endblock %}
-
+</div>

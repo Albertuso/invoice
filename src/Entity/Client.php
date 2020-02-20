@@ -54,10 +54,15 @@ class Client
      */
     private $enterprise;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="client")
+     */
+    private $invoices;
+
 
     public function __construct()
     {
-
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,6 +155,37 @@ class Client
     public function setEnterprise(?Enterprise $enterprise): self
     {
         $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->contains($invoice)) {
+            $this->invoices->removeElement($invoice);
+            // set the owning side to null (unless already changed)
+            if ($invoice->getClient() === $this) {
+                $invoice->setClient(null);
+            }
+        }
 
         return $this;
     }

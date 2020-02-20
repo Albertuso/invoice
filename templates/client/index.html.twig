@@ -2,7 +2,14 @@
 
 {% block title %}Listado de clientes{% endblock %}
 
+{% block nav %}
+{{ include('client/navbar.html.twig') }}
+{% endblock %} 
+
 {% block body %}
+
+
+
     <h1>Listado de clientes</h1>
 
     <table class="table">
@@ -27,7 +34,7 @@
                 <td>{{ client.telephone }}</td>
                 <td>{{ client.web }}</td>
                 <td>
-                    <a href="{{ path('client_show', {'id': client.id}) }}">Mostrar</a>
+                    <a href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
                     <a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
                 </td>
             </tr>
@@ -39,5 +46,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('client_new') }}">Crear nuevo cliente</a>
+    <a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 {% endblock %}

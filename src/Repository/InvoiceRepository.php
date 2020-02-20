@@ -47,4 +47,24 @@ class InvoiceRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findOneById($value): ?Invoice
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    public function findByClient($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.client = :val')
+            ->setParameter('val', $value)
+            ->orderBy('i.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

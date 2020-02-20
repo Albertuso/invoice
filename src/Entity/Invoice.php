@@ -19,7 +19,7 @@ class Invoice
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      */
     private $invoicenumber;
 
@@ -52,6 +52,11 @@ class Invoice
      * @ORM\Column(type="float")
      */
     private $total;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="invoices")
+     */
+    private $client;
 
     public function __construct()
     {
@@ -165,4 +170,20 @@ class Invoice
 
         return $this;
     }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+    // public function __toString()
+    // {
+    //     return "e";
+    // }
 }

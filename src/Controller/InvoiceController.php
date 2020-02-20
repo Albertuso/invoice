@@ -3,49 +3,76 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
+use App\Entity\Client;
 use App\Form\InvoiceType;
 use App\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/invoice")
- * @IsGranted("ROLE_USER")
  */
 class InvoiceController extends AbstractController
 {
     /**
-     * @Route("/", name="invoice_index", methods={"GET"})
+     * @Route("/client/{idclient}", name="invoice_index", methods={"GET"})
      */
-    public function index(InvoiceRepository $invoiceRepository): Response
+    public function index(InvoiceRepository $invoiceRepository, $idclient): Response
     {
+        $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
+        $client = $repositoryClient->findOneById($idclient);
         return $this->render('invoice/index.html.twig', [
-            'invoices' => $invoiceRepository->findAll(),
+            'invoices' => $invoiceRepository->findbyClient($idclient),
+            'idclient' => $idclient,
         ]);
     }
 
     /**
-     * @Route("/new", name="invoice_new", methods={"GET","POST"})
+     * @Route("/new/client/{idclient}", name="invoice_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $idclient): Response
     {
+
+        // Cargo el cliente (por route)
+        $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
+        $client = $repositoryClient->findOneById($idclient);
+
+        // Cargo la empresa a la que pertecene el cliente
+        $enterprise = $client->getEnterprise();
+
+        //Genero una nueva factura
         $invoice = new Invoice();
+
+        // Pongo los datos por defecto        
+        $hoy = new \DateTime();
+        $invoice->setInvoicenumber($enterprise->getId() . $hoy->format('YmdHis'));
+        $invoice->setDate($hoy);
+        $invoice->setFooter($enterprise->getFooter());
+
+        // Se genera el formulario con los datos
         $form = $this->createForm(InvoiceType::class, $invoice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $invoice->setClient($client);
+
+
+            //Aqui toca comprobar que la nueva factura es válida
+
+
+            
             $entityManager->persist($invoice);
             $entityManager->flush();
 
-            return $this->redirectToRoute('invoice_index');
+            return $this->redirectToRoute('invoice_index', ['idclient' => $idclient]);
         }
 
         return $this->render('invoice/new.html.twig', [
             'invoice' => $invoice,
+            'invoicenumber' => "1",
             'form' => $form->createView(),
         ]);
     }
