@@ -31,6 +31,11 @@ class Enterprise
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $email;
 
     /**
@@ -69,10 +74,21 @@ class Enterprise
      */
     private $clients;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="enterprise")
+     */
+    private $invoices;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nextinvoicenumber;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,6 +116,18 @@ class Enterprise
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
@@ -238,6 +266,49 @@ class Enterprise
                 $client->setEnterprise(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setEnterprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->contains($invoice)) {
+            $this->invoices->removeElement($invoice);
+            // set the owning side to null (unless already changed)
+            if ($invoice->getEnterprise() === $this) {
+                $invoice->setEnterprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNextinvoicenumber(): ?int
+    {
+        return $this->nextinvoicenumber;
+    }
+
+    public function setNextinvoicenumber(int $nextinvoicenumber): self
+    {
+        $this->nextinvoicenumber = $nextinvoicenumber;
 
         return $this;
     }

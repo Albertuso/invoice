@@ -45,6 +45,7 @@ class EnterpriseController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
+                $enterprise->setNextinvoicenumber(0);
                 $this->getUser()->addEnterprise($enterprise);
                 $entityManager->persist($user);
                 $entityManager->flush();

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
+use App\Entity\ProductLine;
 use App\Entity\Client;
 use App\Form\InvoiceType;
 use App\Repository\InvoiceRepository;
@@ -58,6 +59,7 @@ class InvoiceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $invoice->setClient($client);
+            $invoice->setEnterprise($enterprise);
 
 
             //Aqui toca comprobar que la nueva factura es válida
@@ -74,6 +76,8 @@ class InvoiceController extends AbstractController
             'invoice' => $invoice,
             'invoicenumber' => "1",
             'form' => $form->createView(),
+            'enterprise' => $enterprise,
+            'client' => $client,
         ]);
     }
 

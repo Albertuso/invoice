@@ -15,6 +15,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Direccion</th>
+                <th>Telefono</th>
                 <th>E-mail</th>
                 <th>Web</th>
                 <th>DNI</th>
@@ -26,7 +27,8 @@
         {% for enterprise in enterprises %}
             <tr>
                 <td>{{ enterprise.name }}</td>
-                <td>{{ enterprise.address }}</td>
+                <td>{{ enterprise.address }}</td>                
+                <td>{{ enterprise.telephone }}</td>
                 <td>{{ enterprise.email }}</td>
                 <td>{{ enterprise.web }}</td>
                 <td>{{ enterprise.nif }}</td>
