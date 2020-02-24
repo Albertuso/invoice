@@ -42,7 +42,7 @@ class ProductLine
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="line")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="line", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $invoice;

@@ -14,6 +14,7 @@ class EnterpriseType extends AbstractType
         $builder
             ->add('name',null, array('label' => 'Nombre'))
             ->add('address',null, array('label' => 'Direccion'))
+            ->add('telephone',null, array('label' => 'Telefono'))
             ->add('email',null, array('label' => 'E-mail'))
             ->add('web',null, array('label' => 'Web'))
             ->add('nif',null, array('label' => 'DNI'))

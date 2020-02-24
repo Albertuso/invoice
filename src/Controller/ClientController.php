@@ -66,12 +66,15 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/show/{client}", name="client_show", methods={"GET"})
+     * @Route("/show/{client}/enterprise/{idempresa}", name="client_show", methods={"GET"})
      */
-    public function show(Client $client): Response
+    public function show(Client $client, $idempresa): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($idempresa);
         return $this->render('client/show.html.twig', [
             'client' => $client,
+            'enterprise' => $enterprise,            
         ]);
     }
 
