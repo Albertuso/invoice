@@ -27,8 +27,8 @@
 
   {# huecos empresas #}
   {% for enterprise in user.enterprises %}
-    <div class="p-2 bg-light m-10"><a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a><br/><a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
-<a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a></div>
+    <div class="p-2 bg-light m-10"><a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a><br/><a href="{{path('enterprise_edit',  {id: enterprise.id})}}">Editar</a>
+<a href="{{path('enterprise_delete',  {id: enterprise.id})}}">Eliminar</a></div>
   {% endfor %}
 
   {# huecos vacios #}

@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de clientes{% endblock %}
+{% block title %}Listar clientes{% endblock %}
 
 {% block nav %}
 {{ include('client/navbar.html.twig') }}
 {% endblock %} 
 
 {% block body %}
-
-
 
     <h1>Listado de clientes</h1>
 
@@ -26,7 +24,6 @@
         <tbody>
         {% for client in clients %}
             <tr>
-                <td>{{ client.id }}</td>
                 <td>{{ client.name }}</td>
                 <td>{{ client.address }}</td>
                 <td>{{ client.nif }}</td>

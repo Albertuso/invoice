@@ -25,7 +25,6 @@
         <tbody>
         {% for enterprise in enterprises %}
             <tr>
-                <td>{{ enterprise.id }}</td>
                 <td>{{ enterprise.name }}</td>
                 <td>{{ enterprise.address }}</td>
                 <td>{{ enterprise.email }}</td>
@@ -34,8 +33,8 @@
                 <td>{{ enterprise.logo }}</td>
                 <td>{{ enterprise.footer }}</td>
                 <td>
-                    <a href="{{ path('enterprise_show', {'id': enterprise.id}) }}">mostrar</a>
-                    <a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">editar</a>
+                    <a href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Mostrar</a>
+                    <a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
