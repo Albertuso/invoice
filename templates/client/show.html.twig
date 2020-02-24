@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Clientes{% endblock %}
+{% block title %}Mostrar Clientes{% endblock %}
 
 {% block body %}
+
+{# {% block nav %}
+{{ include('client/navbar.html.twig') }}   
+{% endblock %}  #}
+
+
     <h1>Listado de clientes</h1>
 
     <table class="table">
@@ -34,7 +40,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('client_index') }}">Regresar al listao de clientes</a>
+    {# <a href="{{ path('client_index') }}">Regresar al listado de clientes</a> #}
 
     <a href="{{ path('client_edit', {'id': client.id}) }}">Editar cliente</a>
 

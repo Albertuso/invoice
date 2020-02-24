@@ -6,26 +6,34 @@
 {% endblock %}
 
 {% block title %}
-  Register
+  Registro
 {% endblock %}
 
 {% block body %}
-  <h1>
-    Register
-  </h1>
-  <div id="form">
+
+<div class="container">
+  <div  id="form" class="align-items-center">
+    <form id="login form">
+    <h2 class="h3 mb-3 font-weight-normal">
+      Por favor registrese...
+    </h2>
     {{ form_start(registrationForm) }}
     <h3>
       {{ form_row(registrationForm.username) }}
+      <i class="fa fa-signature"></i>
     </h3>
-    <h2>
+
+    <h3>
       {{ form_row(registrationForm.plainPassword) }}
+      <i class="fa fa-key"></i>
     </h3>
     {{ form_row(registrationForm.agreeTerms) }}
 
-    <button class="btn">
-      Register
+    <button class="btn btn-lg btn-primary" type="submit">
+      Enviar
     </button>
     {{ form_end(registrationForm) }}
+    </form>
   </div>
+</div>
 {% endblock %}

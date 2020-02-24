@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block nav %}
+{{ include('product/navbar.html.twig') }}
+{% endblock %} 
+
+
 {% block title %}Listado de productos{% endblock %}
 
 {% block body %}
@@ -34,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('product_new') }}">Crear nuevo producto</a>
+    <a href="{{ path('product_new', {'idempresa': id_empresa}) }}">Crear nuevo producto</a>
 {% endblock %}

@@ -47,4 +47,13 @@ class EnterpriseRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findOneByid($value): ?Enterprise
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

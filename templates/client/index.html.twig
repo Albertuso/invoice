@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de clientes{% endblock %}
+{% block title %}Listar clientes{% endblock %}
+
+{% block nav %}
+{{ include('client/navbar.html.twig') }}
+{% endblock %} 
 
 {% block body %}
+
     <h1>Listado de clientes</h1>
 
     <table class="table">
@@ -19,7 +24,6 @@
         <tbody>
         {% for client in clients %}
             <tr>
-                <td>{{ client.id }}</td>
                 <td>{{ client.name }}</td>
                 <td>{{ client.address }}</td>
                 <td>{{ client.nif }}</td>
@@ -27,7 +31,7 @@
                 <td>{{ client.telephone }}</td>
                 <td>{{ client.web }}</td>
                 <td>
-                    <a href="{{ path('client_show', {'id': client.id}) }}">Mostrar</a>
+                    <a href="{{ path('client_show', {'client': client.id}) }}">Mostrar</a>
                     <a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
                 </td>
             </tr>
@@ -39,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('client_new') }}">Crear nuevo cliente</a>
+    <a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 {% endblock %}

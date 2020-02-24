@@ -17,7 +17,6 @@ class ProductLineType extends AbstractType
             ->add('price',null, array('label' => 'Precio'))
             ->add('vat',null, array('label' => 'IVA'))
             ->add('name',null, array('label' => 'Nombre'))
-            ->add('invoice',null, array('label' => 'Factura (Creo que este no vale)'))
         ;
     }
 

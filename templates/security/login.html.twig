@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Loguéate!{% endblock %}
 {% block stylesheets %}
 {{ parent() }}        
     <link rel="stylesheet" href="{{asset('css/login.css') }}">
@@ -14,21 +14,25 @@
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
-            {% if app.user %}
-                <div class="mb-3">
-                    Est&aacute;s logueado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-            {% endif %}
-
-            <h1 class="h3 mb-3 font-weight-normal">Por favor, registrese</h1>
-            <label for="inputUsername">Usuario</label>
+            <h1 class="h3 mb-3 font-weight-normal">Por favor, loguéese</h1>
+            <label for="inputUsername">Nombre</label>
+            <i class="fas fa-address-card"></i>
+            <div align="center">
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
-            <label for="inputPassword">Contrase&ntilde;a</label>
+            </div>
+            <label for="inputPassword">Password</label>
+            <i class="fas fa-key"></i>
+            <div align="center">
             <input type="password" name="password" id="inputPassword" class="form-control" required>
-
+            </div>
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
             >
+            {% if app.user %}
+                <div class="mb-3"><br>
+                    Est&aacute;s logueado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Desloguéate</a>
+                </div>
+            {% endif %}
 
             {#
                 Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
