@@ -157,8 +157,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeEnterprise(Enterprise $enterprise): self
-    {
+    public function removeEnterprise(Enterprise $enterprise): self{
         if ($this->enterprises->contains($enterprise)) {
             $this->enterprises->removeElement($enterprise);
             // set the owning side to null (unless already changed)
@@ -166,11 +165,9 @@ class User implements UserInterface
                 $enterprise->setUser(null);
             }
         }
-
         return $this;
     }
-    public function __toString()
-    {
+    public function __toString(){
         return $this->username;
     }
 }
