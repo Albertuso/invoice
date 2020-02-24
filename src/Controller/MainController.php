@@ -27,32 +27,6 @@ class MainController extends AbstractController{
      */
     public function index(HttpFoundationRequest $request, UserPasswordEncoderInterface $passwordEncoder): Response{
 
-        //Vista de Bienvenida
-            //Si pulsamos registrarnos
-            $user = new User();
-            $registrationForm=$this->createForm(RegistrationFormType::class, $user);
-            $registrationForm->handleRequest($request);
-            if($registrationForm->isSubmitted() && $registrationForm->isValid()){
-                $em= $this->getDoctrine()->getManager();
-                $user->setRoles(['ROLE_USER']);
-                $user->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $registrationForm->get('plainPassword')->getData()
-                    )
-                );
-                $em->persist($registrationForm);
-                return $this->redirectToRoute('main');
-            }
-    
-    
-            return $this->render('main/index.html.twig', [
-                'controller_name' => 'PrincipalController',
-                'registrationForm'=>$registrationForm->createView()
-                
-            ]);
-
-        //Vista fin de bienvenida
 
         $repositoryUsers = $this->getDoctrine()->getRepository(User::class);
         $users = $repositoryUsers->findAll();
