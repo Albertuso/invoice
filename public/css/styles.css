@@ -1,7 +1,37 @@
 /* APARECE EN WELCOME.HTML.TWIG*/
 
-a,
-a:hover {
+a {
     text-decoration: none;
     color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: gray;
+}
+
+html,
+body,
+#global,
+#segundo,
+#fila {
+    height: 100%;
+}
+
+
+/* APARECE EN: VISTA PRINCIPAL  (NO LOGUEADO)*/
+
+#global {
+    height: 100%;
+    width: 1500px;
+}
+
+#login_ {
+    display: flex;
+    align-items: center;
+}
+
+#register_ {
+    display: flex;
+    align-items: center;
 }

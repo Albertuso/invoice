@@ -1,12 +1,30 @@
-{# FORMULARIO REGISTRO#}
 
-<div id="form-register">
-<a href="{{ path('register') }}">Registrarse</a>
+<div id="global" class="container">
+    <div id="segundo" class="align-self-center" >
+    
+        <div class="row align-content-center" id="fila">
+           
+                <a href="{{ path('app_login')}}" id="login_" class="
+                col-4 
+                text-center align-content-center 
+                justify-content-center
+                bg-dark">
+                Iniciar sesion
+                </a>
+            
+  
+      
+                <img src="{{ asset('img/logo2.png') }}" class="
+                col-4 
+                "/>
+              
+   
+                <a href="{{path('app_register')}}" id="register_" class="
+                col-4 
+                text-center align-content-center 
+                justify-content-center
+                bg-danger">Registrarse</a>
+       
+        </div>
+    </div>
 </div>
-{# FIN FORMULARIO REGISTRO#}
-
-{# FORMULARIO LOGIN#}
-<div id="form-login">
-  <a href="{{ path('login') }}">Iniciar sesion</a>
-</div>
-{# FIN FORMULARIO LOGIN#}
