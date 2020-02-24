@@ -1,5 +1,46 @@
-<a href="{{ path('app_login')}}">Login</a>
+{# <a href="{{ path('app_login')}}">Login</a>
 
 <img src="{{ asset('img/logo.png') }}" width = '400px' />
 
-<a href="{{path('app_register')}}">Registro</a>
+<a href="{{path('app_register')}}">Registro</a> #}
+
+
+{# {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+{% endblock %}
+
+{% block title %}
+  Registro
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div  id="form" class="align-items-center">
+    <form id="login form">
+    <h2 class="h3 mb-3 font-weight-normal">
+      Por favor registrese...
+    </h2>
+    {{ form_start(registrationForm) }}
+    <h3>
+      {{ form_row(registrationForm.username) }}
+      <i class="fa fa-signature"></i>
+    </h3>
+
+    <h3>
+      {{ form_row(registrationForm.plainPassword) }}
+      <i class="fa fa-key"></i>
+    </h3>
+    {{ form_row(registrationForm.agreeTerms) }}
+
+    <button class="btn btn-lg btn-primary" type="submit">
+      Enviar
+    </button>
+    {{ form_end(registrationForm) }}
+    </form>
+  </div>
+</div>
+{% endblock %} #}
