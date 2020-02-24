@@ -25,18 +25,36 @@
           {% for rol in listuser.roles %}
             {% if rol == 'ROLE_USER' %}
               {# aqui menu admin #}
+
+
+
+
+
               {{ listuser.username }} - max empresas = {{ listuser.max }}
             {% endif %}
           {% endfor %}
         {% endfor %}
       {% else %}
-          {{ include('main/user.html.twig') }}
-       
+        {# ... o un usuario #} 
+        <p>
+            <a href="{{path('enterprise_new')}}">Añadir empresa</a>
+        </p>
+        
+
+        {% for enterprise in user.enterprises %}
+        {# listado de empresas #}
+        {{ enterprise.name }} - <a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
+        <a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a>
+        
+        </br>
+        {% endfor %}
       {% endif %}
       {% else %}
           {# no tiene roles #}
-          registrate y esas cosas
-           <a href="{{path('app_login')}}">registro</a>
+          
+          {{ include('main/welcome.html.twig') }}
+
+         
     {% endif %}
   </div>
 {% endblock %}

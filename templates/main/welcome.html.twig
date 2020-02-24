@@ -1,0 +1,42 @@
+{# FORMULARIO REGISTRO#}
+
+<div id="form-register">
+  <h1>
+    Registrarse
+  </h1>
+  {{ form_start(registrationForm) }}
+  <b>
+    {{ form_row(registrationForm.username) }}
+
+    {{ form_row(registrationForm.plainPassword) }}
+    <br />
+    {{ form_row(registrationForm.agreeTerms) }}
+  </b>
+  <br />
+  <button class="btn">
+    Registrame
+  </button>
+  {{ form_end(registrationForm) }}
+</div>
+{# FIN FORMULARIO REGISTRO#}
+{# FORMULARIO LOGIN#}
+<div id="form-login">
+  <h1>
+    Iniciar sesión
+  </h1>
+  {{ form_start(loginForm) }}
+  <b>
+    {{ form_row(loginForm.username) }}
+
+    {{ form_row(loginForm.plainPassword) }}
+    <br />
+  </b>
+  <br />
+  <button class="btn">
+    Iniciame
+  </button>
+  {{ form_end(loginForm) }}
+
+  <div></div>
+</div>
+{# FIN FORMULARIO LOGIN#}
