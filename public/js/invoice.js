@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+	var count = $(".itemRow").length;
+
+	showproduct("#productName_1");	
+
 	// $(document).on('click', '#checkAll', function () {
 	// 	$(".itemRow").prop("checked", this.checked);
 	// });
@@ -9,20 +14,29 @@ $(document).ready(function () {
 	// 		$('#checkAll').prop('checked', false);
 	// 	}
 	// });
-	var count = $(".itemRow").length;
+	
+
+	// JQUERY PARA AÑADIR UNA FILA MAS
 	$(document).on('click', '#addRows', function () {
 		count++;
 		var htmlRows = '';
 		htmlRows += '<tr>';
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
 		htmlRows += '<td><input type="text" name="productCode[]" id="productCode_' + count + '" class="form-control" autocomplete="off"></td>';
-		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"></td>';
+
+		//htmlRows += '<td><select name="select" class="form-control"><option value="value1"></option>{% for product in products %}<option  name="productName[]" value="value1"> {{ product.name }} </option>{% endfor %}</select></td>';
+
+		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count+ '"></div></td>';
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
+		htmlRows += '<div id="suggestions_' + count+ '</div>';
 		$('#invoiceItem').append(htmlRows);
+		showproduct("#productName_"+count);
 	});
+
+	// JQUERY PARA ELIMINAR UNA FILA
 	$(document).on('click', '#removeRows', function () {
 		$(".itemRow:checked").each(function () {
 			$(this).closest('tr').remove();
@@ -100,4 +114,48 @@ function calculateTotal() {
 			$('#amountDue').val(subTotal);
 		}
 	}
+}
+
+function showproduct(productName) {
+	//AJAX PARA MOSTRAR EL ARRAY DE PRODUCTOS 
+
+	var idempresa = $("#idempresa").text();
+	$(productName).blur(function () {
+		var numberline = productName.split("_")[1];
+		$('#suggestions_' + numberline).hide();
+		
+	});
+	
+	$(productName).keyup(function () {		
+		
+		var parametros = idempresa + "/" + $(this).val();
+		var numberline = productName.split("_")[1];
+		$('#suggestions_' + numberline).show();
+
+		$.ajax('/invoice/search/enterprise/' + parametros, {
+			dataType: 'json',
+			contentType: 'application/json',
+			cache: false
+		})
+			.done(function (response) {
+				var html = "";
+				$.each(response, function (index, element) {
+					
+					html += response[index].name + "<br/>";
+				}); 
+
+				$('#suggestions_' + numberline).html(html);
+				//Al hacer click en alguna de las sugerencias
+				$('.suggest-element').on('click', function () {
+					//Obtenemos la id unica de la sugerencia pulsada
+					var id = $(this).attr('id');
+					//Editamos el valor del input con data de la sugerencia pulsada
+					$('#key').val($('#' + id).attr('data'));
+					//Hacemos desaparecer el resto de sugerencias
+					$('#suggestions');
+					alert('Has seleccionado el ' + id + ' ' + $('#' + id).attr('data'));
+					return false;
+				});
+			})			
+	});
 }

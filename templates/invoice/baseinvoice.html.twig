@@ -14,13 +14,13 @@
                 {{client.email}}<br>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
-                <h3>Empresa,</h3>                    
+                <h3>Empresa,</h3>
+                <p id="idempresa" style="display: none">{{enterprise.id}}</p>                    
                 {{enterprise.name}}<br>
                 {{enterprise.address}}<br>
                 {{enterprise.telephone}}<br>
                 {{enterprise.email}}<br>
-
-            </div>
+            </div>            
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -37,8 +37,20 @@
                         <td><input class="itemRow" type="checkbox"></td>
                         <td><input type="text" name="productCode[]" id="productCode_1" class="form-control"
                                 autocomplete="off"></td>
+
                         <td><input type="text" name="productName[]" id="productName_1" class="form-control"
-                                autocomplete="off"></td>
+                                autocomplete="off"> <div class="suggestions" id="suggestions_1"></div></td>
+
+                                
+                                
+                                
+                        {# <td><select name="productName[]" class="form-control">
+                        <option value="value1"></option>
+                            {% for product in products %}
+                                <option value="{{product.name}}">{{product.name}}</option> 
+                            {% endfor %}                        
+                        </select></td> #}
+                                
                         <td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity"
                                 autocomplete="off"></td>
                         <td><input type="number" name="price[]" id="price_1" class="form-control price"
@@ -46,6 +58,7 @@
                         <td><input type="number" name="total[]" id="total_1" class="form-control total"
                                 autocomplete="off"></td>
                     </tr>
+                    
                 </table>
             </div>
         </div>

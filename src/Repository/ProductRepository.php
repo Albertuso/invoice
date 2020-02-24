@@ -59,4 +59,19 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findByNameAjax($value,$identerprise)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.name LIKE :val')
+            ->setParameter('val', '%'. $value.'%')
+            ->andWhere('p.enterprise = :enter')
+            ->setParameter('enter', $identerprise)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;       
+    }
+   
 }

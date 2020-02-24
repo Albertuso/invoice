@@ -1,49 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de clientes{% endblock %}
+{% block title %}Listado de clientes
+{% endblock %}
 
 {% block nav %}
-{{ include('client/navbar.html.twig') }}
-{% endblock %} 
+	{{ include('client/navbar.html.twig') }}
+{% endblock %}
 
 {% block body %}
 
 
+	<div class="container" id="tableArea">
+		<h1>Listado de clientes</h1>
 
-    <h1>Listado de clientes</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Direccion</th>
+					<th>DNI</th>
+					<th>E-mail</th>
+					<th>Telefono</th>
+					<th>Web</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for client in clients %}
+					<tr>
+						<td>{{ client.name }}</td>
+						<td>{{ client.address }}</td>
+						<td>{{ client.nif }}</td>
+						<td>{{ client.email }}</td>
+						<td>{{ client.telephone }}</td>
+						<td>{{ client.web }}</td>
+						<td>
+							<a href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
+							<a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="8">No se han encontrado resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Direccion</th>
-                <th>DNI</th>
-                <th>E-mail</th>
-                <th>Telefono</th>
-                <th>Web</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.name }}</td>
-                <td>{{ client.address }}</td>
-                <td>{{ client.nif }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.telephone }}</td>
-                <td>{{ client.web }}</td>
-                <td>
-                    <a href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
-                    <a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">No se han encontrado resultados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
+	<a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 {% endblock %}
