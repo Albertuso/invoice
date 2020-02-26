@@ -1,5 +1,80 @@
-a,
+/* APARECE EN WELCOME.HTML.TWIG*/
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
 a:hover {
-  text-decoration: none;
-  color: grey;
+    text-decoration: none;
+    color: gray;
+}
+
+html,
+body,
+#global,
+#segundo,
+#fila {
+    height: 100%;
+}
+
+
+/* APARECE EN: VISTA PRINCIPAL  (NO LOGUEADO)*/
+
+#global {
+    height: 100%;
+    width: 1500px;
+}
+
+#login_ {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: grey;
+}
+
+
+/* navbar a la derecha */
+
+.mobileNav {
+    position: absolute;
+    right: 20px;
+    top: 0px;
+}
+
+.suggestions {
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0);
+    height: auto;
+    position: absolute;
+    z-index: 9999;
+    width: 318px;
+}
+
+#suggestions .suggest-element {
+    background-color: #eeeeee;
+    border-top: 1px solid #d6d4d4;
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    box-shadow: 4px 1px 13px black;
+    float: left;
+}
+
+#tableArea {
+    max-width: 1000px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(15, 43, 152);
+}
+
+#register_ {
+    display: flex;
+    align-items: center;
 }
