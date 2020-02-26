@@ -2,7 +2,7 @@ $(document).ready(function () {
 
 	var count = $(".itemRow").length;
 
-	showproduct("#productName_1");	
+	showproduct("#productName_1");
 
 	// $(document).on('click', '#checkAll', function () {
 	// 	$(".itemRow").prop("checked", this.checked);
@@ -14,7 +14,7 @@ $(document).ready(function () {
 	// 		$('#checkAll').prop('checked', false);
 	// 	}
 	// });
-	
+
 
 	// JQUERY PARA AÑADIR UNA FILA MAS
 	$(document).on('click', '#addRows', function () {
@@ -22,18 +22,16 @@ $(document).ready(function () {
 		var htmlRows = '';
 		htmlRows += '<tr>';
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
+		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count + '"></div></td>';
 		htmlRows += '<td><input type="text" name="productCode[]" id="productCode_' + count + '" class="form-control" autocomplete="off"></td>';
-
-		//htmlRows += '<td><select name="select" class="form-control"><option value="value1"></option>{% for product in products %}<option  name="productName[]" value="value1"> {{ product.name }} </option>{% endfor %}</select></td>';
-
-		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count+ '"></div></td>';
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + ' class="form-control price" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
-		htmlRows += '<div id="suggestions_' + count+ '</div>';
+		htmlRows += '<div id="suggestions_' + count + '</div>';
 		$('#invoiceItem').append(htmlRows);
-		showproduct("#productName_"+count);
+		showproduct("#productName_" + count);
 	});
 
 	// JQUERY PARA ELIMINAR UNA FILA
@@ -122,12 +120,12 @@ function showproduct(productName) {
 	var idempresa = $("#idempresa").text();
 	$(productName).blur(function () {
 		var numberline = productName.split("_")[1];
-		$('#suggestions_' + numberline).hide();
-		
+		//$('#suggestions_' + numberline).hide(300);
+
 	});
-	
-	$(productName).keyup(function () {		
-		
+
+	$(productName).keyup(function () {
+
 		var parametros = idempresa + "/" + $(this).val();
 		var numberline = productName.split("_")[1];
 		$('#suggestions_' + numberline).show();
@@ -140,22 +138,36 @@ function showproduct(productName) {
 			.done(function (response) {
 				var html = "";
 				$.each(response, function (index, element) {
-					
-					html += response[index].name + "<br/>";
-				}); 
 
+					// index es el numero de respuestas (1, 2, 3... dependiendo)
+
+					html += '<div id="' + index + '" class="suggestions_' + index + ' suggest-element">' + response[index].name + "</div>";
+					//console.log(element.price);
+					console.log("linea id:" + index);
+
+				});
+
+				// me saca en el div oculto la informacion devuelta ajax
 				$('#suggestions_' + numberline).html(html);
-				//Al hacer click en alguna de las sugerencias
+
+
+				//Al hacer click en alguna de las sugerencias devueltas ajax
 				$('.suggest-element').on('click', function () {
+
+					console.log("numberline: " + numberline);
+					$('#suggestions_' + numberline).hide();
 					//Obtenemos la id unica de la sugerencia pulsada
 					var id = $(this).attr('id');
-					//Editamos el valor del input con data de la sugerencia pulsada
-					$('#key').val($('#' + id).attr('data'));
+					
 					//Hacemos desaparecer el resto de sugerencias
 					$('#suggestions');
-					alert('Has seleccionado el ' + id + ' ' + $('#' + id).attr('data'));
+					//alert('Has seleccionado el ' + id + ' ' + $('#' + id).attr('data'));
+					$('#suggestions_'+id)
+
+					console.log(response[$(this)[0].id]);
+					//console.log($(this)[0].id);
 					return false;
 				});
-			})			
+			})
 	});
 }

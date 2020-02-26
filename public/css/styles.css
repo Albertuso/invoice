@@ -14,7 +14,7 @@ a:hover {
 .suggestions {
   box-shadow: 2px 2px 8px 0 rgba(0, 0, 0);
   height: auto;
-  position: absolute;
+  position: relative;
   z-index: 9999;
   width: 318px;
 }
