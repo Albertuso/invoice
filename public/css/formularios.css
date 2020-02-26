@@ -1,0 +1,27 @@
+form{
+    height:500px;
+    width: 250px;
+    background-color: #66afe9;
+    color: chocolate;
+    box-shadow: 0 0 15px #374dbc;
+    position: absolute;
+    border: 5px solid purple;
+}
+input{
+    height: 30px;
+    width: 150px;
+    background-color: #1d2124;
+    color: yellow;
+    box-shadow: 0 0 15px orange;
+    position: absolute;
+    border: 3px solid pink;
+
+}
+input:hover{
+    background-color: yellow;
+    color: black;
+    box-shadow: 0 0 15px pink;
+    position: absolute;
+    border: 3px solid orange;
+    animation: focuseado 3s linear;
+}
