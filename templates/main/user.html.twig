@@ -27,14 +27,42 @@
 
   {# huecos empresas #}
   {% for enterprise in user.enterprises %}
-    <div class="p-2 bg-light m-10"><a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a><br/><a href="{{path('enterprise_edit',  {id: enterprise.id})}}">editar</a> 
-<a href="{{path('enterprise_delete',  {id: enterprise.id})}}">eliminar</a></div>
+    <div class="p-2 bg-light m-10 cuadro">
+    <h2>
+    <a href="{{path('enterprise_show', {id: enterprise.id})}}">
+    {{ enterprise.name }}
+    </a>
+    </h2>
+    <br/>
+    <p>
+    <a href="{{path('enterprise_edit',  {id: enterprise.id})}}">
+    editar
+    </a> 
+   
+  <a href="{{path('enterprise_delete',  {id: enterprise.id})}}">
+  eliminar
+  </a>
+  </p>
+  <img src="{{ asset('img/empresa/') }}{{ enterprise.logo }}" id="logo"/>
+  </div>
   {% endfor %}
 
   {# huecos vacios #}
   {% if user.enterprises|length < user.max %} 
     {% for i in range(user.enterprises|length + 1, user.max) %}
-    <div class="p-2 bg-light m-10 "><a href="{{path('enterprise_new')}}"><img src="{{ asset('img/add.png') }}" width = '150px' /></a></div>
+    <div class="p-2 bg-light m-10 cuadro">
+
+    <a href="{{path('enterprise_new')}}">
+    <h2>
+    Añadir empresa
+    </h2>
+    </a>
+  
+    <img src="{{ asset('img/add2.png') }}" />
+    
+    
+    </div>
+
     {% endfor %}  
   {% endif %} 
   
