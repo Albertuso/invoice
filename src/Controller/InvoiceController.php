@@ -123,7 +123,7 @@ class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route("/{invoice}/edit", name="invoice_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="invoice_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Invoice $invoice): Response
     {
@@ -137,8 +137,6 @@ class InvoiceController extends AbstractController
         //Cargo los productos de esa empresa
         $repositoryProduct = $this->getDoctrine()->getRepository(Product::class);
         $products = $repositoryProduct->findByEnterpriseId($enterprise);
-        
-
 
         $form = $this->createForm(InvoiceType::class, $invoice);
 
@@ -146,23 +144,54 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Eliminar todas las lineas
+            $productsLine = $invoice->getLine();
+
+
+    $this->getDoctrine()->getManager()->flush();
+
+            $names = $_REQUEST['productName'];
+            $quantities = $_REQUEST['quantity'];
+            $prices = $_REQUEST['price'];
+            $vats = $_REQUEST['VAT'];
+
+            //Aqui toca comprobar que la nueva factura es válida
+
+
+            //Guardo las lineas 
+            for ($i = 0; $i < count($names); $i++) {
+
+                $newLine = new ProductLine();
+
+                $newLine->setName($names[$i]);
+                $newLine->setQuantity($quantities[$i]);
+                $newLine->setPrice($prices[$i]);
+                $newLine->setVat($vats[$i]);
+
+                $invoice->addLine($newLine);
+            }
+
+
+
+
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
+            // return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
 
-            // return $this->render('invoice/debug.html.twig', [
-            //     'debug' => $request,
-            //     'dato' => $invoice,
-            //     'cantidades' => null,
-            // ]);
+            return $this->render('invoice/debug.html.twig', [
+                'debug' => $productsLine[0],
+                'dato' => $invoice,
+                'cantidades' => null,
+            ]);
         }
 
 
-            // return $this->render('invoice/debug.html.twig', [
-            //     'debug' => $request,
-            //     'dato' => $invoice,
-            //     'cantidades' => $form->getData(),
-            // ]);
+        // return $this->render('invoice/debug.html.twig', [
+        //     'debug' => $request,
+        //     'dato' => $invoice,
+        //     'cantidades' => $form->getData(),
+        // ]);
 
         return $this->render('invoice/edit.html.twig', [
             'invoice' => $invoice,

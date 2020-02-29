@@ -26,7 +26,7 @@ $(document).ready(function () {
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" disabled name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" readonly name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
 		htmlRows += '<div id="suggestions_' + count + '</div>';
 		$('#invoiceItem').append(htmlRows);

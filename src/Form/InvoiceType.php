@@ -20,8 +20,8 @@ class InvoiceType extends AbstractType
             ->add('date', DateType::class)
             ->add('description', TextareaType::class, array('attr' => array('maxlength' => '255', 'rows' => '5', 'class'=>'form-control txt')))
             ->add('footer')
-            ->add('subtotal', TextType::class , array('attr' => array('disabled' => true)))
-            ->add('total', TextType::class , array('attr' => array('disabled' => true)))
+            ->add('subtotal', TextType::class , array('attr' => array('readonly' => true)))
+            ->add('total', TextType::class , array('attr' => array('readonly' => true)))
         ;
     }
 
