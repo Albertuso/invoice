@@ -6,6 +6,7 @@ use App\Entity\Enterprise;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class EnterpriseType extends AbstractType
 {
@@ -18,7 +19,7 @@ class EnterpriseType extends AbstractType
             ->add('email',null, array('label' => 'E-mail'))
             ->add('web',null, array('label' => 'Web'))
             ->add('nif',null, array('label' => 'DNI'))
-            ->add('logo',null, array('label' => 'Logotipo'))
+            ->add('logo', FileType::class, array('label' => 'Logotipo'))
             ->add('footer',null, array('label' => 'Pie de pagina'))
         ;
     }

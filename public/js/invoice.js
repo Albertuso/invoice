@@ -22,11 +22,11 @@ $(document).ready(function () {
 		htmlRows += '<tr>';
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
 		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count + '"></div></td>';
-		htmlRows += '<td><input type="text" name="description[]" id="description_' + count + '" class="form-control" autocomplete="off"></td>';
+		// htmlRows += '<td><input type="text" name="description[]" id="description_' + count + '" class="form-control" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" disabled name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
 		htmlRows += '<div id="suggestions_' + count + '</div>';
 		$('#invoiceItem').append(htmlRows);

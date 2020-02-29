@@ -2,10 +2,21 @@
 	<div class="load-animate animated fadeInUp">
 		<div class="row">
 			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+
+
 				<h1>Crear nueva factura</h1>
 			</div>
 		</div>
 		<div class="row">
+		<div class="col-8">
+				Fecha: {{ form_widget(form.date)}}
+			</div>
+			<div class="col-4">
+				Nº de Factura: {{ enterprise.nextinvoicenumber }}
+			</div>
+			
+	
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 
 
@@ -30,7 +41,7 @@
 					<tr>
 						<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
 						<th width="100px">Nombre Producto</th>
-						<th width="250px">Descripci&oacute;n</th>
+						{# <th width="250px">Descripci&oacute;n</th> #}
 						<th width="40px">Cantidad</th>
 						<th width="80px">Precio</th>
 						<th width="40px">%VAT</th>
@@ -43,12 +54,12 @@
 							<div class="suggestions" id="suggestions_1"></div>
 						</td>
 
-						<td><input type="text" name="description[]" id="description_1" class="form-control" autocomplete="off"></td>
+						{# <td><input type="text" name="description[]" id="description_1" class="form-control" autocomplete="off"></td> #}
 
 						<td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
 						<td><input type="number" step=".01" name="price[]" id="price_1" class="form-control price" autocomplete="off"></td>
 						<td><input type="number" step=".01" name="VAT[]" id="vat_1" class="form-control price" autocomplete="off"></td>
-						<td><input type="number" step=".01" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
+						<td><input type="number" disabled step=".01" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
 					</tr>
 
 				</table>
@@ -65,7 +76,9 @@
 				<h3>Descripción:
 				</h3>
 				<div class="form-group">
-					<textarea class="form-control txt" rows="5" name="invoice[description]" maxlength="255" id="invoice_description" placeholder="Descripción"></textarea>
+					{# <textarea class="form-control txt" rows="5" name="invoice[description]" maxlength="255" id="invoice_description" placeholder="Descripción"></textarea> #}
+					
+					{{ form_widget(form.description)}}
 				</div>
 				<br>
 				<div class="form-group">
@@ -76,73 +89,75 @@
 			</div>
 
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-				
+
 				<div class="input-group">
-                <label>Tasa Impuestos:</label>
+					<label>Tasa Impuestos:</label>
 					<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
 					<div class="input-group-addon">%</div>
-				</div>                
+				</div>
 
-                <div class="input-group">
-                <label>Subtotal:</label>
-					<input type="number" class="form-control w-100" name="taxRate" id="taxRate" placeholder="Tasa de Impuestos">
+				<div class="input-group">
+					<label>Subtotal:</label>
+					{{ form_widget(form.subtotal)}}
+					
 					<div class="input-group-addon">euros</div>
 				</div>
 
-                <div class="input-group">
-                <label>total:</label>
-					<input type="number" class="form-control w-100" name="taxRate" id="taxRate" placeholder="Tasa de Impuestos">
+				<div class="input-group">
+					<label>total:</label>
+					{{ form_widget(form.total)}}
+
 					<div class="input-group-addon">euros</div>
 				</div>
 
 
 			</div>
 			{# <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-				<span class="form-inline">
-					<div class="form-group">
-						<label>Subtotal: &nbsp;</label>
-						<div class="input-group">
-							<div class="input-group-addon currency">$</div>
-							<input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Subtotal">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Tasa Impuesto: &nbsp;</label>
-						<div class="input-group">
-							<input value="" type="number" class="form-control" name="taxRate" id="taxRate" placeholder="Tasa de Impuestos">
-							<div class="input-group-addon">%</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Monto Inpuesto: &nbsp;</label>
-						<div class="input-group">
-							<div class="input-group-addon currency">$</div>
-							<input value="" type="number" class="form-control" name="taxAmount" id="taxAmount" placeholder="Monto de Impuesto">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Total: &nbsp;</label>
-						<div class="input-group">
-							<div class="input-group-addon currency">$</div>
-							<input value="" type="number" class="form-control" name="totalAftertax" id="totalAftertax" placeholder="Total">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Cantidad pagada: &nbsp;</label>
-						<div class="input-group">
-							<div class="input-group-addon currency">$</div>
-							<input value="" type="number" class="form-control" name="amountPaid" id="amountPaid" placeholder="Cantidad pagada">
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Cantidad debida: &nbsp;</label>
-						<div class="input-group">
-							<div class="input-group-addon currency">$</div>
-							<input value="" type="number" class="form-control" name="amountDue" id="amountDue" placeholder="Cantidad debida">
-						</div>
-					</div>
-				</span>
-			</div> #}
+							<span class="form-inline">
+								<div class="form-group">
+									<label>Subtotal: &nbsp;</label>
+									<div class="input-group">
+										<div class="input-group-addon currency">$</div>
+										<input value="" type="number" class="form-control" name="subTotal" id="subTotal" placeholder="Subtotal">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Tasa Impuesto: &nbsp;</label>
+									<div class="input-group">
+										<input value="" type="number" class="form-control" name="taxRate" id="taxRate" placeholder="Tasa de Impuestos">
+										<div class="input-group-addon">%</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Monto Inpuesto: &nbsp;</label>
+									<div class="input-group">
+										<div class="input-group-addon currency">$</div>
+										<input value="" type="number" class="form-control" name="taxAmount" id="taxAmount" placeholder="Monto de Impuesto">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Total: &nbsp;</label>
+									<div class="input-group">
+										<div class="input-group-addon currency">$</div>
+										<input value="" type="number" class="form-control" name="totalAftertax" id="totalAftertax" placeholder="Total">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Cantidad pagada: &nbsp;</label>
+									<div class="input-group">
+										<div class="input-group-addon currency">$</div>
+										<input value="" type="number" class="form-control" name="amountPaid" id="amountPaid" placeholder="Cantidad pagada">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Cantidad debida: &nbsp;</label>
+									<div class="input-group">
+										<div class="input-group-addon currency">$</div>
+										<input value="" type="number" class="form-control" name="amountDue" id="amountDue" placeholder="Cantidad debida">
+									</div>
+								</div>
+							</span>
+						</div> #}
 		</div>
 		<div class="clearfix"></div>
 	</div>

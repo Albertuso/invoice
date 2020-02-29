@@ -47,4 +47,15 @@ class ProductLineRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByInvoice($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.invoice = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

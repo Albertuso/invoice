@@ -1,13 +1,145 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Invoice{% endblock %}
+
+{% block stylesheet %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
+
+{% endblock %}
+
+{% block title %}Editar factura
+{% endblock %}
+
+{% block nav %}
+	{# {{ include('invoice/navbar.html.twig') }} #}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Invoice</h1>
 
-    {{ include('invoice/_form.html.twig', {'button_label': 'Update'}) }}
+	<div class="container content-invoice">
+		<div class="load-animate animated fadeInUp">
+			<div class="row">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 
-    {# <a href="{{ path('invoice_index') }}">back to list</a> #}
 
-    {{ include('invoice/_delete_form.html.twig') }}
+					<h1>Editar factura</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-8">Fecha:
+					{{ form_widget(form.date) }}
+				</div>
+				<div class="col-4">
+					Nº de Factura:
+					{{ invoice.invoicenumber }}
+				</div>
+
+
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+
+					<h3>Cliente,</h3>
+					{{client.name}}<br>
+					{{client.address}}<br>
+					{{client.telephone}}<br>
+					{{client.email}}<br>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
+					<h3>Empresa,</h3>
+					<p id="idempresa" style="display: none">{{enterprise.id}}</p>
+					{{enterprise.name}}<br>
+					{{enterprise.address}}<br>
+					{{enterprise.telephone}}<br>
+					{{enterprise.email}}<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<table class="table table-bordered" id="invoiceItem">
+						<tr>
+							<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
+							<th width="100px">Nombre Producto</th>
+							{# <th width="250px">Descripci&oacute;n</th> #}
+							<th width="40px">Cantidad</th>
+							<th width="80px">Precio</th>
+							<th width="40px">%VAT</th>
+							<th width="80px">Total</th>
+						</tr>
+
+						{% set count = 0 %}
+						{% for line in lines %}
+                        {% set count = count + 1 %}
+                        {% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+							<tr>
+								<td><input class="itemRow" type="checkbox"></td>
+								<td><input type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
+								<td><input type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
+								<td><input type="number" value="{{line.price}}" step=".01" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
+								<td><input type="number" value="{{line.vat}}" step=".01" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
+								<td><input type="number" disabled value="{{total}}" step=".01" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
+							</tr>
+						{% endfor %}
+
+
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mt-5">
+					<button class="btn btn-danger delete" id="removeRows" type="button">- Borrar</button>
+					<button class="btn btn-success" id="addRows" type="button">+ Agregar Más</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+					<h3>Descripción:
+					</h3>
+					<div class="form-group">{# <textarea class="form-control txt" rows="5" name="invoice[description]" maxlength="255" id="invoice_description" placeholder="Descripción"></textarea> #}
+
+						{# {{ form_widget(form.description)}} #}
+					</div>
+					<br>
+					<div class="form-group">
+						<input type="hidden" value="<?php echo $_SESSION['userid']; ?>" class="form-control" name="userId">
+						<input data-loading-text="Guardando factura..." type="submit" name="invoice_btn" value="Guardar Factura" class="btn btn-success submit_btn invoice-save-btm">
+					</div>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+					<div class="input-group">
+						<label>Tasa Impuestos:</label>
+						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
+						<div class="input-group-addon">%</div>
+					</div>
+
+					<div class="input-group">
+						<label>Subtotal:</label>
+						{# {{ form_widget(form.subtotal)}} #}
+
+						<div class="input-group-addon">euros</div>
+					</div>
+
+					<div class="input-group">
+						<label>total:</label>
+						{# {{ form_widget(form.total)}} #}
+
+
+						<div class="input-group-addon">euros</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	{{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+
+	{# {{ include('invoice/_delete_form.html.twig') }} #}
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/invoice.js') }}"></script>
 {% endblock %}
