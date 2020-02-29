@@ -13,15 +13,15 @@ class EnterpriseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null, array('label' => 'Nombre'))
-            ->add('address',null, array('label' => 'Direccion'))
-            ->add('telephone',null, array('label' => 'Telefono'))
-            ->add('email',null, array('label' => 'E-mail'))
-            ->add('web',null, array('label' => 'Web'))
-            ->add('nif',null, array('label' => 'DNI'))
-            ->add('logo', FileType::class, array('label' => 'Logotipo'))
-            ->add('footer',null, array('label' => 'Pie de pagina'))
-        ;
+            ->add('name', null, array('label' => 'Nombre'))
+            ->add('address', null, array('label' => 'Direccion'))
+            ->add('telephone', null, array('label' => 'Telefono'))
+            ->add('email', null, array('label' => 'E-mail'))
+            ->add('web', null, array('label' => 'Web'))
+            ->add('nif', null, array('label' => 'DNI'))
+            ->add('logo', FileType::class, array('label' => 'Logotipo', 'data_class' => null, 'required' => false))
+
+            ->add('footer', null, array('label' => 'Pie de pagina'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

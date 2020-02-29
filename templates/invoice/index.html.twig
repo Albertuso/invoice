@@ -30,6 +30,7 @@
 						<td>{{ invoice.subtotal }}</td>
 						<td>{{ invoice.total }}</td>
 						<td>
+							<a href="{{ path('invoice_print', {'id': invoice.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
 							<a href="{{ path('invoice_show', {'id': invoice.id}) }}">show</a>
 							<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
 						</td>

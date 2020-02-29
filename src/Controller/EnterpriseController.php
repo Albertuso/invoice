@@ -45,7 +45,16 @@ class EnterpriseController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 $entityManager = $this->getDoctrine()->getManager();
+
+                $file = $form['logo']->getData();
+                $ext = $file->guessExtension();
+                $file_name = time() . "." . $ext;
+                $file->move("./img/logos", $file_name);
+
+                $enterprise->setLogo($file_name);
+
                 $enterprise->setNextinvoicenumber(0);
                 $this->getUser()->addEnterprise($enterprise);
                 $entityManager->persist($user);
@@ -83,6 +92,14 @@ class EnterpriseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['logo']->getData();
+            $ext = $file->guessExtension();
+            $file_name = time() . "." . $ext;
+            $file->move("./img/logos", $file_name);
+
+            $enterprise->setLogo($file_name);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('enterprise_index');
@@ -116,7 +133,7 @@ class EnterpriseController extends AbstractController
         $repositoryInvoice = $this->getDoctrine()->getRepository(Invoice::class);
         $invoicesenterprise = $repositoryInvoice->findByEnterprise($idempresa);
 
-         return $this->render('enterprise/show_invoices.html.twig', [
+        return $this->render('enterprise/show_invoices.html.twig', [
             'invoiceseterprises' => $invoicesenterprise,
         ]);
     }

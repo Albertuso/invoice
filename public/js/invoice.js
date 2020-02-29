@@ -7,13 +7,13 @@ $(document).ready(function () {
 	$(document).on('click', '#checkAll', function () {
 		$(".itemRow").prop("checked", this.checked);
 	});
-	// $(document).on('click', '.itemRow', function () {
-	// 	if ($('.itemRow:checked').length == $('.itemRow').length) {
-	// 		$('#checkAll').prop('checked', true);
-	// 	} else {
-	// 		$('#checkAll').prop('checked', false);
-	// 	}
-	// });
+	$(document).on('click', '.itemRow', function () {
+		if ($('.itemRow:checked').length == $('.itemRow').length) {
+			$('#checkAll').prop('checked', true);
+		} else {
+			$('#checkAll').prop('checked', false);
+		}
+	});
 
 	// JQUERY PARA AÑADIR UNA FILA MAS
 	$(document).on('click', '#addRows', function () {
@@ -73,6 +73,10 @@ $(document).ready(function () {
 	// });
 });
 
+function decimales(x) {
+  return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100 ;
+}
+
 function calculateTotal() {
 	var totalAmount = 0;
 	$("[id^='price_']").each(function () {
@@ -85,7 +89,7 @@ function calculateTotal() {
 		}
 		var vat = $('#vat_' + id).val();
 		var total = (price * quantity) - (price * quantity * (vat/100));
-		$('#total_' + id).val(parseFloat(total));
+		$('#total_' + id).val(parseFloat(decimales(total)));
 		totalAmount += total;
 	});
 	$('#invoice_subtotal').val(parseFloat(totalAmount));
@@ -93,9 +97,9 @@ function calculateTotal() {
 	var subTotal = $('#invoice_subtotal').val();
 	if (subTotal) {
 		var taxAmount = subTotal * taxRate / 100;
-		$('#taxAmount').val(taxAmount);
+		$('#taxAmount').val(decimales(taxAmount));
 		subTotal = parseFloat(subTotal) + parseFloat(taxAmount);
-		$('#invoice_total').val(subTotal);
+		$('#invoice_total').val(decimales(subTotal));
 	}
 }
 

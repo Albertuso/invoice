@@ -74,11 +74,11 @@
                         {% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
 							<tr>
 								<td><input class="itemRow" type="checkbox"></td>
-								<td><input type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
-								<td><input type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
-								<td><input type="number" value="{{line.price}}" step=".01" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
-								<td><input type="number" value="{{line.vat}}" step=".01" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
-								<td><input type="number" disabled value="{{total}}" step=".01" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
+								<td><input required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
+								<td><input required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
+								<td><input required type="number" value="{{line.price}}" step="any" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
+								<td><input required type="number" value="{{line.vat}}" step="any" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
+								<td><input required type="number" disabled value="{{total}}" step="any" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
 							</tr>
 						{% endfor %}
 
@@ -137,12 +137,12 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
+
+	{{ form_end(form) }}
 	</div>
 
 
-	{{ form_widget(form) }}
-	<button class="btn">{{ button_label|default('Save') }}</button>
-	{{ form_end(form) }}
+	
 
 	{# <a href="{{ path('invoice_index') }}">back to list</a> #}
 

@@ -78,7 +78,6 @@ class InvoiceController extends AbstractController
 
             //Aqui toca comprobar que la nueva factura es válida
 
-
             //Guardo las lineas 
             for ($i = 0; $i < count($names); $i++) {
 
@@ -130,7 +129,6 @@ class InvoiceController extends AbstractController
 
         // Cargo el cliente (por invoice)
         $client = $invoice->getClient();
-
         // Cargo la empresa a la que pertecene el cliente
         $enterprise = $client->getEnterprise();
 
@@ -144,11 +142,17 @@ class InvoiceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //Cargo las lineas de productos de esa empresa
+            $repositoryProductLine = $this->getDoctrine()->getRepository(ProductLine::class);
+            $productLines = $repositoryProductLine->findByInvoice($invoice);
+
             // Eliminar todas las lineas
-            $productsLine = $invoice->getLine();
+            for ($i = 0; $i < count($invoice->getLine()); $i++) {
+                // $invoice->removeLine($invoice->getLine($i)[0]);
+                $this->getDoctrine()->getManager()->remove($productLines[$i]);
+            }
 
-
-    $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             $names = $_REQUEST['productName'];
             $quantities = $_REQUEST['quantity'];
@@ -156,6 +160,17 @@ class InvoiceController extends AbstractController
             $vats = $_REQUEST['VAT'];
 
             //Aqui toca comprobar que la nueva factura es válida
+            for ($i = 0; $i < count($names); $i++) {
+
+                $newLine = new ProductLine();
+
+                $newLine->setName($names[$i]);
+                $newLine->setQuantity($quantities[$i]);
+                $newLine->setPrice($prices[$i]);
+                $newLine->setVat($vats[$i]);
+
+                $invoice->addLine($newLine);
+            }
 
 
             //Guardo las lineas 
@@ -171,19 +186,15 @@ class InvoiceController extends AbstractController
                 $invoice->addLine($newLine);
             }
 
-
-
-
-
             $this->getDoctrine()->getManager()->flush();
 
-            // return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
+            return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
 
-            return $this->render('invoice/debug.html.twig', [
-                'debug' => $productsLine[0],
-                'dato' => $invoice,
-                'cantidades' => null,
-            ]);
+            // return $this->render('invoice/debug.html.twig', [
+            //     'debug' => $products,
+            //     'dato' => $invoice,
+            //     'cantidades' => null,
+            // ]);
         }
 
 
@@ -248,5 +259,14 @@ class InvoiceController extends AbstractController
         // return $this->render('invoice/debug.html.twig', [
         //     'debug' => $products,
         // ]);
+    }
+
+    /**
+     * @Route("/print/{id}", name="invoice_print", methods={"DELETE"})
+     */
+    public function print(Request $request, Invoice $invoice): Response
+    {
+        
+        return $this->redirectToRoute('invoice_index');
     }
 }

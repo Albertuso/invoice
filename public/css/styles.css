@@ -3,6 +3,12 @@ a:hover {
   text-decoration: none;
   color: grey;
 }
+.abs-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 
 /* navbar a la derecha */
 .mobileNav {
@@ -42,3 +48,7 @@ a:hover {
   color: rgba(15, 43, 152);
   
 }
+
+nav{background-color: lightskyblue !important;}
+
+
