@@ -39,7 +39,7 @@ class Invoice
     private $footer;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProductLine", mappedBy="invoice")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductLine", mappedBy="invoice", cascade={"persist"})
      */
     private $line;
 

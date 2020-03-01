@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de facturas de empresa{% endblock %}
+
+{% block nav %}
+{{ include('enterprise/simplenavbar.html.twig') }}   
+{% endblock %} 
+
+{% block body %}
+
+<div class="container">
+		<h1>Invoice index</h1>
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Nº Factura</th>
+					<th>Fecha</th>
+					<th>Descripción</th>
+					<th>Cliente</th>
+					<th>Subtotal</th>
+					<th>Total</th>
+					<th>acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for invoiceseterprise in invoiceseterprises  %}
+					<tr>
+						<td>{{ invoiceseterprise.invoicenumber}}</td>
+						<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
+						<td>{{ invoiceseterprise.description }}</td>
+						<td>{{ invoiceseterprise.client }}</td>
+						<td>{{ invoiceseterprise.subtotal }}</td>
+						<td>{{ invoiceseterprise.total }}</td>
+						<td>
+							<a href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">show</a>
+							<a href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="8">No se han encontrado resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+
+
+
+
+    <a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
+{% endblock %}

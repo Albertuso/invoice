@@ -1,0 +1,11 @@
+1. Formularios numeros positivos (pattern)
+https://es.stackoverflow.com/questions/93416/c%C3%B3mo-permitir-%C3%BAnicamente-valores-positivos-en-un-input
+
+2. Una vez creada una factura podemos eliminarla solo si es la más reciente, si no NO.
+
+3. Podemos crear una factura a partir de otra. Es decir, crear un borrador de factura cargando los datos de otra ya existente, aunque la fecha y el número de factura serán los que correspondan (fecha de hoy y numero siguiente). El resto de datos aparecerán editables (cliente, descripcion y lineas de factura).
+
+4. Tendremos una vista de listado de facturas, donde podremos buscar por número, cliente o incluso descripcion de lineas de pedido. También por intervalo de fechas. En el resultado de la búsqueda debe informar de la sumatoria de los importes totales y de los importes de iva de esa selección.
+
+5. A los listados podremos editar la factura SOLO SI ES LA ÚLTIMA EMITIDA, crear una nueva a partir de ella, mandarla por mail o guardarla como pdf/imprimirla.
+

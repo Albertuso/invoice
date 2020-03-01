@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Enterprise;
+use App\Entity\Invoice;
 use App\Form\EnterpriseType;
 use App\Repository\EnterpriseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class EnterpriseController extends AbstractController
     public function index(EnterpriseRepository $enterpriseRepository): Response
     {
         return $this->render('enterprise/index.html.twig', [
-            'enterprises' => $enterpriseRepository->findAll(),
+            // 'enterprises' => $enterpriseRepository->findAll(),
             'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
@@ -44,7 +45,16 @@ class EnterpriseController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 $entityManager = $this->getDoctrine()->getManager();
+
+                $file = $form['logo']->getData();
+                $ext = $file->guessExtension();
+                $file_name = time() . "." . $ext;
+                $file->move("./img/logos", $file_name);
+
+                $enterprise->setLogo($file_name);
+
                 $enterprise->setNextinvoicenumber(0);
                 $this->getUser()->addEnterprise($enterprise);
                 $entityManager->persist($user);
@@ -59,7 +69,6 @@ class EnterpriseController extends AbstractController
             ]);
         } else {
             return $this->render('enterprise/errormax.html.twig');
-
         }
     }
 
@@ -83,6 +92,14 @@ class EnterpriseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['logo']->getData();
+            $ext = $file->guessExtension();
+            $file_name = time() . "." . $ext;
+            $file->move("./img/logos", $file_name);
+
+            $enterprise->setLogo($file_name);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('enterprise_index');
@@ -99,12 +116,25 @@ class EnterpriseController extends AbstractController
      */
     public function delete(Request $request, Enterprise $enterprise): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$enterprise->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $enterprise->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($enterprise);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('enterprise_index');
+    }
+
+    /**
+     * @Route("/{idempresa}/listinvoices", name="enterprise_listinvoices", methods={"GET","POST"})
+     */
+    public function invoices($idempresa)
+    {
+        $repositoryInvoice = $this->getDoctrine()->getRepository(Invoice::class);
+        $invoicesenterprise = $repositoryInvoice->findByEnterprise($idempresa);
+
+        return $this->render('enterprise/show_invoices.html.twig', [
+            'invoiceseterprises' => $invoicesenterprise,
+        ]);
     }
 }

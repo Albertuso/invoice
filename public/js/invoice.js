@@ -4,17 +4,16 @@ $(document).ready(function () {
 
 	showproduct("#productName_1");
 
-	// $(document).on('click', '#checkAll', function () {
-	// 	$(".itemRow").prop("checked", this.checked);
-	// });
-	// $(document).on('click', '.itemRow', function () {
-	// 	if ($('.itemRow:checked').length == $('.itemRow').length) {
-	// 		$('#checkAll').prop('checked', true);
-	// 	} else {
-	// 		$('#checkAll').prop('checked', false);
-	// 	}
-	// });
-
+	$(document).on('click', '#checkAll', function () {
+		$(".itemRow").prop("checked", this.checked);
+	});
+	$(document).on('click', '.itemRow', function () {
+		if ($('.itemRow:checked').length == $('.itemRow').length) {
+			$('#checkAll').prop('checked', true);
+		} else {
+			$('#checkAll').prop('checked', false);
+		}
+	});
 
 	// JQUERY PARA AÑADIR UNA FILA MAS
 	$(document).on('click', '#addRows', function () {
@@ -23,11 +22,11 @@ $(document).ready(function () {
 		htmlRows += '<tr>';
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
 		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count + '"></div></td>';
-		htmlRows += '<td><input type="text" name="productCode[]" id="productCode_' + count + '" class="form-control" autocomplete="off"></td>';
+		// htmlRows += '<td><input type="text" name="description[]" id="description_' + count + '" class="form-control" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + ' class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" readonly name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
 		htmlRows += '<div id="suggestions_' + count + '</div>';
 		$('#invoiceItem').append(htmlRows);
@@ -42,25 +41,18 @@ $(document).ready(function () {
 		$('#checkAll').prop('checked', false);
 		calculateTotal();
 	});
-	// $(document).on('blur', "[id^=quantity_]", function () {
-	// 	calculateTotal();
-	// });
-	// $(document).on('blur', "[id^=price_]", function () {
-	// 	calculateTotal();
-	// });
-	// $(document).on('blur', "#taxRate", function () {
-	// 	calculateTotal();
-	// });
-	// $(document).on('blur', "#amountPaid", function () {
-	// 	var amountPaid = $(this).val();
-	// 	var totalAftertax = $('#totalAftertax').val();
-	// 	if (amountPaid && totalAftertax) {
-	// 		totalAftertax = totalAftertax - amountPaid;
-	// 		$('#amountDue').val(totalAftertax);
-	// 	} else {
-	// 		$('#amountDue').val(totalAftertax);
-	// 	}
-	// });
+	$(document).on('change', "[id^=quantity_]", function () {
+		calculateTotal();
+	});
+	$(document).on('change', "[id^=price_]", function () {
+		calculateTotal();
+	});
+	$(document).on('change', "[id^=vat_]", function () {
+		calculateTotal();
+	});
+	$(document).on('blur', "#taxRate", function () {
+		calculateTotal();
+	});
 	// $(document).on('click', '.deleteInvoice', function () {
 	// 	var id = $(this).attr("id");
 	// 	if (confirm("Are you sure you want to remove this?")) {
@@ -81,6 +73,10 @@ $(document).ready(function () {
 	// });
 });
 
+function decimales(x) {
+  return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100 ;
+}
+
 function calculateTotal() {
 	var totalAmount = 0;
 	$("[id^='price_']").each(function () {
@@ -91,26 +87,19 @@ function calculateTotal() {
 		if (!quantity) {
 			quantity = 1;
 		}
-		var total = price * quantity;
-		$('#total_' + id).val(parseFloat(total));
+		var vat = $('#vat_' + id).val();
+		var total = (price * quantity) - (price * quantity * (vat/100));
+		$('#total_' + id).val(parseFloat(decimales(total)));
 		totalAmount += total;
 	});
-	$('#subTotal').val(parseFloat(totalAmount));
+	$('#invoice_subtotal').val(parseFloat(totalAmount));
 	var taxRate = $("#taxRate").val();
-	var subTotal = $('#subTotal').val();
+	var subTotal = $('#invoice_subtotal').val();
 	if (subTotal) {
 		var taxAmount = subTotal * taxRate / 100;
-		$('#taxAmount').val(taxAmount);
+		$('#taxAmount').val(decimales(taxAmount));
 		subTotal = parseFloat(subTotal) + parseFloat(taxAmount);
-		$('#totalAftertax').val(subTotal);
-		var amountPaid = $('#amountPaid').val();
-		var totalAftertax = $('#totalAftertax').val();
-		if (amountPaid && totalAftertax) {
-			totalAftertax = totalAftertax - amountPaid;
-			$('#amountDue').val(totalAftertax);
-		} else {
-			$('#amountDue').val(subTotal);
-		}
+		$('#invoice_total').val(decimales(subTotal));
 	}
 }
 
@@ -120,15 +109,13 @@ function showproduct(productName) {
 	var idempresa = $("#idempresa").text();
 	$(productName).blur(function () {
 		var numberline = productName.split("_")[1];
-		//$('#suggestions_' + numberline).hide(300);
-
 	});
 
 	$(productName).keyup(function () {
 
 		var parametros = idempresa + "/" + $(this).val();
 		var numberline = productName.split("_")[1];
-		$('#suggestions_' + numberline).show();
+		$('#suggestions_' + numberline).slideDown();
 
 		$.ajax('/invoice/search/enterprise/' + parametros, {
 			dataType: 'json',
@@ -155,7 +142,7 @@ function showproduct(productName) {
 				$('.suggest-element').on('click', function () {
 
 					console.log("numberline: " + numberline);
-					$('#suggestions_' + numberline).hide();
+					$('#suggestions_' + numberline).slideToggle();
 					//Obtenemos la id unica de la sugerencia pulsada
 					var id = $(this).attr('id');
 					
@@ -165,7 +152,17 @@ function showproduct(productName) {
 					$('#suggestions_'+id)
 
 					console.log(response[$(this)[0].id]);
-					//console.log($(this)[0].id);
+					
+					$('#price_'+numberline).val(response[$(this)[0].id].price);
+					$('#description_'+numberline).val(response[$(this)[0].id].description);
+					$('#vat_'+numberline).val(response[$(this)[0].id].vat);
+					$('#productName_'+numberline).val(response[$(this)[0].id].name);
+					oldcantity = $('#quantity_'+numberline).val();
+					if (oldcantity=="" || oldcantity==null) {
+						$('#quantity_'+numberline).val(1);
+					}
+					calculateTotal();
+					// $("#price_1").val(5)
 					return false;
 				});
 			})

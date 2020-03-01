@@ -67,4 +67,15 @@ class InvoiceRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findByEnterprise($value)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.enterprise = :val')
+            ->setParameter('val', $value)
+            ->orderBy('i.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
