@@ -1,4 +1,70 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<link rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+		  crossorigin="anonymous" />
+	<link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+	<script src="https://kit.fontawesome.com/ec7905829e.js" crossorigin="anonymous"></script>
+	<style type="text/css">
+		form{
+			margin:20px;
+			padding: 10px;
+			background-color: chocolate;
+			box-shadow: 0 0 15px #374dbc;
+			border: 5px solid purple;
+			align: center;
+		}
+		input{
+			align-content: center;
+			margin-left: 4px;
+			background-color: #1d2124;
+			color: yellow;
+			box-shadow: 0 0 15px orange;
+			border: 3px solid pink;
+			align: center;
+		}
+		input:focus{
+			background-color: yellow;
+			color: black;
+			box-shadow: 0 0 15px pink;
+			border: 3px solid orange;
+			transition: all 1s linear;
+		}
+		h1{
+			color:orange;
+			text-align: center;
+		}
+		a{
+			color:black;
+			text-align: center;
+		}
+		#elementos1 {
+			text-align: center;
+			border: inset 7px coral;
+		}
+		#elementos2 {
+			text-align: center;
+			border: inset 7px skyblue;
+		}
+		#elementos1 a{
+			color: black;
+		}
+		#elementos2 a{
+			color: black;
+		}
+		#elementos1 a:hover, #elementos1 .btn:hover{
+			color: orange;
+			background-color: #1c7430;
+			transition: all 2s linear;
+		}
+		#elementos2 a:hover, .btn:hover{
+			color: pink;
+			background-color: #0000cc;
+			transition: all 2s linear;
+		}
+	</style>
+{% endblock %}
 
 {% block title %}Editar Empresa
 {% endblock %}
@@ -11,12 +77,10 @@
 
 	<div class="container">
 		<h1>Editar Empresa</h1>
-
-		{{ include('enterprise/_form.html.twig', {'button_label': 'Update'}) }}
-
-		<a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
-
-		{{ include('enterprise/_delete_form.html.twig') }}
-
+		{{ include('enterprise/_form.html.twig', {'button_label': 'Actualizar'}) }}
+		<div id="elementos2">
+			<a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
+			{{ include('enterprise/_delete_form.html.twig',{'button_label': 'Borrar'}) }}
+		</div>
 	</div>
 {% endblock %}

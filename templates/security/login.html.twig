@@ -1,54 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!
-{% endblock %}
+{% block title %}Loguéate!{% endblock %}
 {% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{asset('css/login.css') }}">
+{{ parent() }}        
+    <link rel="stylesheet" href="{{asset('css/login.css') }}">
 {% endblock %}
 {% block body %}
 
-	<div class="container-fluid">
-		<div class="abs-center">
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <form id="login" method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-			<form id="login" method="post">
-				{% if error %}
-					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-				{% endif %}
+            <h1 class="h3 mb-3 font-weight-normal">Por favor, loguéese</h1>
+            <label for="inputUsername">Nombre</label>
+            <i class="fas fa-address-card"></i>
+            <div align="center">
+            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+            </div>
+            <label for="inputPassword">Password</label>
+            <i class="fas fa-key"></i>
+            <div align="center">
+            <input type="password" name="password" id="inputPassword" class="form-control" required>
+            </div>
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+            {% if app.user %}
+                <div class="mb-3"><br>
+                    Est&aacute;s logueado como {{ app.user.username }}, <a href="{{ path('app_logout') }}">Desloguéate</a>
+                </div>
+            {% endif %}
 
-				{% if app.user %}
-					<div class="mb-3">
-						Est&aacute;s logueado como
-						{{ app.user.username }},
-						<a href="{{ path('app_logout') }}">Logout</a>
-					</div>
-				{% endif %}
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
 
-				<h1 class="h3 mb-3 font-weight-normal">Por favor, registrese</h1>
-				<label for="inputUsername">Usuario</label>
-				<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control m-auto rounded-pill" required autofocus>
-				<label for="inputPassword">Contrase&ntilde;a</label>
-				<input type="password" name="password" id="inputPassword" class="form-control m-auto rounded-pill" required>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
 
-				<input
-				type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-				{#
-				                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-				                See https://symfony.com/doc/current/security/remember_me.html
-				
-				                <div class="checkbox mb-3">
-				                    <label>
-				                        <input type="checkbox" name="_remember_me"> Remember me
-				                    </label>
-				                </div>
-				            #}
-
-				<button class="btn btn-lg btn-primary rounded-pill" type="submit">
-					Logueate
-				</button>
-			</form>
-		</div>
-	</div>
+            <button class="btn btn-lg btn-primary" type="submit">
+                Logueate
+            </button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

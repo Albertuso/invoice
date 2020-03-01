@@ -12,7 +12,7 @@
         <a class="nav-link" href="{{ path('product_index', {'idempresa': enterprise.id}) }}">Productos</a>
       </li>
         <li class="nav-item">
-        <a class="nav-link" href="{{ path('enterprise_listinvoices', {'idempresa': enterprise.id}) }}">Facturas empresa</a>
+        <a class="nav-link" href="#">Facturas</a>
       </li>      
     </ul>
     <ul class="nav navbar-nav navbar-right mobileNav pull-right navbar-text" id="navbarNavDropdown">
@@ -21,7 +21,6 @@
           {{enterprise.name}}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
         {% for enterprise in enterprises %}
           <a class="dropdown-item" href="{{path('enterprise_show', {id: enterprise.id})}}">{{enterprise.name}}</a>          
         {% endfor %}
