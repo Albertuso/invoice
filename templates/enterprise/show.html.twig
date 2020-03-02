@@ -35,13 +35,79 @@
 				</tr>
 			</tbody>
 		</table>
+		<div class="row border mt-5 border-dark">
+
+			<div class="col-sm-8">
+				<div class="row">
+
+
+					<div class="col-12">
+						<div class="row">
+							<div class="col-12 h6">Responsables de empresa</div>
+						</div>
+
+						{% for supervisor in supervisors %}
+							<div>
+								{{ supervisor}}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="row">
+					<div class="col-12">
+						<a href="{{ path('supervisor_index', {identerprise: enterprise.id} ) }}">Responsables de empresa</a>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="row border mt-5 border-dark">
+			<div class="col-md-12 h6">
+				Pie de empresa<br/>
+				<p style="font-size: 10px">Para editar, ir a empresa</p>
+				<p></p>
+			</div>
+			<div class="col-md-12">
+				<a href="#">{{enterprise.footer}}</a>
+			</div>
+		</div>
+
+		<div class="row border mt-5 border-dark">
+
+
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-12 h6">
+						Redes Sociales
+					</div>
+				</div>
+				{% for socialnetwork in enterprise.socialnetwork %}
+					{{socialnetwork.network }}:
+					{{socialnetwork}}
+					-
+					<a href="{{ path('social_network_edit', {id: socialnetwork.id}) }}">editar</a>
+					{# <a href="{{ path('social_network_delete', {id: socialnetwork.id}) }}">eliminar</a><br/> #}
+
+
+				{% endfor %}
+			</div>
+			<div class="col-sm-4">
+				<div class="row">
+					<div class="col-12">
+						<a href="{{ path('social_network_new', {identerprise: enterprise.id} ) }}">Añadir red social</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
-	<a href="#">Supervisor</a>
-	<br>
-		<a href="#">Pie de empresa</a>
-	</br>
-	<a href="#">RRSS</a>
-	<br/><br/><br/><a href="{{ path('enterprise_index') }}">back to list</a>
+
+
+	<a href="{{ path('enterprise_index') }}">back to list</a>
 	<a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}"><br/>edit</a>
 	{{ include('enterprise/_delete_form.html.twig') }}
 {% endblock %}

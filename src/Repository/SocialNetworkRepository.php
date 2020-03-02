@@ -47,4 +47,14 @@ class SocialNetworkRepository extends ServiceEntityRepository
         ;
     }
     */
+
+     public function findOneById($value): ?SocialNetwork
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

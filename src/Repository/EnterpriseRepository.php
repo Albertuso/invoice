@@ -52,8 +52,20 @@ class EnterpriseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.id = :val')
             ->setParameter('val', $value)
+            ->andWhere('e.visible = :valu')
+            ->setParameter('valu', true)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
+    }
+    public function findByUser($value)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user = :val')
+            ->setParameter('val', $value)
+            ->andWhere('e.visible = :valu')
+            ->setParameter('valu', true)
+            ->orderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

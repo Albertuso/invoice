@@ -74,11 +74,13 @@ $(document).ready(function () {
 });
 
 function decimales(x) {
-  return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100 ;
+	return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100;
 }
 
 function calculateTotal() {
-	var totalAmount = 0;
+	var subTotal = 0;
+	var sumVat = 0;
+	var sumTotal = 0;
 	$("[id^='price_']").each(function () {
 		var id = $(this).attr('id');
 		id = id.replace("price_", '');
@@ -88,19 +90,19 @@ function calculateTotal() {
 			quantity = 1;
 		}
 		var vat = $('#vat_' + id).val();
-		var total = (price * quantity) - (price * quantity * (vat/100));
+		sumVat += (price * quantity * (vat / 100));
+		var total = (price * quantity) + (price * quantity * (vat / 100));
 		$('#total_' + id).val(parseFloat(decimales(total)));
-		totalAmount += total;
+		subTotal = total - vat;
+		sumTotal = + total; //suma de totales
 	});
-	$('#invoice_subtotal').val(parseFloat(totalAmount));
-	var taxRate = $("#taxRate").val();
-	var subTotal = $('#invoice_subtotal').val();
-	if (subTotal) {
-		var taxAmount = subTotal * taxRate / 100;
-		$('#taxAmount').val(decimales(taxAmount));
-		subTotal = parseFloat(subTotal) + parseFloat(taxAmount);
-		$('#invoice_total').val(decimales(subTotal));
-	}
+	$('#invoice_subtotal').val(parseFloat(subTotal));
+
+	$('#taxAmount').val(decimales(sumVat));
+	$('#taxRate').val(decimales(sumVat));
+	$('#invoice_total').val(decimales(sumTotal));
+	$('#invoice_subtotal').val(decimales(subTotal));
+
 }
 
 function showproduct(productName) {
@@ -145,26 +147,26 @@ function showproduct(productName) {
 					$('#suggestions_' + numberline).slideToggle();
 					//Obtenemos la id unica de la sugerencia pulsada
 					var id = $(this).attr('id');
-					
+
 					//Hacemos desaparecer el resto de sugerencias
 					$('#suggestions');
 					//alert('Has seleccionado el ' + id + ' ' + $('#' + id).attr('data'));
-					$('#suggestions_'+id)
+					$('#suggestions_' + id)
 
 					console.log(response[$(this)[0].id]);
-					
-					$('#price_'+numberline).val(response[$(this)[0].id].price);
-					$('#description_'+numberline).val(response[$(this)[0].id].description);
-					$('#vat_'+numberline).val(response[$(this)[0].id].vat);
-					$('#productName_'+numberline).val(response[$(this)[0].id].name);
-					oldcantity = $('#quantity_'+numberline).val();
-					if (oldcantity=="" || oldcantity==null) {
-						$('#quantity_'+numberline).val(1);
+
+					$('#price_' + numberline).val(response[$(this)[0].id].price);
+					$('#description_' + numberline).val(response[$(this)[0].id].description);
+					$('#vat_' + numberline).val(response[$(this)[0].id].vat);
+					$('#productName_' + numberline).val(response[$(this)[0].id].name);
+					oldcantity = $('#quantity_' + numberline).val();
+					if (oldcantity == "" || oldcantity == null) {
+						$('#quantity_' + numberline).val(1);
 					}
 					calculateTotal();
 					// $("#price_1").val(5)
 					return false;
 				});
 			})
-	});
+	});	
 }

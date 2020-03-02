@@ -22,6 +22,7 @@
 					<th>E-mail</th>
 					<th>Telefono</th>
 					<th>Web</th>
+					<th>Responsable</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,6 +34,7 @@
 						<td>{{ client.email }}</td>
 						<td>{{ client.telephone }}</td>
 						<td>{{ client.web }}</td>
+						<td>{{ client.supervisor }}</td>
 						<td>
 							<a href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
 							<a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>

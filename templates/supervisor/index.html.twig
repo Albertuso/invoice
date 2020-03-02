@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Indice de Supervisores{% endblock %}
+{% block title %}Indice de Responsables{% endblock %}
 
 {% block body %}
     <h1>Indice de Supervisores</h1>
@@ -17,8 +17,7 @@
             <tr>
                 <td>{{ supervisor.name }}</td>
                 <td>{{ supervisor.telephone }}</td>
-                <td>
-                    <a href="{{ path('supervisor_show', {'id': supervisor.id}) }}">Mostrar</a>
+                <td>                  
                     <a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
                 </td>
             </tr>
@@ -30,5 +29,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('supervisor_new') }}">Crear nuevo supervisor</a>
+    <a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
 {% endblock %}

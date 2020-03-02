@@ -27,6 +27,11 @@ class SocialNetwork
      */
     private $network;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Enterprise", inversedBy="socialnetwork")
+     */
+    private $enterprise;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,5 +59,22 @@ class SocialNetwork
         $this->network = $network;
 
         return $this;
+    }
+
+    public function getEnterprise(): ?Enterprise
+    {
+        return $this->enterprise;
+    }
+
+    public function setEnterprise(?Enterprise $enterprise): self
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->url;
     }
 }

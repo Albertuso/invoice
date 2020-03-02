@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de redes sociales{% endblock %}
+{% block nav %}
+	{{ include('enterprise/shownavbar.html.twig') }}
+{% endblock %}
+
+{% block title %}Listado de redes{% endblock %}
 
 {% block body %}
-    <h1>Listado de redes sociales</h1>
+    <h1>Listado de redes</h1>
 
     <table class="table">
         <thead>
@@ -16,7 +20,7 @@
             <tr>
                 <td>{{ network.name }}</td>
                 <td>
-                    <a href="{{ path('network_show', {'id': network.id}) }}">Mostrar</a>
+                    {# <a href="{{ path('network_show', {'id': network.id}) }}">Mostrar</a> #}
                     <a href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
                 </td>
             </tr>
@@ -28,5 +32,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('network_new') }}">Crear nueva red social</a>
+    <a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
 {% endblock %}

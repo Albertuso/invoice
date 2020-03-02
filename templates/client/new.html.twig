@@ -1,15 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Creacion de nuevo cliente{% endblock %}
+{% block title %}Creacion de nuevo cliente
+{% endblock %}
 
 {# {% block nav %}
 {{ include('client/simplenavbar.html.twig') }}   
 {% endblock %}  #}
 
 {% block body %}
-    <h1>Creacion de nuevo cliente</h1>
 
-    {{ include('client/_form.html.twig') }}
+	<div class="container">
 
-    <a href="{{ path('client_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
+		<h1>Creacion de nuevo cliente</h1>
+
+		{{ include('client/_form.html.twig') }}
+
+		<a href="{{ path('client_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
+
+	</div>
 {% endblock %}

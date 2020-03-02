@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,21 @@ class Supervisor
      * @ORM\Column(type="string", length=255)
      */
     private $telephone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Enterprise", inversedBy="supervisors")
+     */
+    private $enterprise;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client", mappedBy="supervisor")
+     */
+    private $clients;
+
+    public function __construct()
+    {
+        $this->clients = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,5 +70,52 @@ class Supervisor
         $this->telephone = $telephone;
 
         return $this;
+    }
+
+    public function getEnterprise(): ?Enterprise
+    {
+        return $this->enterprise;
+    }
+
+    public function setEnterprise(?Enterprise $enterprise): self
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Client[]
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Client $client): self
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients[] = $client;
+            $client->setSupervisor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $client): self
+    {
+        if ($this->clients->contains($client)) {
+            $this->clients->removeElement($client);
+            // set the owning side to null (unless already changed)
+            if ($client->getSupervisor() === $this) {
+                $client->setSupervisor(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->name;
     }
 }

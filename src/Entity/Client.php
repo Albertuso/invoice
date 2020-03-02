@@ -59,6 +59,16 @@ class Client
      */
     private $invoices;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Supervisor", inversedBy="clients")
+     */
+    private $supervisor;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
 
     public function __construct()
     {
@@ -186,6 +196,30 @@ class Client
                 $invoice->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSupervisor(): ?Supervisor
+    {
+        return $this->supervisor;
+    }
+
+    public function setSupervisor(?Supervisor $supervisor): self
+    {
+        $this->supervisor = $supervisor;
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }

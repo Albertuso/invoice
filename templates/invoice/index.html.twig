@@ -3,12 +3,16 @@
 {% block title %}Invoice index
 {% endblock %}
 
+
+
 {% block body %}
 
 	<div class="container">
 		<h1>Invoice index</h1>
-
-		<table class="table table-striped table-bordered">
+fg
+		<table
+			id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+			{# <table class="table table-striped table-bordered"> #}
 			<thead>
 				<tr>
 					<th>Nº factura</th>
@@ -47,3 +51,5 @@
 
 	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Create new</a>
 {% endblock %}
+
+

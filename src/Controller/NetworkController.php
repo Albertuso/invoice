@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Network;
 use App\Form\NetworkType;
+use App\Repository\EnterpriseRepository;
 use App\Repository\NetworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,19 +19,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class NetworkController extends AbstractController
 {
     /**
-     * @Route("/", name="network_index", methods={"GET"})
+     * @Route("/{identerprise}", name="network_index", methods={"GET"})
      */
-    public function index(NetworkRepository $networkRepository): Response
+    public function index(NetworkRepository $networkRepository, $identerprise): Response
     {
+        $enterprise = $networkRepository->findOneById($identerprise);
         return $this->render('network/index.html.twig', [
             'networks' => $networkRepository->findAll(),
+            'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
     /**
-     * @Route("/new", name="network_new", methods={"GET","POST"})
+     * @Route("/new/{identerprise}", name="network_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,$identerprise): Response
     {
         $network = new Network();
         $form = $this->createForm(NetworkType::class, $network);
@@ -41,12 +45,13 @@ class NetworkController extends AbstractController
             $entityManager->persist($network);
             $entityManager->flush();
 
-            return $this->redirectToRoute('network_index');
+            return $this->redirectToRoute('network_index', ['identerprise' => $identerprise]);
         }
 
         return $this->render('network/new.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
+            'identerprise' => $identerprise,            
         ]);
     }
 
@@ -65,18 +70,21 @@ class NetworkController extends AbstractController
      */
     public function edit(Request $request, Network $network): Response
     {
+        
+
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('network_index');
+            return $this->redirectToRoute('network_index', ['identerprise' => $identerprise]);
         }
 
         return $this->render('network/edit.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
+            'enterprise' => null,
         ]);
     }
 

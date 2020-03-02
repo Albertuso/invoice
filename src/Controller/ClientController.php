@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Enterprise;
+use App\Entity\Supervisor;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,7 @@ class ClientController extends AbstractController
     public function index(ClientRepository $clientRepository, $idempresa): Response
     {
         $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
+        
         return $this->render('client/index.html.twig', [
             'clients' => $clientRepository->findByEnterpriseId($idempresa),
             'id_empresa' => $idempresa,
@@ -43,13 +45,15 @@ class ClientController extends AbstractController
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($idempresa);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
-            $enterprise = $repositoryEnterprise->findOneById($idempresa);
 
             $entityManager = $this->getDoctrine()->getManager();
+            $client->setVisible(true);
             $entityManager->persist($client);
             $client->setEnterprise($enterprise);
             $entityManager->flush();
@@ -62,6 +66,7 @@ class ClientController extends AbstractController
             'client' => $client,
             'form' => $form->createView(),
             'id_empresa' => $idempresa,
+            'supervisors' => $enterprise->getSupervisors(),
         ]);
     }
 
@@ -74,7 +79,7 @@ class ClientController extends AbstractController
         $enterprise = $repositoryEnterprise->findOneById($idempresa);
         return $this->render('client/show.html.twig', [
             'client' => $client,
-            'enterprise' => $enterprise,            
+            'enterprise' => $enterprise,
         ]);
     }
 
@@ -84,11 +89,20 @@ class ClientController extends AbstractController
     public function edit(Request $request, Client $client): Response
     {
         $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request); 
-                
+        $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $supervisorid = $_REQUEST['supervisor'][0];
+            $supervisor = $this->getDoctrine()->getRepository(Supervisor::class)->findOneById($supervisorid);
+
+            $client->setSupervisor($supervisor);
             $this->getDoctrine()->getManager()->flush();
+
+            // return $this->render('debug.html.twig', [
+            //     'debug' => $_REQUEST['supervisor'][0],
+            // ]);
 
             return $this->redirectToRoute('client_index', ['idempresa' => $client->getEnterprise()->getId()]);
         }
@@ -97,6 +111,7 @@ class ClientController extends AbstractController
             'client' => $client,
             'form' => $form->createView(),
             'enterprise' => $client->getEnterprise(),
+            'supervisors' => $client->getEnterprise()->getSupervisors(),
         ]);
     }
 
@@ -106,12 +121,15 @@ class ClientController extends AbstractController
      */
     public function delete(Request $request, Client $client): Response
     {
+        $enterprise = $client->getEnterprise();
         if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($client);
+
+            $client->setVisible(false);
+            // $entityManager->remove($client);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('client_index');
+        return $this->redirectToRoute('client_index', ['idempresa' => $enterprise->getId()]);
     }
 }
