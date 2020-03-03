@@ -41,12 +41,11 @@ class ProductController extends AbstractController
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($idempresa);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
-            $enterprise = $repositoryEnterprise->findOneById($idempresa);
+            $product->setVisible(true);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
@@ -61,6 +60,8 @@ class ProductController extends AbstractController
             'product' => $product,
             'form' => $form->createView(),
             'id_empresa' => $idempresa,
+            'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 
@@ -69,8 +70,11 @@ class ProductController extends AbstractController
      */
     public function show(Product $product): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'enterprise' => $product->getEnterprise(),
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 
@@ -79,18 +83,22 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('product_index', ['idempresa' => $product->getEnterprise()->getId()]);
         }
 
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'enterprise' => $product->getEnterprise(),
+            'enterprises' => $repositoryEnterprise->findAll(),
+
         ]);
     }
 
@@ -101,10 +109,11 @@ class ProductController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
+            $product->setVisible(false);
+            // $entityManager->remove($product);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('product_index', ['idempresa' => $product->getEnterprise()->getId()]);
     }
 }

@@ -38,6 +38,11 @@ class Supervisor
      */
     private $clients;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -117,5 +122,17 @@ class Supervisor
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
+
+        return $this;
     }
 }

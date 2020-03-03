@@ -1,7 +1,17 @@
 {{ form(form) }}
 {{ form_start(form) }}
 
-{{ form_widget(form) }}
+{{ form_label(form.date) }}
+{{ form_widget(form.date) }}
+{{ form_label(form.descrption) }}
+{{ form_widget(form.description) }}
+{{ form_label(form.footer) }}
+{{ form_widget(form.footer) }}
+{{ form_label(form.subtotal) }}
+{{ form_widget(form.subtotal) }}
+{{ form_label(form.total) }}
+{{ form_widget(form.total) }}
+{{ form_label(form.nif) }}
 
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -17,13 +17,21 @@ class MainController extends AbstractController
         $repositoryUsers = $this->getDoctrine()->getRepository(User::class);
         $users = $repositoryUsers->findAll();
 
+        $user = $this->getUser();
+        if (isset($user)) {
+            foreach ($this->getUser()->getRoles() as $roles) {
+                if ($roles == 'ROLE_ADMIN') {
+                    return $this->redirectToRoute('easyadmin');
+                }
+            }
+        }
+
 
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $this->getUser(),
             'users' => $users
         ]);
-        //vista principal donde apareceran las empresas del usuario
     }
     /**
      * @Route("/edit", name="edit")

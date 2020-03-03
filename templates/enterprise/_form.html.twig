@@ -1,4 +1,22 @@
 {{ form_start(form, {'enctype':'multipart/form-data'}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+{{ form_label(form.name) }}
+{{ form_widget(form.name) }}
+{{ form_label(form.address) }}
+{{ form_widget(form.address) }}
+{{ form_label(form.telephone) }}
+{{ form_widget(form.telephone) }}
+{{ form_label(form.email) }}
+{{ form_widget(form.email) }}
+{{ form_label(form.web) }}
+{{ form_widget(form.web) }}
+{{ form_label(form.nif) }}
+{{ form_widget(form.nif) }}
+{{ form_label(form.footer) }}
+{{ form_widget(form.footer) }}
+{{ form_label(form.logo) }}
+{{ form_widget(form.logo) }}
+
+{{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

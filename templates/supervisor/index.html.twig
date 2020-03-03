@@ -1,33 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Indice de Responsables{% endblock %}
+{% block stylesheet %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
+
+{% endblock %}
+
+{% block title %}Listado de responsables
+{% endblock %}
+
+{% block nav %}
+	{{ include('enterprise/shownavbar.html.twig') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Indice de Supervisores</h1>
+	<div class="container" id="tableArea">
+		<h1>Listado de responsables</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Telephone</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for supervisor in supervisors %}
-            <tr>
-                <td>{{ supervisor.name }}</td>
-                <td>{{ supervisor.telephone }}</td>
-                <td>                  
-                    <a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No se han encontrado resultados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Tel&eacute;fono</th>
+					<th>acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for supervisor in supervisors %}
+					{% if supervisor.visible %}
+						<tr>
+							<td>{{ supervisor.name }}</td>
+							<td>{{ supervisor.telephone }}</td>
+							<td>
+								<a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
+							</td>
+						</tr>
+					{% endif %}
 
-    <a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+				{% else %}
+					<tr>
+						<td colspan="4">No se han encontrado resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+	</div>
 {% endblock %}

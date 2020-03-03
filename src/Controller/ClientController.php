@@ -27,7 +27,7 @@ class ClientController extends AbstractController
     public function index(ClientRepository $clientRepository, $idempresa): Response
     {
         $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
-        
+
         return $this->render('client/index.html.twig', [
             'clients' => $clientRepository->findByEnterpriseId($idempresa),
             'id_empresa' => $idempresa,
@@ -50,8 +50,6 @@ class ClientController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-
             $entityManager = $this->getDoctrine()->getManager();
             $client->setVisible(true);
             $entityManager->persist($client);
@@ -67,6 +65,8 @@ class ClientController extends AbstractController
             'form' => $form->createView(),
             'id_empresa' => $idempresa,
             'supervisors' => $enterprise->getSupervisors(),
+            'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 

@@ -1,4 +1,5 @@
 easy_admin:
+    disabled_actions: ['new']
     user:
         name_property_path: username
     entities:
@@ -12,55 +13,17 @@ easy_admin:
                 fields:
                     # all users will see the first three columns
                     - username
-                    - { property: 'enterprises', label: 'Empresas'} 
                     - { property: 'max', label: 'Nº empresas max'}
 
             edit:
                 fields:
                     # all users will see the first three columns
                     - username
-                    - enterprises
                     - { property: 'max', label: 'Nº empresas max'}
-                    # - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
-                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
             new:
                 fields: 
                     - username
                     - {property: 'password', type: 'password'}
                     - enterprises
-        Client:
-            class: App\Entity\Client
-            label: 'Cliente'
-            list:
-                fields:
-                    - { property: 'name', label: 'Nombre'} 
-                    - { property: 'address', label: 'Dirección'} 
-                    - { property: 'nif', label: 'Nº nif'}
-                    - { property: 'email', label: 'email'} 
-                    - { property: 'telephone', label: 'Nº telefono'} 
-                    - { property: 'web', label: 'URL web'}
-            edit:
-                fields:
-                    - { property: 'name', label: 'Nombre'} 
-                    - { property: 'address', label: 'Dirección'} 
-                    - { property: 'nif', label: 'Nº nif'}
-                    - { property: 'email', label: 'email'} 
-                    - { property: 'telephone', label: 'Nº telefono'} 
-                    - { property: 'web', label: 'URL web'}
-            new:
-                fields: 
-                    - { property: 'name', label: 'Nombre'} 
-                    - { property: 'address', label: 'Dirección'} 
-                    - { property: 'nif', label: 'Nº nif'}
-                    - { property: 'email', label: 'email'} 
-                    - { property: 'telephone', label: 'Nº telefono'} 
-                    - { property: 'web', label: 'URL web'}
-        Company:
-            class: App\Entity\Enterprise
-            label: 'Empresa'
-        Invoice:
-            class: App\Entity\Invoice
-            label: 'Factura'
-        Supervisor:
-            class: App\Entity\Supervisor
+        
 

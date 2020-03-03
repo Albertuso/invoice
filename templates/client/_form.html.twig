@@ -1,9 +1,5 @@
 {{ form_start(form) }}
 
-{# <div class="form-group"> <!-- Full Name -->
-        <label for="full_name_id" class="control-label">Full Name</label>
-        <input type="text" class="form-control" id="full_name_id" name="full_name" placeholder="John Deer">
-    </div>  #}
 {{ form_label(form.name) }}
 {{ form_widget(form.name) }}
 {{ form_label(form.address) }}
@@ -21,10 +17,12 @@
 <select class="form-control" id="supervisor[]" name="supervisor[]">
 	<option value=""></option>
 	{% for supervisor in supervisors %}
-
-		<option value="{{supervisor.id}}">{{supervisor}}</option>
+		{% if supervisor.visible %}		
+				<option value="{{supervisor.id}}">{{supervisor}}</option>
+		{% endif %}
 	{% endfor %}
-</select>
 
+</select>
+{{ dump (client)}}
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

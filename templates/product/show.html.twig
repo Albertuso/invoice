@@ -1,34 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Producto{% endblock %}
+{% block title %}Producto
+{% endblock %}
+
+{% block nav %}
+	{{ include('enterprise/shownavbar.html.twig') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Producto</h1>
+	<div class="container" id="tableArea">
+		<h1>Producto</h1>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>Nombre</th>
+					<td>{{ product.name }}</td>
+				</tr>
+				<tr>
+					<th>Precio</th>
+					<td>{{ product.price }}</td>
+				</tr>
+				<tr>
+					<th>IVA</th>
+					<td>{{ product.vat }}</td>
+				</tr>
+				<tr>
+					<th>Descripcion</th>
+					<td>{{ product.description }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>IVA</th>
-                <td>{{ product.vat }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ product.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+		{# <a href="{{ path('product_index') }}">Regresar al listado de productos</a> #}
 
-    {# <a href="{{ path('product_index') }}">Regresar al listado de productos</a> #}
+		<a href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
 
-    <a href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
-
-    {{ include('product/_delete_form.html.twig') }}
+		{{ include('product/_delete_form.html.twig') }}
+	</div>
 {% endblock %}

@@ -14,11 +14,11 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container" id="tableArea">
 		<h1>Ver factura</h1>
 
 
-		<table class="table table-striped table-bordered">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Nº factura</th>
@@ -40,12 +40,16 @@
 					<td>{{ invoice.total }}</td>
 					<td>
 						<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
-						
+
 					</td>
 				</tr>
 			</tbody>
 		</table>
-{{ include('invoice/_delete_form.html.twig') }}
+		<form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
+			<button class="btn">Duplicar</button>
+		</form>
+		{{ include('invoice/_delete_form.html.twig') }}
+
 	</div>
 
 {% endblock %}

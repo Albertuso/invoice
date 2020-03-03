@@ -31,17 +31,13 @@
 
 				<div class="card-deck">
 					{% for enterprise in user.enterprises %}
-
 						{% if enterprise.visible == true %}
-
 							<div class="card bg-light">
-
 								{% if enterprise.logo != "" or enterprise.logo != null %}
 									{% set imagen = "img/logos/" ~ enterprise.logo %}
 								{% else %}
 									{% set imagen = "img/logos/default.png" %}
 								{% endif %}
-
 								<div class="card-header">
 									<a href="{{path('enterprise_show', {id: enterprise.id})}}"><img src="{{ asset(imagen)}}" width="100%"></a>
 								</div>

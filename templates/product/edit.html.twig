@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editar producto{% endblock %}
+{% block title %}Editar producto
+{% endblock %}
+
+{% block nav %}
+	{{ include('enterprise/shownavbar.html.twig') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Editar producto</h1>
 
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+	<div class="container">
+		<h1>Editar producto</h1>
 
-    {# <a href="{{ path('product_index') }}">Regresar al listado de productos</a> #}
+		{{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('product/_delete_form.html.twig') }}
+		{# <a href="{{ path('product_index') }}">Regresar al listado de productos</a> #}
+
+		{{ include('product/_delete_form.html.twig') }}
+	</div>
 {% endblock %}

@@ -23,10 +23,10 @@ $(document).ready(function () {
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
 		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count + '"></div></td>';
 		// htmlRows += '<td><input type="text" name="description[]" id="description_' + count + '" class="form-control" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="quantity[]" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="price[]" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="VAT[]" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" readonly name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" name="quantity[]" min="0" pattern="^[0-9]+" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" name="price[]" min="0" pattern="^[0-9]+" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" name="VAT[]" min="0" pattern="^[0-9]+" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input type="number" readonly min="0" pattern="^[0-9]+" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
 		htmlRows += '<div id="suggestions_' + count + '</div>';
 		$('#invoiceItem').append(htmlRows);
@@ -81,6 +81,7 @@ function calculateTotal() {
 	var subTotal = 0;
 	var sumVat = 0;
 	var sumTotal = 0;
+	var total = 0;
 	$("[id^='price_']").each(function () {
 		var id = $(this).attr('id');
 		id = id.replace("price_", '');
@@ -91,10 +92,13 @@ function calculateTotal() {
 		}
 		var vat = $('#vat_' + id).val();
 		sumVat += (price * quantity * (vat / 100));
-		var total = (price * quantity) + (price * quantity * (vat / 100));
+		// var total = (price * quantity) + (price * quantity * (vat / 100));
+		var ivaProduct = (price * quantity * (vat / 100));
+		total = price*quantity + ivaProduct;
 		$('#total_' + id).val(parseFloat(decimales(total)));
-		subTotal = total - vat;
-		sumTotal = + total; //suma de totales
+		subTotal += decimales(price* quantity);
+		// subTotal = total - vat;
+		sumTotal += total; //suma de totales
 	});
 	$('#invoice_subtotal').val(parseFloat(subTotal));
 

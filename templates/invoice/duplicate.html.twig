@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block nav %}
-	{{ include('enterprise/shownavbar.html.twig') }}
+	{{ include('invoice/navbar.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -24,7 +24,7 @@
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 
 
-					<h1>Editar nueva factura</h1>
+					<h1>Duplicar factura</h1>
 				</div>
 			</div>
 			<div class="row">
@@ -113,7 +113,7 @@
 
 					<div class="input-group">
 						<label>Tasa Impuestos:</label>
-						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" step="any" placeholder="Tasa de Impuestos">
+						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
 						<div class="input-group-addon">%</div>
 					</div>
 

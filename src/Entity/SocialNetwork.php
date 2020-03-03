@@ -32,6 +32,11 @@ class SocialNetwork
      */
     private $enterprise;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,5 +81,17 @@ class SocialNetwork
     public function __toString()
     {
         return $this->url;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
+
+        return $this;
     }
 }

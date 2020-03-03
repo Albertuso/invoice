@@ -36,7 +36,6 @@ a:hover {
 }
 
 #tableArea {
-  max-width: 1000px;
   overflow-x: auto;
   overflow-y: auto;
 }
@@ -46,9 +45,25 @@ a:hover {
 }
 .navbar-light .navbar-nav .nav-link {
   color: rgba(15, 43, 152);
-  
 }
 
-nav{background-color: lightskyblue !important;}
+nav {
+  background-color: lightskyblue !important;
+}
 
+thead {
+  background-color: lightsteelblue;
+}
 
+tbody {
+  font-size: small;
+}
+td,th {
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+  height: 2px;
+}
+table{
+  border: 2px solid
+}

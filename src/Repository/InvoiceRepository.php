@@ -81,19 +81,64 @@ class InvoiceRepository extends ServiceEntityRepository
 
     public function findByLoQueSea($value)
     {
-        return $this->createQueryBuilder('p')
-            ->join('p.client', 'c')
-            ->addSelect('c')
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c', 'client', 'p', 'c.user_id = p.id')
             ->orwhere('c.name = :clientid')
             ->orwhere('p.description LIKE :val')
             ->setParameter('clientid', $value)
             ->setParameter('val', '%' . $value . '%')
-            ->orwhere('p.date LIKE :val')
-            ->setParameter('val', '%' . $value . '%')
+            ->orwhere('p.date LIKE :valu')
+            ->setParameter('valu', '%' . $value . '%')
 
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+
+
+
+
+
+
+        // ->innerJoin('c.phones', 'p', 'WITH', 'p.phone = :phone')
+        // ->orwhere('c.name = :clientid')
+        // ->orwhere('p.description LIKE :val')
+        // ->setParameter('clientid', $value)
+        // ->setParameter('val', '%' . $value . '%')
+        // ->orwhere('p.date LIKE :valu')
+        // ->setParameter('valu', '%' . $value . '%')
+
+        // ->orderBy('p.id', 'ASC')
+        // ->setMaxResults(10)
+        // ->getQuery()
+        // ->getResult();
+    }
+
+    public function findOneByIdJoinedToCategory($value)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            "SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
+WHERE DESCRIPTION LIKE p.id = :id
+OR NAME LIKEp.id = :id
+OR ADDRESS LIKE p.id = :id
+OR SUBTOTAL LIKE p.id = :id
+OR TOTAL LIKE p.id = :id
+OR DATE LIKE p.id = :id 
+OR INVOICENUMBER LIKE p.id = :id"
+        )->setParameter('id', '%' . $value . '%');
+
+
+
+
+
+        //     'SELECT p, c
+        // FROM App\Entity\Product p
+        // INNER JOIN p.category c
+        // WHERE p.id = :id'
+        // )->setParameter('id', $productId);
+
+        return $query->getOneOrNullResult();
     }
 }

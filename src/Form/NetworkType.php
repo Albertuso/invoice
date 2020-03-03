@@ -6,14 +6,14 @@ use App\Entity\Network;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class NetworkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',null, array('label' => 'Nombre'))
-        ;
+            ->add('name');
     }
 
     public function configureOptions(OptionsResolver $resolver)

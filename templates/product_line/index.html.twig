@@ -1,40 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de detalles de factura{% endblock %}
+{% block title %}Listado de detalles de factura
+{% endblock %}
 
 {% block body %}
-    <h1>Listado de detalles de factura</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Descripcion</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>IVA</th>
-                <th>Nombre</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product_line in product_lines %}
-            <tr>
-                <td>{{ product_line.description }}</td>
-                <td>{{ product_line.quantity }}</td>
-                <td>{{ product_line.price }}</td>
-                <td>{{ product_line.vat }}</td>
-                <td>{{ product_line.name }}</td>
-                <td>
-                    <a href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
-                    <a href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">No se han encontrado detalles de factura</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<div class="container" id="tableArea">
+		<h1>Listado de detalles de factura</h1>
 
-    <a href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Descripcion</th>
+					<th>Cantidad</th>
+					<th>Precio</th>
+					<th>IVA</th>
+					<th>Nombre</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product_line in product_lines %}
+					{% if product_line.visible %}
+						<tr>
+							<td>{{ product_line.description }}</td>
+							<td>{{ product_line.quantity }}</td>
+							<td>{{ product_line.price }}</td>
+							<td>{{ product_line.vat }}</td>
+							<td>{{ product_line.name }}</td>
+							<td>
+								<a href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
+								<a href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
+							</td>
+						</tr>
+					{% endif %}
+
+				{% else %}
+					<tr>
+						<td colspan="7">No se han encontrado detalles de factura</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
+	</div>
 {% endblock %}

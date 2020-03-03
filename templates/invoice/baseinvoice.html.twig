@@ -32,7 +32,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<table class="table table-bordered" id="invoiceItem">
+				<table class="table table-striped" id="invoiceItem">
 					<tr>
 						<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
 						<th width="100px">Nombre Producto</th>
@@ -44,10 +44,10 @@
 					<tr>
 						<td><input class="itemRow" type="checkbox"></td>
 						<td><input type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_1"></div></td>
-						<td><input type="number" name="quantity[]" id="quantity_1" class="form-control quantity" autocomplete="off"></td>
-						<td><input type="number" step="any" name="price[]" id="price_1" class="form-control price" autocomplete="off"></td>
-						<td><input type="number" step="any" name=" VAT[]" id="vat_1" class=" form-control price" autocomplete="off"></td>
-						<td><input type="number" readonly step="any" name="total[]" id="total_1" class="form-control total" autocomplete="off"></td>
+						<td><input type="number" name="quantity[]" id="quantity_1" min="0" pattern="^[0-9]+" class="form-control quantity" autocomplete="off"></td>
+						<td><input type="number" step="any" name="price[]" id="price_1" min="0" pattern="^[0-9]+" class="form-control price" autocomplete="off"></td>
+						<td><input type="number" step="any" name=" VAT[]" id="vat_1" class=" form-control price" min="0" pattern="^[0-9]+" autocomplete="off"></td>
+						<td><input type="number" readonly step="any" name="total[]" min="0" pattern="^[0-9]+" id="total_1" class="form-control total" autocomplete="off"></td>
 					</tr>
 				</table>
 			</div>

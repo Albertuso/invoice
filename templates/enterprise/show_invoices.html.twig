@@ -4,17 +4,17 @@
 {% endblock %}
 
 {% block nav %}
-	{{ include('enterprise/simplenavbar.html.twig') }}
+	{{ include('enterprise/shownavbar.html.twig') }}
 {% endblock %}
 
 {% block body %}
 
-	<div class="container">
-		<h1>Listado de facturas</h1>
-
+	<div class="container" id="tableArea">
 
 		<div class="row justify-content-center">
-			<div class="col-9"></div>
+			<div class="col-9">
+				<h1>Listado de facturas</h1>
+			</div>
 			<div class="col-3 text-right">
 				{{form_start(form)}}
 				{{form_label(form.buscar)}}{{form_widget(form.buscar)}}
@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="row mt-2">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>Nº Factura</th>
@@ -37,30 +37,46 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% set sumSubtotal = 0 %}
+					{% set sumTotal = 0 %}
 					{% for invoiceseterprise in invoiceseterprises  %}
-						<tr>
-							<td>{{ invoiceseterprise.invoicenumber}}</td>
-							<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
-							<td>{{ invoiceseterprise.description }}</td>
-							<td>{{ invoiceseterprise.client }}</td>
-							<td>{{ invoiceseterprise.subtotal }}</td>
-							<td>{{ invoiceseterprise.total }}</td>
-							<td>
-								<a href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">show</a>
-								<a href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">edit</a>
-							</td>
-						</tr>
+						{% if invoiceseterprise.visible %}
+							<tr>
+								<td>{{ invoiceseterprise.invoicenumber}}</td>
+								<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
+								<td>{{ invoiceseterprise.description }}</td>
+								<td>{{ invoiceseterprise.client }}</td>
+								<td>{{ invoiceseterprise.subtotal }}€</td>
+								<td>{{ invoiceseterprise.total }}€</td>
+								<td>
+									<a href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">show</a>
+									<a href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">edit</a>
+								</td>
+								{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
+								{% set sumTotal = sumTotal + invoiceseterprise.total %}
+							</tr>
+						{% endif %}
+
 					{% else %}
 						<tr>
 							<td colspan="8">No se han encontrado resultados</td>
 						</tr>
 					{% endfor %}
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>{{sumSubtotal}}€</td>
+						<td>{{sumTotal}}€</td>
+						<td></td>
+					</tr>
 				</tbody>
 			</table>
 
 		</div>
+		<a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
 	</div>
 
 
-	<a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
 {% endblock %}

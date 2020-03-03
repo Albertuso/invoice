@@ -95,6 +95,7 @@ class EnterpriseController extends AbstractController
      */
     public function edit(Request $request, Enterprise $enterprise): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
         $form = $this->createForm(EnterpriseType::class, $enterprise);
         $form->handleRequest($request);
 
@@ -114,6 +115,7 @@ class EnterpriseController extends AbstractController
 
         return $this->render('enterprise/edit.html.twig', [
             'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprise->findAll(),
             'form' => $form->createView(),
         ]);
     }
@@ -144,8 +146,8 @@ class EnterpriseController extends AbstractController
 
 
 
-        // $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
-        // $enterprise = $repositoryEnterprise->findOneById($idempresa);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($idempresa);
 
         // $form = $this->createForm(EnterpriseType::class, $enterprise);
         $form = $this->createFormBuilder()
@@ -167,6 +169,8 @@ class EnterpriseController extends AbstractController
         return $this->render('enterprise/show_invoices.html.twig', [
             'invoiceseterprises' => $invoicesenterprise,
             'form' => $form->createView(),
+            'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 }

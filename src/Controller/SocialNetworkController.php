@@ -45,6 +45,7 @@ class SocialNetworkController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $socialNetwork->setVisible(true);
             $socialNetwork->setEnterprise($enterpriseRepository->findOneByid($identerprise));
             $entityManager->persist($socialNetwork);
             $entityManager->flush();
@@ -100,7 +101,8 @@ class SocialNetworkController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$socialNetwork->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($socialNetwork);
+             $socialNetwork->setVisible(false);
+            // $entityManager->remove($socialNetwork);
             $entityManager->flush();
         }
 

@@ -28,6 +28,11 @@ class Network
      */
     private $socialNetworks;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->socialNetworks = new ArrayCollection();
@@ -84,5 +89,17 @@ class Network
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
+
+        return $this;
     }
 }

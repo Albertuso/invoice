@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Invoice;
 use App\Entity\Client;
+use App\Entity\Enterprise;
 use App\Entity\Product;
 use App\Entity\ProductLine;
 use App\Form\InvoiceType;
+use App\Repository\EnterpriseRepository;
 use App\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +26,22 @@ class InvoiceController extends AbstractController
      */
     public function index(InvoiceRepository $invoiceRepository, $idclient): Response
     {
+        $repositoryEnterprises = $this->getDoctrine()->getRepository(Enterprise::class);
+        // Cargo el cliente (por route)
+        $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
+
+        $client = $repositoryClient->findOneById($idclient);
+
+        // Cargo la empresa a la que pertecene el cliente
+        $enterprise = $client->getEnterprise();
+
         // $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
         // $client = $repositoryClient->findOneById($idclient);
         return $this->render('invoice/index.html.twig', [
             'invoices' => $invoiceRepository->findbyClient($idclient),
             'idclient' => $idclient,
+            'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprises->findAll(),
         ]);
     }
 
@@ -70,6 +83,7 @@ class InvoiceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $invoice->setClient($client);
             $invoice->setEnterprise($enterprise);
+            $invoice->setVisible(true);
             $names = $_REQUEST['productName'];
             $quantities = $_REQUEST['quantity'];
             $prices = $_REQUEST['price'];
@@ -125,7 +139,7 @@ class InvoiceController extends AbstractController
      */
     public function edit(Request $request, Invoice $invoice): Response
     {
-
+        $repositoryEnterprises = $this->getDoctrine()->getRepository(Enterprise::class);
         // Cargo el cliente (por invoice)
         $client = $invoice->getClient();
         // Cargo la empresa a la que pertecene el cliente
@@ -172,7 +186,6 @@ class InvoiceController extends AbstractController
                 $invoice->addLine($newLine);
             }
 
-
             //Guardo las lineas 
             for ($i = 0; $i < count($names); $i++) {
 
@@ -189,25 +202,13 @@ class InvoiceController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
-
-            // return $this->render('invoice/debug.html.twig', [
-            //     'debug' => $products,
-            //     'dato' => $invoice,
-            //     'cantidades' => null,
-            // ]);
         }
-
-
-        // return $this->render('invoice/debug.html.twig', [
-        //     'debug' => $request,
-        //     'dato' => $invoice,
-        //     'cantidades' => $form->getData(),
-        // ]);
 
         return $this->render('invoice/edit.html.twig', [
             'invoice' => $invoice,
             'form' => $form->createView(),
             'enterprise' => $invoice->getEnterprise(),
+            'enterprises' => $repositoryEnterprises->findAll(),
             'client' => $invoice->getClient(),
             'lines' => $invoice->getLine(),
             'products' => $products,
@@ -219,14 +220,10 @@ class InvoiceController extends AbstractController
      */
     public function delete(Request $request, Invoice $invoice): Response
     {
-        $client = $invoice->getClient(); 
+        $client = $invoice->getClient();
         if ($this->isCsrfTokenValid('delete' . $invoice->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-
-
-
             $invoice->setVisible(false);
-
             // $entityManager->remove($invoice);
             $entityManager->flush();
         }
@@ -260,7 +257,6 @@ class InvoiceController extends AbstractController
 
             return new Response($enviar);
         } else return new Response(null);
-
     }
 
     /**
@@ -331,20 +327,7 @@ class InvoiceController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
-
-            // return $this->render('invoice/debug.html.twig', [
-            //     'debug' => $products,
-            //     'dato' => $invoice,
-            //     'cantidades' => null,
-            // ]);
         }
-
-
-        // return $this->render('invoice/debug.html.twig', [
-        //     'debug' => $request,
-        //     'dato' => $invoice,
-        //     'cantidades' => $form->getData(),
-        // ]);
 
         return $this->render('invoice/toPrint.html.twig', [
             'invoice' => $invoice,
@@ -354,5 +337,44 @@ class InvoiceController extends AbstractController
             'lines' => $invoice->getLine(),
             'products' => $products,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="invoice_duplicate", methods={"GET","POST"})
+     */
+    public function duplicate(Request $request, Invoice $invoice): Response
+    {
+
+        // Cargo el cliente (por invoice)
+        $client = $invoice->getClient();
+        // Cargo la empresa a la que pertecene el cliente
+        $enterprise = $client->getEnterprise();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $newinvoice = new Invoice();
+        $hoy = new \DateTime();
+        $newid = $enterprise->getNextinvoicenumber();
+        $newinvoice->setInvoicenumber($newid);
+        $newinvoice->setDate($hoy);
+        $newinvoice->setVisible(true);
+        $newinvoice->setFooter($enterprise->getFooter());
+
+        $lines = $invoice->getLine();
+        foreach ($lines as $line) {
+            $newinvoice->addLine($line);
+        }
+        $newinvoice->setDescription($invoice->getDescription());
+        $newinvoice->setSubtotal($invoice->getSubTotal());
+        $newinvoice->setTotal($invoice->getTotal());
+        $newinvoice->setClient($invoice->getClient());
+        $newinvoice->setEnterprise($invoice->getEnterprise());
+        //Subo id de invoicenext
+        $enterprise->setNextinvoicenumber($enterprise->getNextinvoicenumber() + 1);
+
+        $entityManager->persist($invoice);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
     }
 }

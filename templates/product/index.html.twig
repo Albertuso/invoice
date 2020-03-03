@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="container" id="tableArea">
 		<h1>Listado de productos</h1>
 		<table class="table table-striped">
@@ -18,20 +17,24 @@
 					<th>Precio</th>
 					<th>IVA</th>
 					<th>Descripcion</th>
+					<th>acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for product in products %}
-					<tr>
-						<td>{{ product.name }}</td>
-						<td>{{ product.price }}</td>
-						<td>{{ product.vat }}</td>
-						<td>{{ product.description }}</td>
-						<td>
-							<a href="{{ path('product_show', {'id': product.id}) }}">Mostrar</a>
-							<a href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
-						</td>
-					</tr>
+					{% if product.visible %}
+						<tr>
+							<td>{{ product.name }}</td>
+							<td>{{ product.price }}</td>
+							<td>{{ product.vat }}</td>
+							<td>{{ product.description }}</td>
+							<td>
+								<a href="{{ path('product_show', {'id': product.id}) }}">Mostrar</a>
+								<a href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
+							</td>
+						</tr>
+					{% endif %}
+
 				{% else %}
 					<tr>
 						<td colspan="6">No se han encontrado resultados</td>
@@ -39,7 +42,8 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<a href="{{ path('product_new', {'idempresa': id_empresa}) }}">Crear nuevo producto</a>
 	</div>
 
-	<a href="{{ path('product_new', {'idempresa': id_empresa}) }}">Crear nuevo producto</a>
+
 {% endblock %}

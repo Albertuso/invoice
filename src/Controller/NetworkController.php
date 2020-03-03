@@ -42,6 +42,7 @@ class NetworkController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $network->setVisible(true);
             $entityManager->persist($network);
             $entityManager->flush();
 
@@ -95,7 +96,8 @@ class NetworkController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$network->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($network);
+             $network->setVisible(false);
+            // $entityManager->remove($network);
             $entityManager->flush();
         }
 

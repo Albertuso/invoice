@@ -4,33 +4,40 @@
 	{{ include('enterprise/shownavbar.html.twig') }}
 {% endblock %}
 
-{% block title %}Listado de redes{% endblock %}
+{% block title %}Listado de redes
+{% endblock %}
 
 {% block body %}
-    <h1>Listado de redes</h1>
+	<h1>Listado de redes</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for network in networks %}
-            <tr>
-                <td>{{ network.name }}</td>
-                <td>
-                    {# <a href="{{ path('network_show', {'id': network.id}) }}">Mostrar</a> #}
-                    <a href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No se han encontrado resultados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<div class="container" id="tableArea">
 
-    <a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for network in networks %}
+					{% if network.visible %}
+						<tr>
+							<td>{{ network.name }}</td>
+							<td>
+								{# <a href="{{ path('network_show', {'id': network.id}) }}">Mostrar</a> #}
+								<a href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
+							</td>
+						</tr>
+					{% endif %}
+
+				{% else %}
+					<tr>
+						<td colspan="3">No se han encontrado resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
+	</div>
 {% endblock %}

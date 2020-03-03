@@ -33,6 +33,7 @@ class SupervisorController extends AbstractController
         return $this->render('supervisor/index.html.twig', [
             'supervisors' => $supervisorRepository->findByEnterprise($identerprise),
             'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 
@@ -42,14 +43,16 @@ class SupervisorController extends AbstractController
     public function new(Request $request, $identerprise): Response
     {
         $supervisor = new Supervisor();
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
-            $enterprise = $repositoryEnterprise->findOneById($identerprise);
+
             $supervisor->setEnterprise($enterprise);
+            $supervisor->setVisible(true);
             $entityManager->persist($supervisor);
             $entityManager->flush();
 
@@ -59,7 +62,8 @@ class SupervisorController extends AbstractController
         return $this->render('supervisor/new.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form->createView(),
-            'enterprise' => "",
+            'enterprise' => $enterprise,
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 
@@ -70,6 +74,7 @@ class SupervisorController extends AbstractController
     {
         return $this->render('supervisor/show.html.twig', [
             'supervisor' => $supervisor,
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 
@@ -101,7 +106,8 @@ class SupervisorController extends AbstractController
         $enterprise = $supervisor->getEnterprise();
         if ($this->isCsrfTokenValid('delete' . $supervisor->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($supervisor);
+            $supervisor->setVisible(false);
+            // $entityManager->remove($supervisor);
             $entityManager->flush();
         }
 

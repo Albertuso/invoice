@@ -8,29 +8,34 @@
 
 
 {% block body %}
-	<h1>Indice de redes sociales</h1>
+	<div class="container" id="tableArea">
+		<h1>Indice de redes sociales</h1>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>URL</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for social_network in social_networks %}
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td>{{ social_network.url }}</td>
-					<td>
-						<a href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
-					</td>
+					<th>URL</th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">No se han encontrado registros</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for social_network in social_networks %}
+					{% if social_network.visible %}
+						<tr>
+							<td>{{ social_network.url }}</td>
+							<td>
+								<a href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
+							</td>
+						</tr>
+					{% endif %}
 
-	<a href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
+				{% else %}
+					<tr>
+						<td colspan="3">No se han encontrado registros</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
+	</div>
 {% endblock %}

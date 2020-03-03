@@ -19,7 +19,7 @@ class InvoiceType extends AbstractType
             // ->add('invoicenumber')
             ->add('date', DateType::class)
             ->add('description', TextareaType::class, array('attr' => array('maxlength' => '255', 'rows' => '5', 'class' => 'form-control txt')))
-            ->add('footer', TextareaType::class, array('label'=>"Pie de página" ,'attr' => array('maxlength' => '255', 'rows' => '2', 'class' => 'form-control txt w-100')))
+            ->add('footer', TextareaType::class, array('label' => "Pie de página", 'attr' => array('maxlength' => '255', 'rows' => '2', 'class' => 'form-control txt w-100')))
             ->add('subtotal', NumberType::class, array('attr' => array('readonly' => true, 'step' => "any", 'class' => 'form-control')))
             ->add('total', NumberType::class, array('attr' => array('readonly' => true, 'step' => "any", 'class' => 'form_control')));
     }
