@@ -4,7 +4,11 @@
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
+<<<<<<< HEAD
 	 <link rel="stylesheet" href="{{ asset('css/toPrint.css') }}"/> 
+=======
+	<link rel="stylesheet" href="{{ asset('css/toPrint.css') }}"/>
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -16,21 +20,36 @@
 {% block body %}
 
 
+<<<<<<< HEAD
 
 	<div class="container content-invoice dina4" id="printableArea" >
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 				</div>
+=======
+	<div class="container content-invoice dina4" id="printableArea">
+		<div class="load-animate animated fadeInUp">
+			<div class="row">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8"></div>
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 			</div>
 			<div class="row">
 				<div class="col-8">
 					<p id="fecha" readonly>
+<<<<<<< HEAD
 					Fecha:
 					 {{ form_widget(form.date)}} 
 					 
 					</p>
 					
+=======
+						Fecha:
+						{{ form_widget(form.date)}}
+
+					</p>
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 				</div>
 				<div class="col-4">
 					Nº de Factura:
@@ -57,10 +76,16 @@
 					{{enterprise.email}}<br>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
+<<<<<<< HEAD
 				<img src="{{ asset(enterprise.logo)}}" width="100%">
 				<img src= "img/logos/"{ enterprise.logo }}>
 				<img src="{{ asset(enterprise.logo) }}"  />
 				<img src="img/logos/{{ asset(enterprise.logo) }}" />
+=======
+					{% set imagen = "img/logos/" ~ enterprise.logo %}
+					<img src="{{ asset(imagen)}}" height="136px">
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 				</div>
 			</div>
 			<br>
@@ -68,9 +93,15 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table class="table table-bordered" id="invoiceItem">
 						<tr>
+<<<<<<< HEAD
 							
 							<th width="100px">Nombre Producto</th>
 							
+=======
+
+							<th width="100px">Nombre Producto</th>
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 							<th width="40px">Cantidad</th>
 							<th width="80px">Precio</th>
 							<th width="40px">%VAT</th>
@@ -78,11 +109,20 @@
 						</tr>
 						{% set count = 0 %}
 						{% for line in lines %}
+<<<<<<< HEAD
                         {% set count = count + 1 %}
                         {% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
 							<tr>
 							
 								<td><input readonly required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
+=======
+							{% set count = count + 1 %}
+							{% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+							<tr>
+
+								<td><input readonly required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div>
+								</td>
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 								<td><input readonly required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
 								<td><input readonly required type="number" value="{{line.price}}" step="any" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
 								<td><input readonly required type="number" value="{{line.vat}}" step="any" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
@@ -93,19 +133,32 @@
 					</table>
 				</div>
 			</div>
+<<<<<<< HEAD
 			
+=======
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 			<div class="row">
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h3>Descripción:
 					</h3>
+<<<<<<< HEAD
 					<div
 						class="form-group">
 						
+=======
+					<div class="form-group">
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 
 						{{ form_widget(form.description)}}
 					</div>
 					<br>
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -113,6 +166,7 @@
 					<div class="input-group">
 						<label>Tasa Impuestos:</label>
 						<input readonly type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
+<<<<<<< HEAD
 						
 						<div class="input-group-addon">%</div>
 					</div>
@@ -120,19 +174,33 @@
 					<div class="input-group">
 						<label>Subtotal:</label>
 						
+=======
+
+						<div class="input-group-addon">%</div>
+					</div>
+					<div class="input-group">
+						<label>Subtotal:</label>
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 						{{ form_widget(form.subtotal)}}
 
 						<div class="input-group-addon">euros</div>
 					</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 					<div class="input-group">
 						<label>total:</label>
 						{{ form_widget(form.total)}}
 
 						<div class="input-group-addon">euros</div>
 					</div>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 				</div>
 
 			</div>
@@ -144,6 +212,7 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 
 
 	</div>
@@ -161,12 +230,25 @@
                  
 	{# <a href="{{ path('invoice_index') }}">back to list</a> #}
 
+=======
+	</div>
+	<div="row">
+		<div class="col-12 text-center mt-4">
+			<input type="button" class="btn btn-success" onclick="printDiv('printableArea')" value="IMPRIMIR FACTURA"/>
+		</div>
+		<div class="col-12 text-center mt-2 mb-5">
+			<input type="button" class="btn btn-danger" onclick="window.history.back();" value="Cancelar"/>
+		</div>
+
+	</div>
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/invoice.js') }}"></script>
 	<script>
+<<<<<<< HEAD
 	function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
@@ -178,5 +260,14 @@
      document.body.innerHTML = originalContents;
 	}
 
+=======
+		function printDiv(divName) {
+var printContents = document.getElementById(divName).innerHTML;
+var originalContents = document.body.innerHTML;
+document.body.innerHTML = printContents;
+window.print();
+document.body.innerHTML = originalContents;
+}
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 	</script>
 {% endblock %}

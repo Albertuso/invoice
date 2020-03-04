@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
 /**
  * @Route("/enterprise")
  * @IsGranted("ROLE_USER")
@@ -25,10 +24,7 @@ class EnterpriseController extends AbstractController
      */
     public function index(EnterpriseRepository $enterpriseRepository): Response
     {
-        return $this->render('enterprise/index.html.twig', [
-            // 'enterprises' => $enterpriseRepository->findAll(),
-            'enterprises' => $this->getUser()->getEnterprises(),
-        ]);
+        return $this->redirectToRoute('main');
     }
 
     /**
@@ -39,7 +35,15 @@ class EnterpriseController extends AbstractController
 
         $user = $this->getUser();
 
-        if ($user->getMax() > count($user->getEnterprises())) {
+        $visibles = 0;
+        for ($i = 0; $i < count($user->getEnterprises()); $i++) {
+            if ($user->getEnterprises()[$i]->getVisible() == true) {
+                $visibles++;
+            }
+        }
+
+
+        if ($user->getMax() > $visibles) {
             $enterprise = new Enterprise();
             $form = $this->createForm(EnterpriseType::class, $enterprise);
             $form->handleRequest($request);
@@ -54,6 +58,7 @@ class EnterpriseController extends AbstractController
                 $file->move("./img/logos", $file_name);
 
                 $enterprise->setLogo($file_name);
+                $enterprise->setVisible(true);
 
                 $enterprise->setNextinvoicenumber(0);
                 $this->getUser()->addEnterprise($enterprise);
@@ -77,9 +82,11 @@ class EnterpriseController extends AbstractController
      */
     public function show(Enterprise $enterprise): Response
     {
+
         return $this->render('enterprise/show.html.twig', [
             'enterprise' => $enterprise,
             'enterprises' => $this->getUser()->getEnterprises(),
+            'supervisors' => $enterprise->getSupervisors(),
         ]);
     }
 
@@ -118,23 +125,48 @@ class EnterpriseController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $enterprise->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($enterprise);
+
+            $enterprise->setVisible(false);
+            // $entityManager->remove($enterprise);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('enterprise_index');
+        return $this->redirectToRoute('main');
     }
 
     /**
      * @Route("/{idempresa}/listinvoices", name="enterprise_listinvoices", methods={"GET","POST"})
      */
-    public function invoices($idempresa)
+    public function invoices(Request $request, $idempresa)
     {
         $repositoryInvoice = $this->getDoctrine()->getRepository(Invoice::class);
         $invoicesenterprise = $repositoryInvoice->findByEnterprise($idempresa);
 
+
+
+        // $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        // $enterprise = $repositoryEnterprise->findOneById($idempresa);
+
+        // $form = $this->createForm(EnterpriseType::class, $enterprise);
+        $form = $this->createFormBuilder()
+            ->add('buscar')
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+
+            $invoicesenterprise = $repositoryInvoice->findByLoQueSea($data['buscar']);
+
+            return $this->render('debug.html.twig', [
+                'debug' => $invoicesenterprise,
+            ]);
+        }
+
         return $this->render('enterprise/show_invoices.html.twig', [
             'invoiceseterprises' => $invoicesenterprise,
+            'form' => $form->createView(),
         ]);
     }
 }

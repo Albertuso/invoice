@@ -84,11 +84,28 @@ class Enterprise
      */
     private $nextinvoicenumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetwork", mappedBy="enterprise")
+     */
+    private $socialnetwork;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Supervisor", mappedBy="enterprise")
+     */
+    private $supervisors;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->clients = new ArrayCollection();
         $this->invoices = new ArrayCollection();
+        $this->socialnetwork = new ArrayCollection();
+        $this->supervisors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,6 +326,80 @@ class Enterprise
     public function setNextinvoicenumber(int $nextinvoicenumber): self
     {
         $this->nextinvoicenumber = $nextinvoicenumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialNetwork[]
+     */
+    public function getSocialnetwork(): Collection
+    {
+        return $this->socialnetwork;
+    }
+
+    public function addSocialnetwork(SocialNetwork $socialnetwork): self
+    {
+        if (!$this->socialnetwork->contains($socialnetwork)) {
+            $this->socialnetwork[] = $socialnetwork;
+            $socialnetwork->setEnterprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialnetwork(SocialNetwork $socialnetwork): self
+    {
+        if ($this->socialnetwork->contains($socialnetwork)) {
+            $this->socialnetwork->removeElement($socialnetwork);
+            // set the owning side to null (unless already changed)
+            if ($socialnetwork->getEnterprise() === $this) {
+                $socialnetwork->setEnterprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supervisor[]
+     */
+    public function getSupervisors(): Collection
+    {
+        return $this->supervisors;
+    }
+
+    public function addSupervisor(Supervisor $supervisor): self
+    {
+        if (!$this->supervisors->contains($supervisor)) {
+            $this->supervisors[] = $supervisor;
+            $supervisor->setEnterprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupervisor(Supervisor $supervisor): self
+    {
+        if ($this->supervisors->contains($supervisor)) {
+            $this->supervisors->removeElement($supervisor);
+            // set the owning side to null (unless already changed)
+            if ($supervisor->getEnterprise() === $this) {
+                $supervisor->setEnterprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }

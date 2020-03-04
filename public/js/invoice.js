@@ -74,6 +74,7 @@ $(document).ready(function() {
 });
 
 function decimales(x) {
+<<<<<<< HEAD
     return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100;
 }
 
@@ -171,4 +172,101 @@ function showproduct(productName) {
 
 
 
+=======
+	return Math.round((Number.parseFloat(x) + Number.EPSILON) * 100) / 100;
+}
+
+function calculateTotal() {
+	var subTotal = 0;
+	var sumVat = 0;
+	var sumTotal = 0;
+	$("[id^='price_']").each(function () {
+		var id = $(this).attr('id');
+		id = id.replace("price_", '');
+		var price = $('#price_' + id).val();
+		var quantity = $('#quantity_' + id).val();
+		if (!quantity) {
+			quantity = 1;
+		}
+		var vat = $('#vat_' + id).val();
+		sumVat += (price * quantity * (vat / 100));
+		var total = (price * quantity) + (price * quantity * (vat / 100));
+		$('#total_' + id).val(parseFloat(decimales(total)));
+		subTotal = total - vat;
+		sumTotal = + total; //suma de totales
+	});
+	$('#invoice_subtotal').val(parseFloat(subTotal));
+
+	$('#taxAmount').val(decimales(sumVat));
+	$('#taxRate').val(decimales(sumVat));
+	$('#invoice_total').val(decimales(sumTotal));
+	$('#invoice_subtotal').val(decimales(subTotal));
+
+}
+
+function showproduct(productName) {
+	//AJAX PARA MOSTRAR EL ARRAY DE PRODUCTOS 
+
+	var idempresa = $("#idempresa").text();
+	$(productName).blur(function () {
+		var numberline = productName.split("_")[1];
+	});
+
+	$(productName).keyup(function () {
+
+		var parametros = idempresa + "/" + $(this).val();
+		var numberline = productName.split("_")[1];
+		$('#suggestions_' + numberline).slideDown();
+
+		$.ajax('/invoice/search/enterprise/' + parametros, {
+			dataType: 'json',
+			contentType: 'application/json',
+			cache: false
+		})
+			.done(function (response) {
+				var html = "";
+				$.each(response, function (index, element) {
+
+					// index es el numero de respuestas (1, 2, 3... dependiendo)
+
+					html += '<div id="' + index + '" class="suggestions_' + index + ' suggest-element">' + response[index].name + "</div>";
+					//console.log(element.price);
+					console.log("linea id:" + index);
+
+				});
+
+				// me saca en el div oculto la informacion devuelta ajax
+				$('#suggestions_' + numberline).html(html);
+
+
+				//Al hacer click en alguna de las sugerencias devueltas ajax
+				$('.suggest-element').on('click', function () {
+
+					console.log("numberline: " + numberline);
+					$('#suggestions_' + numberline).slideToggle();
+					//Obtenemos la id unica de la sugerencia pulsada
+					var id = $(this).attr('id');
+
+					//Hacemos desaparecer el resto de sugerencias
+					$('#suggestions');
+					//alert('Has seleccionado el ' + id + ' ' + $('#' + id).attr('data'));
+					$('#suggestions_' + id)
+
+					console.log(response[$(this)[0].id]);
+
+					$('#price_' + numberline).val(response[$(this)[0].id].price);
+					$('#description_' + numberline).val(response[$(this)[0].id].description);
+					$('#vat_' + numberline).val(response[$(this)[0].id].vat);
+					$('#productName_' + numberline).val(response[$(this)[0].id].name);
+					oldcantity = $('#quantity_' + numberline).val();
+					if (oldcantity == "" || oldcantity == null) {
+						$('#quantity_' + numberline).val(1);
+					}
+					calculateTotal();
+					// $("#price_1").val(5)
+					return false;
+				});
+			})
+	});	
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 }

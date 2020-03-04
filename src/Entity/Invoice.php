@@ -65,6 +65,11 @@ class Invoice
      */
     private $enterprise;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visible;
+
     public function __construct()
     {
         $this->line = new ArrayCollection();
@@ -198,6 +203,18 @@ class Invoice
     public function setEnterprise(?Enterprise $enterprise): self
     {
         $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    public function getVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): self
+    {
+        $this->visible = $visible;
 
         return $this;
     }

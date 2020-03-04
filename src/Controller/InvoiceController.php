@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
-
 /**
  * @Route("/invoice")
  */
@@ -58,6 +56,7 @@ class InvoiceController extends AbstractController
         $hoy = new \DateTime();
         $invoice->setInvoicenumber($enterprise->getNextinvoicenumber());
         $invoice->setDate($hoy);
+        $invoice->setVisible(true);
         $invoice->setFooter($enterprise->getFooter());
 
         // Creo un array de Productlines
@@ -160,6 +159,7 @@ class InvoiceController extends AbstractController
             $vats = $_REQUEST['VAT'];
 
             //Aqui toca comprobar que la nueva factura es válida
+
             for ($i = 0; $i < count($names); $i++) {
 
                 $newLine = new ProductLine();
@@ -219,13 +219,19 @@ class InvoiceController extends AbstractController
      */
     public function delete(Request $request, Invoice $invoice): Response
     {
+        $client = $invoice->getClient(); 
         if ($this->isCsrfTokenValid('delete' . $invoice->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($invoice);
+
+
+
+            $invoice->setVisible(false);
+
+            // $entityManager->remove($invoice);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('invoice_index');
+        return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
     }
     /**
      * @Route("/search/enterprise/{identerprise}/{txtbusca}", defaults={"txtbusca"=""}, name="invoice_search", methods={"GET","POST"})
@@ -255,14 +261,14 @@ class InvoiceController extends AbstractController
             return new Response($enviar);
         } else return new Response(null);
 
-
-        // return $this->render('invoice/debug.html.twig', [
-        //     'debug' => $products,
-        // ]);
     }
 
+<<<<<<< HEAD
  
   /**
+=======
+    /**
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
      * @Route("/{id}/print", name="invoice_print", methods={"GET","POST"})
      */
     public function print(Request $request, Invoice $invoice): Response

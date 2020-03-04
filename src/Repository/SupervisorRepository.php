@@ -47,4 +47,26 @@ class SupervisorRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneById($value): ?Supervisor
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findByEnterprise($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.enterprise = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -12,7 +12,7 @@
 						{{user.username}}
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="#">Informaci&oacute;n</a>
+
 						<a class="dropdown-item" href="{{ path('app_logout')}}">Desloguear</a>
 					</div>
 				</li>
@@ -26,45 +26,65 @@
 	<div class="container mt-2">
 		<h2>Seleccione una empresa</h2>
 
-		<div class="card-deck">
-			{% for enterprise in user.enterprises %}
-				<div class="card bg-light">
+		<div class="row">
+			<div class="col-12">
 
-					{% if enterprise.logo != "" or enterprise.logo != null %}
-						{% set imagen = "img/logos/" ~ enterprise.logo %}
-					{% else %}
-						{% set imagen = "img/logos/default.png" %}
+				<div class="card-deck">
+					{% for enterprise in user.enterprises %}
+
+						{% if enterprise.visible == true %}
+
+							<div class="card bg-light">
+
+								{% if enterprise.logo != "" or enterprise.logo != null %}
+									{% set imagen = "img/logos/" ~ enterprise.logo %}
+								{% else %}
+									{% set imagen = "img/logos/default.png" %}
+								{% endif %}
+
+								<div class="card-header">
+									<a href="{{path('enterprise_show', {id: enterprise.id})}}"><img src="{{ asset(imagen)}}" width="100%"></a>
+								</div>
+								<div class="card-body text-center">
+									<a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a>
+								</div>
+								<p class="card-text text-center">
+									<a href="{{path('enterprise_edit', {id: enterprise.id})}}">editar</a>
+									<a href="{{path('enterprise_delete', {id: enterprise.id})}}">eliminar</a>
+								</p>
+
+							</div>
+						{% endif %}
+
+
+					{% endfor %}
+
+					{% set visibles = 0 %}
+					{% for enterprise in user.enterprises %}
+						{% if enterprise.visible == true %}
+							{% set visibles = visibles +1 %}
+						{% endif %}
+
+					{% endfor %}
+
+					{# {% for i in range(visibles + 1, user.max) %} #}
+					{% if visibles != user.max %}
+						{% for i in visibles+1..user.max %}
+
+							<div class="card bg-light">
+								<div class="card-body text-center">
+									<p class="card-text">
+										<a href="{{path('enterprise_new')}}"><img src="{{ asset('img/add.png') }}" width='100%'/></a>
+									</p>
+								</div>
+							</div>
+
+						{% endfor %}
 					{% endif %}
 
-					<div class="card-header"><img src="{{ asset(imagen)}}" width="100%"></div>
-					<div class="card-body text-center">
-						<a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a>
-					</div>
-					<p class="card-text text-center">
-						<a href="{{path('enterprise_edit', {id: enterprise.id})}}">editar</a>
-						<a href="{{path('enterprise_delete', {id: enterprise.id})}}">eliminar</a>
-					</p>
 
 				</div>
-
-			{% endfor %}
-
-			{% if user.enterprises|length < user.max %}
-				{% for i in range(user.enterprises|length + 1, user.max) %}
-
-					<div class="card bg-light">
-						<div class="card-body text-center">
-							<p class="card-text">
-								<a href="{{path('enterprise_new')}}"><img src="{{ asset('img/add.png') }}" width='150px'/></a>
-							</p>
-						</div>
-					</div>
-
-				{% endfor %}
-			{% endif %}
-
+			</div>
 		</div>
 	</div>
-
-
 {% endblock %}

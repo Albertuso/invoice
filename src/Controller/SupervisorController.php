@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Supervisor;
+use App\Entity\Enterprise;
 use App\Form\SupervisorType;
+use App\Repository\EnterpriseRepository;
 use App\Repository\SupervisorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,19 +20,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class SupervisorController extends AbstractController
 {
     /**
-     * @Route("/", name="supervisor_index", methods={"GET"})
+     * @Route("/{identerprise}", name="supervisor_index", methods={"GET"})
      */
-    public function index(SupervisorRepository $supervisorRepository): Response
+    public function index(SupervisorRepository $supervisorRepository, $identerprise): Response
     {
+
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
+
+
+
         return $this->render('supervisor/index.html.twig', [
-            'supervisors' => $supervisorRepository->findAll(),
+            'supervisors' => $supervisorRepository->findByEnterprise($identerprise),
+            'enterprise' => $enterprise,
         ]);
     }
 
     /**
-     * @Route("/new", name="supervisor_new", methods={"GET","POST"})
+     * @Route("/new/{identerprise}", name="supervisor_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $identerprise): Response
     {
         $supervisor = new Supervisor();
         $form = $this->createForm(SupervisorType::class, $supervisor);
@@ -38,15 +47,19 @@ class SupervisorController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+            $enterprise = $repositoryEnterprise->findOneById($identerprise);
+            $supervisor->setEnterprise($enterprise);
             $entityManager->persist($supervisor);
             $entityManager->flush();
 
-            return $this->redirectToRoute('supervisor_index');
+            return $this->redirectToRoute('supervisor_index', ['identerprise' => $identerprise]);
         }
 
         return $this->render('supervisor/new.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form->createView(),
+            'enterprise' => "",
         ]);
     }
 
@@ -85,12 +98,13 @@ class SupervisorController extends AbstractController
      */
     public function delete(Request $request, Supervisor $supervisor): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$supervisor->getId(), $request->request->get('_token'))) {
+        $enterprise = $supervisor->getEnterprise();
+        if ($this->isCsrfTokenValid('delete' . $supervisor->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($supervisor);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('supervisor_index');
+        return $this->redirectToRoute('enterprise_show', ['id' => $enterprise->getId()]);
     }
 }

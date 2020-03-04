@@ -53,19 +53,19 @@ class InvoiceRepository extends ServiceEntityRepository
             ->andWhere('i.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
     public function findByClient($value)
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.client = :val')
             ->setParameter('val', $value)
+            ->andWhere('i.visible = :valu')
+            ->setParameter('valu', true)
             ->orderBy('i.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findByEnterprise($value)
@@ -75,7 +75,25 @@ class InvoiceRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('i.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+
+    public function findByLoQueSea($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.client', 'c')
+            ->addSelect('c')
+            ->orwhere('c.name = :clientid')
+            ->orwhere('p.description LIKE :val')
+            ->setParameter('clientid', $value)
+            ->setParameter('val', '%' . $value . '%')
+            ->orwhere('p.date LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
+
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
     }
 }

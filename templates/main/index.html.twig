@@ -20,7 +20,10 @@
       {% endfor %}
       {% if admin == true %}
         {# verificamos si es un administrador.... #}
-        {{ include('main/admin.html.twig') }}        
+
+
+        
+        {# {{ include('main/admin.html.twig') }}         #}
       {% else %}
         {{ include('main/user.html.twig') }}       
       {% endif %}

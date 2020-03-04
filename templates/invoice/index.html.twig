@@ -6,17 +6,23 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 
+<<<<<<< HEAD
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 {% endblock %} #}
+=======
+
+>>>>>>> fd1a289bcff56d73919e5b692acec8b02d289fc2
 {% block body %}
 
 	<div class="container">
 		<h1>Invoice index</h1>
-
-		<table class="table table-striped table-bordered">
+fg
+		<table
+			id="dtHorizontalExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+			{# <table class="table table-striped table-bordered"> #}
 			<thead>
 				<tr>
 					<th>Nº factura</th>
@@ -56,3 +62,5 @@
 
 	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Create new</a>
 {% endblock %}
+
+

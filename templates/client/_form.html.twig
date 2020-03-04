@@ -1,4 +1,30 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+{# <div class="form-group"> <!-- Full Name -->
+        <label for="full_name_id" class="control-label">Full Name</label>
+        <input type="text" class="form-control" id="full_name_id" name="full_name" placeholder="John Deer">
+    </div>  #}
+{{ form_label(form.name) }}
+{{ form_widget(form.name) }}
+{{ form_label(form.address) }}
+{{ form_widget(form.address) }}
+{{ form_label(form.nif) }}
+{{ form_widget(form.nif) }}
+{{ form_label(form.email) }}
+{{ form_widget(form.email) }}
+{{ form_label(form.telephone) }}
+{{ form_widget(form.telephone) }}
+{{ form_label(form.web) }}
+{{ form_widget(form.web) }}
+
+<label for="supervisor[]">Supervisor</label>
+<select class="form-control" id="supervisor[]" name="supervisor[]">
+	<option value=""></option>
+	{% for supervisor in supervisors %}
+
+		<option value="{{supervisor.id}}">{{supervisor}}</option>
+	{% endfor %}
+</select>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

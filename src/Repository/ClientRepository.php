@@ -53,11 +53,12 @@ class ClientRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.enterprise = :val')
             ->setParameter('val', $value)
+            ->andWhere('c.visible = :valu')
+            ->setParameter('valu', true)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findOneByid($value): ?Client
@@ -65,8 +66,9 @@ class ClientRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.id = :val')
             ->setParameter('val', $value)
+            ->andWhere('c.visible = :valu')
+            ->setParameter('valu', true)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 }

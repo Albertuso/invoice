@@ -14,6 +14,7 @@ class SupervisorType extends AbstractType
         $builder
             ->add('name',null, array('label' => 'Nombre'))
             ->add('telephone',null, array('label' => 'Telefono'))
+     
         ;
     }
 

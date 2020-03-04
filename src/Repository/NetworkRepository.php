@@ -47,4 +47,14 @@ class NetworkRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findOneById($value): ?Network
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

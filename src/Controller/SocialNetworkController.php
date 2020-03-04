@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SocialNetwork;
+use App\Entity\Enterprise;
 use App\Form\SocialNetworkType;
 use App\Repository\SocialNetworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,35 +19,45 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class SocialNetworkController extends AbstractController
 {
     /**
-     * @Route("/", name="social_network_index", methods={"GET"})
+     * @Route("/{idsocialnetwork}", name="social_network_index", methods={"GET"})
      */
-    public function index(SocialNetworkRepository $socialNetworkRepository): Response
+    public function index(SocialNetworkRepository $socialNetworkRepository, $idsocialnetwork): Response
     {
+        $socialNetworkRepository->findOneById($idsocialnetwork);
+
         return $this->render('social_network/index.html.twig', [
             'social_networks' => $socialNetworkRepository->findAll(),
+            'identerprise' => "1",
+
         ]);
     }
 
     /**
-     * @Route("/new", name="social_network_new", methods={"GET","POST"})
+     * @Route("/new/{identerprise}", name="social_network_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $identerprise): Response
     {
+
+        $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
         $socialNetwork = new SocialNetwork();
         $form = $this->createForm(SocialNetworkType::class, $socialNetwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $socialNetwork->setEnterprise($enterpriseRepository->findOneByid($identerprise));
             $entityManager->persist($socialNetwork);
             $entityManager->flush();
 
-            return $this->redirectToRoute('social_network_index');
+            return $this->redirectToRoute('enterprise_show', ['id' => $identerprise]);
         }
 
         return $this->render('social_network/new.html.twig', [
             'social_network' => $socialNetwork,
             'form' => $form->createView(),
+            'id_empresa' => $identerprise,
+            'enterprise' => $enterpriseRepository->findOneByid($identerprise),
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
@@ -65,18 +76,20 @@ class SocialNetworkController extends AbstractController
      */
     public function edit(Request $request, SocialNetwork $socialNetwork): Response
     {
+        $identerprise = $socialNetwork->getEnterprise();
         $form = $this->createForm(SocialNetworkType::class, $socialNetwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('social_network_index');
+            return $this->redirectToRoute('social_network_show', ['id' => $socialNetwork]);
         }
 
         return $this->render('social_network/edit.html.twig', [
             'social_network' => $socialNetwork,
             'form' => $form->createView(),
+            'identerprise' => $identerprise,
         ]);
     }
 
@@ -91,6 +104,6 @@ class SocialNetworkController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('social_network_index');
+        return $this->redirectToRoute('enterprise_show' , ['id' => $socialNetwork->getEnterprise()]);
     }
 }
