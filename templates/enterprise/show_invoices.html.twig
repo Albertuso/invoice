@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block nav %}
-	{{ include('enterprise/shownavbar.html.twig') }}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -49,8 +49,8 @@
 								<td>{{ invoiceseterprise.subtotal }}€</td>
 								<td>{{ invoiceseterprise.total }}€</td>
 								<td>
-									<a href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">show</a>
-									<a href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">edit</a>
+									<a href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">elegir</a>
+									<a href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">editar</a>
 								</td>
 								{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
 								{% set sumTotal = sumTotal + invoiceseterprise.total %}

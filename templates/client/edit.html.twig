@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block nav %}
-	{{ include('client/simplenavbar.html.twig') }}
+	{{ include('navbar/simplenavbar.html.twig') }}
 {% endblock %}
 
 
@@ -11,11 +11,11 @@
 {% block body %}
 
 	<div class="container">
-		<h1>Editar Cliente</h1>
+
 
 		<div class="row">
-			<div class="col-md-5">		
-
+			<div class="col-md-9">
+				<h1>Editar Cliente</h1>
 				{{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
 
 			</div>
@@ -25,7 +25,6 @@
 		{# <a href="{{ path('client_index', {idempresa: enterprise.id})}}) }}">Regresar al listado</a> #}
 		{# <a href="{{ path('client_index', {idempresa: enterprise.id})}}) }}">Regresar al listado</a> #}
 
-		{{ include('client/_delete_form.html.twig') }}
+	{{ include('client/_delete_form.html.twig') }}
 
-	</div>
-{% endblock %}
+</div>{% endblock %}

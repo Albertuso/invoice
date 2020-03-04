@@ -83,6 +83,18 @@ function calculateTotal() {
 	var sumTotal = 0;
 	var total = 0;
 	$("[id^='price_']").each(function () {
+		$(this).on('blur', function () {
+			var number = $(this).val()
+			if (number < 0) {
+				$(this).val(0);
+				calculateTotal();
+			}
+		});
+
+
+
+
+
 		var id = $(this).attr('id');
 		id = id.replace("price_", '');
 		var price = $('#price_' + id).val();
@@ -94,9 +106,9 @@ function calculateTotal() {
 		sumVat += (price * quantity * (vat / 100));
 		// var total = (price * quantity) + (price * quantity * (vat / 100));
 		var ivaProduct = (price * quantity * (vat / 100));
-		total = price*quantity + ivaProduct;
+		total = price * quantity + ivaProduct;
 		$('#total_' + id).val(parseFloat(decimales(total)));
-		subTotal += decimales(price* quantity);
+		subTotal += decimales(price * quantity);
 		// subTotal = total - vat;
 		sumTotal += total; //suma de totales
 	});
@@ -172,5 +184,5 @@ function showproduct(productName) {
 					return false;
 				});
 			})
-	});	
+	});
 }

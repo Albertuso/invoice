@@ -98,9 +98,7 @@ class EnterpriseController extends AbstractController
         $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
         $form = $this->createForm(EnterpriseType::class, $enterprise);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $file = $form['logo']->getData();
             $ext = $file->guessExtension();
             $file_name = time() . "." . $ext;
@@ -159,11 +157,11 @@ class EnterpriseController extends AbstractController
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
 
-            $invoicesenterprise = $repositoryInvoice->findByLoQueSea($data['buscar']);
+            $invoicesenterprise = $repositoryInvoice->findOneByIdJoinedToCategory($data['buscar'],$idempresa);
 
-            return $this->render('debug.html.twig', [
-                'debug' => $invoicesenterprise,
-            ]);
+            // return $this->render('debug.html.twig', [
+            //     'debug' => $invoicesenterprise,
+            // ]);
         }
 
         return $this->render('enterprise/show_invoices.html.twig', [

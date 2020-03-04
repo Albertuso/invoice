@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Invoice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Invoice|null find($id, $lockMode = null, $lockVersion = null)
@@ -79,66 +80,83 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
 
+    // public function findByLoQueSea($value)
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->innerJoin('client', 'p', Join::ON ,'c.user_id = p.id')
+    //         ->orwhere('c.name = :clientid')
+    //         ->setParameter('clientid', $value)
+    //         ->orwhere('p.description LIKE :val')
+    //         ->setParameter('val', '%' . $value . '%')
+    //         ->orwhere('p.date LIKE :valu')
+    //         ->setParameter('valu', '%' . $value . '%')
+
+    //         ->orderBy('p.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+
+    // }
+
+
     public function findByLoQueSea($value)
     {
-        return $this->createQueryBuilder('c')
-            ->innerJoin('c', 'client', 'p', 'c.user_id = p.id')
+        return $this->createQueryBuilder('i')
+
+            ->innerJoin('i.client', 'c', Join::ON, 'c.id = i.client')
             ->orwhere('c.name = :clientid')
-            ->orwhere('p.description LIKE :val')
             ->setParameter('clientid', $value)
+            ->orwhere('i.description LIKE :val')
             ->setParameter('val', '%' . $value . '%')
-            ->orwhere('p.date LIKE :valu')
+            ->orwhere('i.date LIKE :valu')
             ->setParameter('valu', '%' . $value . '%')
 
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-
-
-
-
-
-
-        // ->innerJoin('c.phones', 'p', 'WITH', 'p.phone = :phone')
-        // ->orwhere('c.name = :clientid')
-        // ->orwhere('p.description LIKE :val')
-        // ->setParameter('clientid', $value)
-        // ->setParameter('val', '%' . $value . '%')
-        // ->orwhere('p.date LIKE :valu')
-        // ->setParameter('valu', '%' . $value . '%')
-
-        // ->orderBy('p.id', 'ASC')
-        // ->setMaxResults(10)
-        // ->getQuery()
-        // ->getResult();
     }
 
-    public function findOneByIdJoinedToCategory($value)
+    public function findOneByIdJoinedToCategory($value, $identerprise)
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            "SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
-WHERE DESCRIPTION LIKE p.id = :id
-OR NAME LIKEp.id = :id
-OR ADDRESS LIKE p.id = :id
-OR SUBTOTAL LIKE p.id = :id
-OR TOTAL LIKE p.id = :id
-OR DATE LIKE p.id = :id 
-OR INVOICENUMBER LIKE p.id = :id"
-        )->setParameter('id', '%' . $value . '%');
+            'SELECT i 
+                FROM App:Invoice i INNER JOIN App:Client c
+                WHERE i.enterprise = '.$identerprise.'
+                AND i.description LIKE :val
+                OR c.name LIKE :val
+                OR c.address LIKE :val
+                OR i.subtotal LIKE :val
+                OR i.total LIKE :val
+                OR i.date LIKE :val
+                OR i.invoicenumber LIKE :val
+                ORDER BY i.invoicenumber ASC'
+        )
+            ->setParameter('val', '%' . $value . '%');
 
 
+        // SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
+        //     WHERE i.enterprise_id = 1 AND DESCRIPTION LIKE '%ben%'
+        //     OR NAME LIKE '%ben%'
+        //     OR ADDRESS LIKE '%ben%'
+        //     OR SUBTOTAL LIKE '%ben%%'
+        //     OR TOTAL LIKE '%ben%'
+        //     OR DATE LIKE '%ben%'
+        //     OR INVOICENUMBER LIKE '%ben%'
 
 
+        //SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
+        // WHERE DESCRIPTION LIKE '%ru%' 
+        // OR NAME LIKE '%Ru%'
+        // OR ADDRESS LIKE '%Ru%'
+        // OR SUBTOTAL LIKE '%Ru%'
+        // OR TOTAL LIKE '%Ru%'
+        // OR DATE LIKE '%Ru%'
+        // OR INVOICENUMBER LIKE '%Ru%'
 
-        //     'SELECT p, c
-        // FROM App\Entity\Product p
-        // INNER JOIN p.category c
-        // WHERE p.id = :id'
-        // )->setParameter('id', $productId);
 
-        return $query->getOneOrNullResult();
+        return $query->getResult();
     }
 }

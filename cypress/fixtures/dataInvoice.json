@@ -1,0 +1,26 @@
+{
+  "name": "Using fixtures to represent data",
+  "email": "hello@cypress.io",
+  "body": "Fixtures are a great way to mock data for responses to routes",
+  "username": "invoiceUser",
+  "password": "invoice",
+  "enterprise": "STR",
+  "address": "C/ Pintor Velazquez",
+  "web": "www.str.es",
+  "dni": "20078543D",
+  "logo": "str.png",
+  "footer": "str footer",
+  "product": "pantalla iphone",
+  "price": "60",
+  "vat": "21",
+  "description": "pantalla iphone x",
+  "cliente": "CLIENTE01",
+  "telefono": "958442091",
+  "emailc": "cliente01@gmail.com",
+  "addressc": "Calle Real",
+  "webc": "www.cliente01.es",
+  "emailedit": "emailedit@gmail.es",
+  "priceedit": "10",
+  "emaile": "str@gmail.es"
+
+}

@@ -60,10 +60,14 @@ tbody {
 }
 td,th {
   padding: 0px;
-  border: 0px;
+  border: 0px solid;
   margin: 0px;
   height: 2px;
 }
 table{
-  border: 2px solid
+  border: 2px solid #000
+}
+
+thead {
+  border: 3px solid black
 }

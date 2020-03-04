@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editar detalle de factura{% endblock %}
+{% block title %}Editar detalle de factura
+{% endblock %}
+
+{% block nav %}
+	{{ include('navbar/shownavbar.html.twig') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Editar detalle de factura</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<h1>Editar detalle de factura</h1>
 
-    {{ include('product_line/_form.html.twig', {'button_label': 'Update'}) }}
+				{{ include('product_line/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
+				<a href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
 
-    {{ include('product_line/_delete_form.html.twig') }}
+				{{ include('product_line/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

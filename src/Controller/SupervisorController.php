@@ -72,6 +72,8 @@ class SupervisorController extends AbstractController
      */
     public function show(Supervisor $supervisor): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+
         return $this->render('supervisor/show.html.twig', [
             'supervisor' => $supervisor,
             'enterprises' => $repositoryEnterprise->findAll(),
@@ -85,6 +87,8 @@ class SupervisorController extends AbstractController
     {
         $form = $this->createForm(SupervisorType::class, $supervisor);
         $form->handleRequest($request);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -95,6 +99,8 @@ class SupervisorController extends AbstractController
         return $this->render('supervisor/edit.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form->createView(),
+            'enterprise' => $supervisor->getEnterprise(),
+            'enterprises' => $repositoryEnterprise->findAll(),
         ]);
     }
 

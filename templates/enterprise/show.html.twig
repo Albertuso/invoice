@@ -4,112 +4,140 @@
 {% endblock %}
 
 {% block nav %}
-	{{ include('enterprise/shownavbar.html.twig') }}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 
 {% block body %}
 
 	<div class="container" id="tableArea">
-		<h1>Empresa</h1>
-		<table class="table table-striped table-light">
-			<thead>
-				<tr>
-					<th scope="col">Nombre</th>
-					<th scope="col">Direccion</th>
-					<th scope="col">Telefono</th>
-					<th scope="col">Email</th>
-					<th scope="col">Web</th>
-					<th scope="col">NIF</th>
-					<th scope="col">Logo</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>{{ enterprise.name }}</td>
-					<td>{{ enterprise.address }}</td>
-					<td>{{ enterprise.telephone }}</td>
-					<td>{{ enterprise.email }}</td>
-					<td>{{ enterprise.web }}</td>
-					<td>{{ enterprise.nif }}</td>
-					<td>{{ enterprise.logo }}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="row border mt-5 border-dark">
-
-			<div class="col-sm-8">
-				<div class="row">
-
-
-					<div class="col-12">
-						<div class="row">
-							<div class="col-12 h6">Responsables de empresa</div>
-						</div>
-
-						{% for supervisor in supervisors %}
-							<div>
-								{% if supervisor.visible %}
-									{{ supervisor}}
-								{% endif %}
-							</div>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="row">
-					<div class="col-12">
-						<a href="{{ path('supervisor_index', {identerprise: enterprise.id} ) }}">Responsables de empresa</a>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-		<div class="row border mt-5 border-dark">
-			<div class="col-md-12 h6">
-				Pie de empresa<br/>
-				<p style="font-size: 10px">Para editar, ir a empresa</p>
-				<p></p>
-			</div>
-			<div class="col-md-12">
-				<a href="#">{{enterprise.footer}}</a>
-			</div>
-		</div>
-
-		<div class="row border mt-5 border-dark">
-
-
-			<div class="col-sm-8">
-				<div class="row">
-					<div class="col-12 h6">
-						Redes Sociales
-					</div>
-				</div>
-				{% for socialnetwork in enterprise.socialnetwork %}
-					{% if socialnetwork.visible %}
-						{{socialnetwork.network }}:
-						{{socialnetwork}}
-						-
-					<a href="{{ path('social_network_edit', {id: socialnetwork.id}) }}">editar</a>
-					{% endif %}
-
-				{% endfor %}
-			</div>
-			<div class="col-sm-4">
-				<div class="row">
-					<div class="col-12">
-						<a href="{{ path('social_network_new', {identerprise: enterprise.id} ) }}">Añadir red social</a>
-					</div>
+		<div class="row">
+			<div class="col-12">
+				<h1>Empresa</h1>
+				<div class="table-responsive">
+					<table class="table table-striped  table-light">
+						<thead>
+							<tr>
+								<th scope="col">Nombre</th>
+								<th scope="col">Direccion</th>
+								<th scope="col">Telefono</th>
+								<th scope="col">Email</th>
+								<th scope="col">Web</th>
+								<th scope="col">NIF</th>
+								<th scope="col">Logo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ enterprise.name }}</td>
+								<td>{{ enterprise.address }}</td>
+								<td>{{ enterprise.telephone }}</td>
+								<td>{{ enterprise.email }}</td>
+								<td>{{ enterprise.web }}</td>
+								<td>{{ enterprise.nif }}</td>
+								<td>{{ enterprise.logo }}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
+
+
+		<div class="row">
+			<div class="col-12 h6">
+
+				<table class="table table-striped  table-light">
+					<thead>
+						<tr>
+							<th>Responsables de empresa</th>
+							<th class="align-right float-right">
+								<a href="{{ path('supervisor_index', {identerprise: enterprise.id} ) }}">Añadir</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								{% for supervisor in supervisors %}
+									<div>
+										{% if supervisor.visible %}
+											{{ supervisor}}
+										{% endif %}
+									</div>
+								{% endfor %}
+							</td>
+							<td></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-12 h6">
+
+				<table class="table table-striped table-light">
+					<thead>
+						<tr>
+							<th>Pie de empresa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="font-size: 10px">Para editar, ir a empresa</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="col-md-12">
+									<a href="#">{{enterprise.footer}}</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-12 h6">
+
+				<table class="table table-striped table-light">
+					<thead>
+						<tr>
+							<th>Redes Sociales</th>
+							<th class="align-right float-right">
+								<a href="{{ path('social_network_new', {identerprise: enterprise.id} ) }}">Añadir red social</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+
+							{% for socialnetwork in enterprise.socialnetwork %}
+								<td>
+									{% if socialnetwork.visible %}
+										{{socialnetwork.network }}:
+										{{socialnetwork}}
+										-
+										<a href="{{ path('social_network_edit', {id: socialnetwork.id}) }}">editar</a>
+									{% endif %}
+								</td>
+								<td></td>
+							{% endfor %}
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
 		<a href="{{ path('enterprise_index') }}">volver al listado</a>
 		<a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}"><br/>editar</a>
 		{{ include('enterprise/_delete_form.html.twig') }}
 
-	</div>
 
-
-{% endblock %}
+	{% endblock %}
