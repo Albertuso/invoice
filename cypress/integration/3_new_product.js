@@ -7,7 +7,7 @@ it('Select Enterprise, New Product', () => {
        
         // Select Enterprise
         cy.get('.card-body > a').click();
-        cy.get(':nth-child(2) > .nav-link').click();
+        cy.get('body > nav > .collapse > ul > :nth-child(2)').click();
 
         // Create new product
         cy.fixture('dataInvoice').then((fixedData) => {
@@ -33,15 +33,15 @@ it('Select Enterprise, New Product', () => {
         // Delete product
         cy.visit('http://www.invoice.tld/');
         cy.get('.card-body > a').click();
-        cy.get(':nth-child(2) > .nav-link').click();
+        cy.get('body > nav > .collapse > ul > :nth-child(2)').click();
         
         // CAMBIAR LA FORMA DE COGER EL BOTON EDIT, SINO SOLO FUNCIONA PARA INTRODUCIR 1 PRODUCTO
         cy.get('#tableArea > table > tbody > tr > td:nth-child(5) > a:nth-child(2)').click();
-        cy.get('body > div.container > form:nth-child(3) > button').click({force:true});
+        cy.get('body > div.container > div > div > form:nth-child(3) > button').click({force:true});
 
         cy.visit('http://www.invoice.tld/');
         cy.get('.card-body > a').click();
-        cy.get(':nth-child(2) > .nav-link').click();
+        cy.get('body > nav > .collapse > ul > :nth-child(2)').click();
         
         
     });

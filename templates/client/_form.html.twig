@@ -1,6 +1,10 @@
 {{ form_start(form) }}
-
-{{ form_label(form.name) }}
+{{ form_row(form.name, {'label': 'Nombre'}) }}
+{{ form_row(form.address, {'label': 'Dirección'}) }}
+{{ form_row(form.nif, {'label': 'DNI'}) }}
+{{ form_row(form.email, {'label': 'Email'}) }}
+{{ form_row(form.telephone, {'label': 'Teléfono'}) }}
+{{ form_row(form.web, {'label': 'Página web'}) }}
 {{ form_widget(form.name) }}
 {{ form_label(form.address) }}
 {{ form_widget(form.address) }}
@@ -26,13 +30,14 @@
 
 <script>
 	var number = document.querySelector("#supervisor\\[\\]").options.length;
-		for (i = 0; i < number; i ++) {
-		if ( "{{client.supervisor.name}}" == document.querySelector("#supervisor\\[\\]").options[i].text  ) {
-		document.querySelector("#supervisor\\[\\]").selectedIndex = i;
-}
-
+for (i = 0; i < number; i ++) {
+{% if client.supervisor.name is defined %}
+	if ("{{ client.supervisor.name }}" == document.querySelector("#supervisor\\[\\]").options[i].text) {
+	document.querySelector("#supervisor\\[\\]").s}electedIndex = i;
+{% endif %}
 }
 </script>
+
 {# {{ dump (client.supervisor.name)}} #}
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

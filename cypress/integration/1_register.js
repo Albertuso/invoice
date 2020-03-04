@@ -1,6 +1,6 @@
 context('Register and Edit Max Enterprises', () => {
 
-	it('Visit Invoice', () => {
+        it('Visit Invoice', () => {
                 cy.visit('http://www.invoice.tld/');
         });
 
@@ -13,12 +13,12 @@ context('Register and Edit Max Enterprises', () => {
                         cy.get('#registration_form_plainPassword').type(fixedData.password)
                         cy.get('#registration_form_agreeTerms').click();
                         // REALIZAR REGISTRO
-                        cy.get('.btn').click({ force:true });
+                        cy.get('.btn').click({ force: true });
                 })
         });
 
         var admin = "admin";
-        var pw = "admin";
+        var pw = "pcw12345.";
         var nEnterprises = 5;
 
         it('Login Admin, Check New User, Edit and Check', () => {
@@ -34,17 +34,17 @@ context('Register and Edit Max Enterprises', () => {
                         cy.contains(fixedData.username);
                 });
                 // Edit number of enterprises
-                cy.contains('invoiceUser').parents('tr').find('.action-edit').click({force:true});
-                cy.get('#user_max').clear().type(nEnterprises); 
+                cy.contains('invoiceUser').parents('tr').find('.action-edit').click({ force: true });
+                cy.get('#user_max').clear().type(nEnterprises);
                 // Save
-                cy.get('.action-save').click({ force:true });
+                cy.get('.action-save').click({ force: true });
                 // Check number of enterprises
                 cy.contains('invoiceUser').parents('tr').find('.integer').contains(nEnterprises);
         });
 
         it('LogOut Admin and Login New User', () => {
                 cy.get('.user-name').click();
-                cy.get('.user-action-logout').click({ force:true });
+                cy.get('.user-action-logout').click({ force: true });
 
                 // Login New User
                 cy.get('[href="/login"]').click();
