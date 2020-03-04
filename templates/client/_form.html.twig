@@ -17,12 +17,22 @@
 <select class="form-control" id="supervisor[]" name="supervisor[]">
 	<option value=""></option>
 	{% for supervisor in supervisors %}
-		{% if supervisor.visible %}		
-				<option value="{{supervisor.id}}">{{supervisor}}</option>
+		{% if supervisor.visible %}
+			<option value="{{supervisor.id}}">{{supervisor}}</option>
 		{% endif %}
 	{% endfor %}
 
 </select>
-{{ dump (client)}}
+
+<script>
+	var number = document.querySelector("#supervisor\\[\\]").options.length;
+		for (i = 0; i < number; i ++) {
+		if ( "{{client.supervisor.name}}" == document.querySelector("#supervisor\\[\\]").options[i].text  ) {
+		document.querySelector("#supervisor\\[\\]").selectedIndex = i;
+}
+
+}
+</script>
+{# {{ dump (client.supervisor.name)}} #}
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
