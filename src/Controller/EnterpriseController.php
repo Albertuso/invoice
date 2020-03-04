@@ -60,7 +60,7 @@ class EnterpriseController extends AbstractController
                 $enterprise->setLogo($file_name);
                 $enterprise->setVisible(true);
 
-                $enterprise->setNextinvoicenumber(0);
+                $enterprise->setNextinvoicenumber(1);
                 $this->getUser()->addEnterprise($enterprise);
                 $entityManager->persist($user);
                 $entityManager->flush();

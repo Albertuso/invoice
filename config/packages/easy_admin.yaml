@@ -13,12 +13,14 @@ easy_admin:
                 fields:
                     # all users will see the first three columns
                     - username
+                    - enterprises 
                     - { property: 'max', label: 'Nº empresas max'}
 
             edit:
                 fields:
                     # all users will see the first three columns
                     - username
+                    - { property: 'enterprises', type_options: { by_reference: false } } 
                     - { property: 'max', label: 'Nº empresas max'}
             new:
                 fields: 
