@@ -12,7 +12,6 @@
 						{{user.username}}
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
 						<a class="dropdown-item" href="{{ path('app_logout')}}">Desloguear</a>
 					</div>
 				</li>
@@ -20,16 +19,12 @@
 		</div>
 	</nav>
 {% endblock %}
-
 {% block body %}
-
 	<div class="container mt-2">
 		<h2>Seleccione una empresa</h2>
-
 		<div class="row">
 			<div class="col-12">
-
-				<div class="card-deck">
+				<div class="card-deck" id="tarjeta">
 					{% for enterprise in user.enterprises %}
 						{% if enterprise.visible == true %}
 							<div class="card bg-light">
@@ -45,28 +40,21 @@
 									<a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a>
 								</div>
 								<p class="card-text text-center">
-									<a href="{{path('enterprise_edit', {id: enterprise.id})}}">editar</a>
-									<a href="{{path('enterprise_delete', {id: enterprise.id})}}">eliminar</a>
+									<a href="{{path('enterprise_edit', {id: enterprise.id})}}">Editar</a>
+									<a href="{{path('enterprise_delete', {id: enterprise.id})}}">Eliminar</a>
 								</p>
-
 							</div>
 						{% endif %}
-
-
 					{% endfor %}
-
 					{% set visibles = 0 %}
 					{% for enterprise in user.enterprises %}
 						{% if enterprise.visible == true %}
 							{% set visibles = visibles +1 %}
 						{% endif %}
-
 					{% endfor %}
-
 					{# {% for i in range(visibles + 1, user.max) %} #}
 					{% if visibles != user.max %}
 						{% for i in visibles+1..user.max %}
-
 							<div class="card bg-light">
 								<div class="card-body text-center">
 									<p class="card-text">
@@ -74,11 +62,8 @@
 									</p>
 								</div>
 							</div>
-
 						{% endfor %}
 					{% endif %}
-
-
 				</div>
 			</div>
 		</div>

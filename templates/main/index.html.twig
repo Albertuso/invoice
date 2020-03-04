@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello MainController!
+  {% if user.username is defined %}
+    Hola,    
+  {{ user.username }}
+  {% else %}
+	Bienvenido a factura facil
+	{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -21,8 +26,6 @@
       {% if admin == true %}
         {# verificamos si es un administrador.... #}
 
-
-        
         {# {{ include('main/admin.html.twig') }}         #}
       {% else %}
         {{ include('main/user.html.twig') }}       
