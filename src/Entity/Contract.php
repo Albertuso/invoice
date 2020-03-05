@@ -45,6 +45,11 @@ class Contract
      */
     private $client;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $observation;
+
     public function __construct()
     {
         $this->line = new ArrayCollection();
@@ -130,6 +135,18 @@ class Contract
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getObservation(): ?string
+    {
+        return $this->observation;
+    }
+
+    public function setObservation(string $observation): self
+    {
+        $this->observation = $observation;
 
         return $this;
     }

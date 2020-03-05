@@ -16,7 +16,13 @@
       </li>
         <li class="nav-item">
         <a class="nav-link" href="{{ path('invoice_index', {'idclient': client.id}) }}">Mostrar Facturas</a>
-      </li>    
+      </li> 
+         {# GENERAR PRESUPUESTO #}
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ path('invoice_index', {'idclient': client.id}) }}">Mostrar Presupuesto</a>
+      </li>   
+
     </ul>
     <ul class="nav navbar-nav navbar-right mobileNav pull-right navbar-text" id="navbarNavDropdown">
       <li class="nav-item dropdown">
