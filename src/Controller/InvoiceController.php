@@ -100,7 +100,6 @@ class InvoiceController extends AbstractController
                 $newLine->setQuantity($quantities[$i]);
                 $newLine->setPrice($prices[$i]);
                 $newLine->setVat($vats[$i]);
-
                 $invoice->addLine($newLine);
             }
 
@@ -369,6 +368,7 @@ class InvoiceController extends AbstractController
         $newinvoice->setTotal($invoice->getTotal());
         $newinvoice->setClient($invoice->getClient());
         $newinvoice->setEnterprise($invoice->getEnterprise());
+    
         //Subo id de invoicenext
         $enterprise->setNextinvoicenumber($enterprise->getNextinvoicenumber() + 1);
 

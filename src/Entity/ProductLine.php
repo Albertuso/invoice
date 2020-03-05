@@ -44,7 +44,7 @@ class ProductLine
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Contract", inversedBy="line")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $contract;
 
