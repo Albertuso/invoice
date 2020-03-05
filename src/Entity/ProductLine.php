@@ -42,6 +42,12 @@ class ProductLine
      */
     private $invoice;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Contract", inversedBy="line")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contract;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,5 +115,17 @@ class ProductLine
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getContract(): ?Contract
+    {
+        return $this->contract;
+    }
+
+    public function setContract(?Contract $contract): self
+    {
+        $this->contract = $contract;
+
+        return $this;
     }
 }

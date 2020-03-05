@@ -69,10 +69,16 @@ class Client
      */
     private $visible;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contract", mappedBy="client")
+     */
+    private $contracts;
+
 
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +226,37 @@ class Client
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contract[]
+     */
+    public function getContracts(): Collection
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract): self
+    {
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts[] = $contract;
+            $contract->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): self
+    {
+        if ($this->contracts->contains($contract)) {
+            $this->contracts->removeElement($contract);
+            // set the owning side to null (unless already changed)
+            if ($contract->getClient() === $this) {
+                $contract->setClient(null);
+            }
+        }
 
         return $this;
     }
