@@ -1,8 +1,5 @@
 {{ form_start(form) }}
-{{ form_row(form.name, {'label': 'Nombre'}) }}
-{{ form_label(form.name)}}
-{{ form_widget(form.name)}}
-
+	{{ form_row(form.name, {'label': 'Nombre'}) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

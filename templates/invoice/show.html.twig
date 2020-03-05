@@ -1,23 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Ver factura
 {% endblock %}
-
 {% block nav %}
 	{{ include('invoice/navbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Ver factura</h1>
-
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -39,8 +32,7 @@
 					<td>{{ invoice.subtotal }}</td>
 					<td>{{ invoice.total }}</td>
 					<td>
-						<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
-
+						<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
 					</td>
 				</tr>
 			</tbody>
@@ -49,7 +41,5 @@
 			<button class="btn">Duplicar</button>
 		</form>
 		{{ include('invoice/_delete_form.html.twig') }}
-
 	</div>
-
 {% endblock %}

@@ -1,22 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Listado de responsables
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de responsables</h1>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -36,7 +30,6 @@
 							</td>
 						</tr>
 					{% endif %}
-
 				{% else %}
 					<tr>
 						<td colspan="4">No se han encontrado resultados</td>
@@ -44,7 +37,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
 		<a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
 	</div>
 {% endblock %}

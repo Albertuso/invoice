@@ -103,7 +103,7 @@ class InvoiceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('i')
 
-            ->innerJoin('i.client', 'c', Join::ON, 'c.id = i.client')
+            ->innerJoin('i.client', 'c',  'c.id = i.client')
             ->orwhere('c.name = :clientid')
             ->setParameter('clientid', $value)
             ->orwhere('i.description LIKE :val')
@@ -121,9 +121,10 @@ class InvoiceRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
 
+
         $query = $entityManager->createQuery(
             'SELECT i 
-                FROM App:Invoice i INNER JOIN App:Client c
+                FROM App:Invoice i , App:Client c
                 WHERE i.enterprise = '.$identerprise.'
                 AND i.description LIKE :val
                 OR c.name LIKE :val
@@ -134,6 +135,20 @@ class InvoiceRepository extends ServiceEntityRepository
                 OR i.invoicenumber LIKE :val
                 ORDER BY i.invoicenumber ASC'
         )
+
+        // $query = $entityManager->createQuery(
+        //     'SELECT i 
+        //         FROM App:Invoice i INNER JOIN App:Client c
+        //         WHERE i.enterprise = '.$identerprise.'
+        //         AND i.description LIKE :val
+        //         OR c.name LIKE :val
+        //         OR c.address LIKE :val
+        //         OR i.subtotal LIKE :val
+        //         OR i.total LIKE :val
+        //         OR i.date LIKE :val
+        //         OR i.invoicenumber LIKE :val
+        //         ORDER BY i.invoicenumber ASC'
+        // )
             ->setParameter('val', '%' . $value . '%');
 
 

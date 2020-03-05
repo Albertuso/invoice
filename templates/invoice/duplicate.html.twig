@@ -1,29 +1,19 @@
 {% extends 'base.html.twig' %}
-
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Editar factura
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/navbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
 	{{ form_start(form) }}
-
-
 	<div class="container content-invoice">
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-
-
 					<h1>Duplicar factura</h1>
 				</div>
 			</div>
@@ -36,11 +26,7 @@
 					Nº de Factura:
 					{{ invoice.invoicenumber }}
 				</div>
-
-
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
-
 					<h3>Cliente,</h3>
 					{{client.name}}<br>
 					{{client.address}}<br>
@@ -65,7 +51,7 @@
 							{# <th width="250px">Descripci&oacute;n</th> #}
 							<th width="40px">Cantidad</th>
 							<th width="80px">Precio</th>
-							<th width="40px">%VAT</th>
+							<th width="40px">%IVA</th>
 							<th width="80px">Total</th>
 						</tr>
 						{% set count = 0 %}
@@ -81,7 +67,6 @@
 								<td><input required type="number" disabled value="{{total}}" step="any" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
 							</tr>
 						{% endfor %}
-
 					</table>
 				</div>
 			</div>
@@ -98,7 +83,6 @@
 					<div
 						class="form-group">
 						{# <textarea class="form-control txt" rows="5" name="invoice[description]" maxlength="255" id="invoice_description" placeholder="Descripción"></textarea> #}
-
 						{{ form_widget(form.description)}}
 					</div>
 					<br>
@@ -106,48 +90,31 @@
 						<input type="hidden" value="<?php echo $_SESSION['userid']; ?>" class="form-control" name="userId">
 						<input data-loading-text="Guardando factura..." type="submit" name="invoice_btn" value="Guardar Factura" class="btn btn-success submit_btn invoice-save-btm">
 					</div>
-
 				</div>
-
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
 					<div class="input-group">
 						<label>Tasa Impuestos:</label>
 						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
 						<div class="input-group-addon">%</div>
 					</div>
-
 					<div class="input-group">
 						<label>Subtotal:</label>
 						{{ form_widget(form.subtotal)}}
-
 						<div class="input-group-addon">euros</div>
 					</div>
-
 					<div class="input-group">
 						<label>total:</label>
 						{{ form_widget(form.total)}}
-
 						<div class="input-group-addon">euros</div>
 					</div>
-
-
 				</div>
-
 			</div>
 			<div class="clearfix"></div>
 		</div>
-
 	{{ form_end(form) }}
 	</div>
-
-
-	
-
-	{# <a href="{{ path('invoice_index') }}">back to list</a> #}
-
+	{# <a href="{{ path('invoice_index') }}">Regresar al listado</a> #}
 {% endblock %}
-
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/invoice.js') }}"></script>

@@ -1,16 +1,11 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Listado de facturas de empresa
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
-
 	<div class="container" id="tableArea">
-
 		<div class="row justify-content-center">
 			<div class="col-9">
 				<h1>Listado de facturas</h1>
@@ -19,10 +14,8 @@
 				{{form_start(form)}}
 				{{form_label(form.buscar)}}{{form_widget(form.buscar)}}
 				{{form_end(form)}}
-
 			</div>
 		</div>
-
 		<div class="row mt-2">
 			<table class="table table-striped">
 				<thead>
@@ -56,7 +49,6 @@
 								{% set sumTotal = sumTotal + invoiceseterprise.total %}
 							</tr>
 						{% endif %}
-
 					{% else %}
 						<tr>
 							<td colspan="8">No se han encontrado resultados</td>
@@ -73,10 +65,7 @@
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 		<a href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
 	</div>
-
-
 {% endblock %}

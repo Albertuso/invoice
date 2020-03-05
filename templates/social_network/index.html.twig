@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Indice de redes sociales
 {% endblock %}
 {% block nav %}
 	{# {{ include('navbar/shownavbar.html.twig') }} #}
 {% endblock %}
-
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Indice de redes sociales</h1>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -27,7 +23,6 @@
 							</td>
 						</tr>
 					{% endif %}
-
 				{% else %}
 					<tr>
 						<td colspan="3">No se han encontrado registros</td>
@@ -35,7 +30,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
 		<a href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

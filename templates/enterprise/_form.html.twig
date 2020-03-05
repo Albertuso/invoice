@@ -1,23 +1,12 @@
 {{ form_start(form, {'enctype':'multipart/form-data'}) }}
-
-{{ form_row(form.name, {'label': 'Nombre'}) }}
-{{ form_row(form.address, {'label': 'Dirección'}) }}
-{{ form_row(form.telephone, {'label': 'Teléfono'}) }}
-{{ form_row(form.email, {'label': 'Email'}) }}
-{{ form_row(form.web, {'label': 'Web'}) }}
-{{ form_row(form.nif, {'label': 'CIF'}) }}
-{{ form_row(form.footer, {'label': 'Pie de página'}) }}
-{{ form_row(form.logo, {'label': 'Logo'}) }}
-
-{{ form_widget(form.name) }}
-{{ form_widget(form.address) }}
-{{ form_widget(form.telephone) }}
-{{ form_widget(form.email) }}
-{{ form_widget(form.web) }}
-{{ form_widget(form.nif) }}
-{{ form_widget(form.footer) }}
-{{ form_widget(form.logo) }}
-
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Guardar') }}</button>
+	{{ form_row(form.name, {'label': 'Nombre'}) }}
+	{{ form_row(form.address, {'label': 'Dirección'}) }}
+	{{ form_row(form.telephone, {'label': 'Teléfono'}) }}
+	{{ form_row(form.email, {'label': 'Email'}) }}
+	{{ form_row(form.web, {'label': 'Web'}) }}
+	{{ form_row(form.nif, {'label': 'CIF'}) }}
+	{{ form_row(form.footer, {'label': 'Pie de página'}) }}
+	{{ form_row(form.logo, {'label': 'Logo'}) }}
+	{{ form_widget(form) }}
+	<button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

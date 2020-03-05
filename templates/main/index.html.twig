@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}
   {% if user.username is defined %}
     Hola,    
@@ -8,14 +7,12 @@
 	Bienvenido a factura facil
 	{% endif %}
 {% endblock %}
-
 {% block body %}
   <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font:
     18px/1.5 sans-serif; } .example-wrapper code { background: #F5F5F5; padding:
     2px 6px; }
   </style>
-
     {% set admin = false %}
     {% if user.roles is defined %}
       {% for rol in user.roles %}
@@ -33,7 +30,5 @@
       {% else %}
         {# no tiene roles #}
         {{ include('main/register.html.twig') }}
-          
     {% endif %}
-
 {% endblock %}

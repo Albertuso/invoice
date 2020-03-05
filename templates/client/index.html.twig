@@ -1,18 +1,12 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Listado de clientes
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
-
-
 	<div class="container" id="tableArea">
 		<h1>Listado de clientes</h1>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -28,7 +22,6 @@
 			</thead>
 			<tbody>
 				{% for client in clients %}
-
 					{% if client.visible %}
 						<tr>
 							<td>{{ client.name }}</td>
@@ -44,7 +37,6 @@
 							</td>
 						</tr>
 					{% endif %}
-
 				{% else %}
 					<tr>
 						<td colspan="8">No se han encontrado resultados</td>
@@ -54,6 +46,4 @@
 		</table>
 		<a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 	</div>
-
-
 {% endblock %}

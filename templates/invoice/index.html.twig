@@ -1,21 +1,14 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Listado de facturas
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
-
 {% block body %}
-
 	<div class="container" id="tableArea">
 		<h1>Listado de facturas</h1>
 		<table
@@ -43,13 +36,11 @@
 							<td>{{ invoice.total }}</td>
 							<td>
 								<a href="{{ path('invoice_print', {'id': invoice.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
-								<a href="{{ path('invoice_show', {'id': invoice.id}) }}">show</a>
-								<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
+								<a href="{{ path('invoice_show', {'id': invoice.id}) }}">Mostrar</a>
+								<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
 							</td>
-
 						</tr>
 					{% endif %}
-
 				{% else %}
 					<tr>
 						<td colspan="8">No se han encontrado resultados</td>
@@ -57,8 +48,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
 	</div>
-
-	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Create new</a>
+	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Crear nueva</a>
 {% endblock %}

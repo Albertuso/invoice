@@ -5,17 +5,6 @@
 {{ form_row(form.email, {'label': 'Email'}) }}
 {{ form_row(form.telephone, {'label': 'Teléfono'}) }}
 {{ form_row(form.web, {'label': 'Página web'}) }}
-{{ form_widget(form.name) }}
-{{ form_label(form.address) }}
-{{ form_widget(form.address) }}
-{{ form_label(form.nif) }}
-{{ form_widget(form.nif) }}
-{{ form_label(form.email) }}
-{{ form_widget(form.email) }}
-{{ form_label(form.telephone) }}
-{{ form_widget(form.telephone) }}
-{{ form_label(form.web) }}
-{{ form_widget(form.web) }}
 
 <label for="supervisor[]">Supervisor</label>
 <select class="form-control" id="supervisor[]" name="supervisor[]">
@@ -25,9 +14,7 @@
 			<option value="{{supervisor.id}}">{{supervisor}}</option>
 		{% endif %}
 	{% endfor %}
-
 </select>
-
 <script>
 	var number = document.querySelector("#supervisor\\[\\]").options.length;
 for (i = 0; i < number; i ++) {
@@ -37,7 +24,6 @@ for (i = 0; i < number; i ++) {
 {% endif %}
 }
 </script>
-
 {# {{ dump (client.supervisor.name)}} #}
-<button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

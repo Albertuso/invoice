@@ -1,26 +1,17 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Nuevo responsable
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
-
-
 	<div class="container">
 		<h1>Crear nuevo responsable</h1>
-
 		{{ include('supervisor/_form.html.twig') }}
-
 		{# <a href="{{ path('supervisor_index') }}">Regresar a listado de supervisores</a> #}
 	</div>
 {% endblock %}

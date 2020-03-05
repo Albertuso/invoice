@@ -1,17 +1,12 @@
 {% extends 'base.html.twig' %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block title %}Listado de redes
 {% endblock %}
-
 {% block body %}
 	<h1>Listado de redes</h1>
-
 	<div class="container" id="tableArea">
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -29,7 +24,6 @@
 							</td>
 						</tr>
 					{% endif %}
-
 				{% else %}
 					<tr>
 						<td colspan="3">No se han encontrado resultados</td>
@@ -37,7 +31,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
 		<a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

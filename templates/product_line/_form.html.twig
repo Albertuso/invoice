@@ -1,4 +1,8 @@
 {{ form_start(form) }}
+	{{ form_row(form.name, {'label': 'Nombre'}) }}
+	{{ form_row(form.quantity, {'label': 'Cantidad'}) }}
+	{{ form_row(form.vat, {'label': 'IVA'}) }}
+	{{ form_row(form.price, {'label': 'Precio'}) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}

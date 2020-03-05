@@ -1,4 +1,12 @@
 {{ form_start(form) }}
+	{{ form_row(form.name, {'label': 'Nombre'}) }}
+	{{ form_row(form.price, {'label': 'Precio'}) }}
+	{{ form_row(form.vat, {'label': 'IVA'}) }}
+	{{ form_row(form.description, {'label': 'Descripcion'}) }}
+	{{ form_widget(form.name) }}
+	{{ form_widget(form.price) }}
+	{{ form_widget(form.vat) }}
+	{{ form_widget(form.description) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}
