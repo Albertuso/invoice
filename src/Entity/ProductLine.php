@@ -42,6 +42,11 @@ class ProductLine
      */
     private $invoice;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Budget", inversedBy="line")
+     */
+    private $budget;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,5 +114,17 @@ class ProductLine
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getBudget(): ?Budget
+    {
+        return $this->budget;
+    }
+
+    public function setBudget(?Budget $budget): self
+    {
+        $this->budget = $budget;
+
+        return $this;
     }
 }

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
+
+{% endblock %}
+
+{% block title %}Listado de presupuestos
+{% endblock %}
+
+{% block nav %}
+	{{ include('navbar/shownavbar.html.twig') }}
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="container" id="tableArea">
+		<h1>Listado de presupuestos</h1>
+		<table
+			id="dtHorizontalExample" class="table table-striped table-sm" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>Nº presupuesto</th>
+					<th>Fecha</th>
+					<th>Contrato</th>
+					<th>Pie de página</th>
+					<th>Subtotal</th>
+					<th>Total</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for invoice in invoices %}
+					{% if invoice.visible %}
+						<tr>
+							<td>{{ invoice.invoicenumber}}</td>
+							<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
+							<td>{{ invoice.description }}</td>
+							<td>{{ invoice.footer }}</td>
+							<td>{{ invoice.subtotal }}</td>
+							<td>{{ invoice.total }}</td>
+							<td>
+								<a href="{{ path('invoice_print', {'id': invoice.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
+								<a href="{{ path('invoice_show', {'id': invoice.id}) }}">show</a>
+								<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
+							</td>
+
+						</tr>
+					{% endif %}
+
+				{% else %}
+					<tr>
+						<td colspan="8">No se han encontrado resultados</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+
+	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Create new</a>
+{% endblock %}

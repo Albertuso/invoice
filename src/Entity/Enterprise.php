@@ -99,6 +99,11 @@ class Enterprise
      */
     private $visible;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Budget", mappedBy="enterprise")
+     */
+    private $budgets;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -106,6 +111,7 @@ class Enterprise
         $this->invoices = new ArrayCollection();
         $this->socialnetwork = new ArrayCollection();
         $this->supervisors = new ArrayCollection();
+        $this->budgets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -400,6 +406,37 @@ class Enterprise
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Budget[]
+     */
+    public function getBudgets(): Collection
+    {
+        return $this->budgets;
+    }
+
+    public function addBudget(Budget $budget): self
+    {
+        if (!$this->budgets->contains($budget)) {
+            $this->budgets[] = $budget;
+            $budget->setEnterprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBudget(Budget $budget): self
+    {
+        if ($this->budgets->contains($budget)) {
+            $this->budgets->removeElement($budget);
+            // set the owning side to null (unless already changed)
+            if ($budget->getEnterprise() === $this) {
+                $budget->setEnterprise(null);
+            }
+        }
 
         return $this;
     }
