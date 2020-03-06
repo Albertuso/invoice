@@ -32,33 +32,33 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for invoice in invoices %}
-					{% if invoice.visible %}
+				{% for budget in budgets %}
+					{# {% if budget.visible %} #}
 						<tr>
-							<td>{{ invoice.invoicenumber}}</td>
-							<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
-							<td>{{ invoice.description }}</td>
-							<td>{{ invoice.footer }}</td>
-							<td>{{ invoice.subtotal }}</td>
-							<td>{{ invoice.total }}</td>
+							<td>{{ budget.invoicenumber}}</td>
+							<td>{{ budget.date ? budget.date|date('Y-m-d') : '' }}</td>
+							<td>{{ budget.description }}</td>
+							<td>{{ budget.footer }}</td>
+							<td>{{ budget.subtotal }}</td>
+							<td>{{ budget.total }}</td>
 							<td>
-								<a href="{{ path('invoice_print', {'id': invoice.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
-								<a href="{{ path('invoice_show', {'id': invoice.id}) }}">show</a>
-								<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
+								<a href="{{ path('invoice_print', {'id': budget.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
+								<a href="{{ path('invoice_show', {'id': budget.id}) }}">show</a>
+								<a href="{{ path('invoice_edit', {'id': budget.id}) }}">edit</a>
 							</td>
 
 						</tr>
-					{% endif %}
+					{# {% endif %} #}
 
-				{% else %}
+				{# {% else %}
 					<tr>
 						<td colspan="8">No se han encontrado resultados</td>
-					</tr>
+					</tr> #}
 				{% endfor %}
 			</tbody>
 		</table>
 
 	</div>
 
-	<a href="{{ path('invoice_new', {'idclient': idclient}) }}">Create new</a>
+	<a href="{{ path('budget_new', {'idclient': idclient}) }}">Create new</a>
 {% endblock %}

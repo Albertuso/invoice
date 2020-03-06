@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}" />
+    
+{% endblock %}
+
+{% block title %}Nuevo presupuesto{% endblock %}
+
+{% block nav %}
+{{ include('invoice/navbar.html.twig') }}
+{% endblock %} 
+
+{% block body %}  
+    {{ form_start(form) }}
+
+
+    {% include "budget/basebudget.html.twig" %}    
+    
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    {# <a href="{{ path('invoice_index') }}">back to list</a> #}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/invoice.js') }}"></script>    
+{% endblock %}
