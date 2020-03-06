@@ -34,14 +34,14 @@
 									{% set imagen = "img/logos/default.png" %}
 								{% endif %}
 								<div class="card-header">
-									<a href="{{path('enterprise_show', {id: enterprise.id})}}"><img src="{{ asset(imagen)}}" width="100%"></a>
+									<a class="buttonize" href="{{path('enterprise_show', {id: enterprise.id})}}"><img src="{{ asset(imagen)}}" width="100%"></a>
 								</div>
 								<div class="card-body text-center">
 									<a href="{{path('enterprise_show', {id: enterprise.id})}}">{{ enterprise.name }}</a>
 								</div>
 								<p class="card-text text-center">
-									<a href="{{path('enterprise_edit', {id: enterprise.id})}}">Editar</a>
-									<a href="{{path('enterprise_delete', {id: enterprise.id})}}">Eliminar</a>
+									<a class="buttonize" href="{{path('enterprise_edit', {id: enterprise.id})}}">Editar</a>
+									<a class="buttonize" href="{{path('enterprise_delete', {id: enterprise.id})}}">Eliminar</a>
 								</p>
 							</div>
 						{% endif %}

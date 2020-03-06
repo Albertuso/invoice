@@ -26,7 +26,7 @@
 							<td>{{ supervisor.name }}</td>
 							<td>{{ supervisor.telephone }}</td>
 							<td>
-								<a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -37,6 +37,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+		<a class="buttonize" href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
 	</div>
 {% endblock %}

@@ -9,11 +9,6 @@ https://es.stackoverflow.com/questions/93416/c%C3%B3mo-permitir-%C3%BAnicamente-
 
 5. A los listados podremos editar la factura SOLO SI ES LA ÚLTIMA EMITIDA, crear una nueva a partir de ella, mandarla por mail o guardarla como pdf/imprimirla.
 
-6. mirar NETWORK bug
-
-7. No calcula bien los subtotales
-
-8. Editar cliente no coge el supervisor por defecto
 
 
 

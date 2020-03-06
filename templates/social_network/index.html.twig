@@ -19,7 +19,7 @@
 						<tr>
 							<td>{{ social_network.url }}</td>
 							<td>
-								<a href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -30,6 +30,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
+		<a class="buttonize" class="buttonize" href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

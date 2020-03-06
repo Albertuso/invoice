@@ -32,8 +32,9 @@
 							<td>{{ client.web }}</td>
 							<td>{{ client.supervisor }}</td>
 							<td>
-								<a href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
-								<a href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
+								<a class="buttonize" href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('invoice_new', {'idclient': client.id}) }}">Nueva Factura</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -44,6 +45,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
+		<a class="buttonize" href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 	</div>
 {% endblock %}

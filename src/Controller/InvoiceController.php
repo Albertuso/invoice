@@ -166,7 +166,7 @@ class InvoiceController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
-
+            
             $names = $_REQUEST['productName'];
             $quantities = $_REQUEST['quantity'];
             $prices = $_REQUEST['price'];
@@ -174,33 +174,17 @@ class InvoiceController extends AbstractController
 
             //Aqui toca comprobar que la nueva factura es válida
 
-            for ($i = 0; $i < count($names); $i++) {
-
-                $newLine = new ProductLine();
-
-                $newLine->setName($names[$i]);
-                $newLine->setQuantity($quantities[$i]);
-                $newLine->setPrice($prices[$i]);
-                $newLine->setVat($vats[$i]);
-
-                $invoice->addLine($newLine);
-            }
-
             //Guardo las lineas 
             for ($i = 0; $i < count($names); $i++) {
-
                 $newLine = new ProductLine();
-
                 $newLine->setName($names[$i]);
                 $newLine->setQuantity($quantities[$i]);
                 $newLine->setPrice($prices[$i]);
                 $newLine->setVat($vats[$i]);
-
                 $invoice->addLine($newLine);
             }
 
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
         }
 

@@ -8,8 +8,7 @@
     <div class="container">
         <h1>Crear nueva red social</h1>
         {{ include('social_network/_form.html.twig') }}
-        <a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Añadir red social</a>
+        <a class="buttonize" href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Añadir red social</a>
     </br/>
-    {# <a href="{{ path('social_network_index', ['identerprise', enterprise.id]) }}">Regresar a listado de red social</a> #}
 </div>
 {% endblock %}

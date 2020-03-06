@@ -24,8 +24,8 @@
 							<td>{{ product_line.vat }}</td>
 							<td>{{ product_line.name }}</td>
 							<td>
-								<a href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
-								<a href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
+								<a class="buttonize" href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -36,6 +36,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
+		<a class="buttonize" href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
 	</div>
 {% endblock %}

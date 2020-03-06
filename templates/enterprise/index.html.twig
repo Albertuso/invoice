@@ -33,8 +33,8 @@
 							<td>{{ enterprise.logo }}</td>
 							<td>{{ enterprise.footer }}</td>
 							<td>
-								<a href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Mostrar</a>
-								<a href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">Editar</a>
+								<a class="buttonize" href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Mostrar</a>
+								<a class="buttonize" href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">Editar</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -46,5 +46,5 @@
 			</tbody>
 		</table>
 	</div>
-	<a href="{{ path('enterprise_new') }}">Crear nuevo</a>
+	<a class="buttonize" href="{{ path('enterprise_new') }}">Crear nuevo</a>
 {% endblock %}

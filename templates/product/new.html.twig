@@ -8,6 +8,6 @@
 	<div class="container">
 		<h1>Crear nuevo producto</h1>
 		{{ include('product/_form.html.twig') }}
-		<a href="{{ path('product_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
+		<a class="buttonize" href="{{ path('product_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
 	</div>
 {% endblock %}

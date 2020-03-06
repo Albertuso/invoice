@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nueva red social{% endblock %}
+{% block title %}Nueva red social
+{% endblock %}
+
+{% block nav %}
+	{{ include('navbar/shownavbar.html.twig') }}
+{% endblock %}
+
 {% block body %}
-    <h1>Nueva red social</h1>
-    {{ include('network/_form.html.twig') }}
-    <a href="{{ path('network_index', {'identerprise': identerprise}) }}">Regresar al listado de redes sociales</a>
+
+	<div class="container">
+		<h1>Nueva red social</h1>
+		{{ include('network/_form.html.twig') }}
+		<a class="buttonize" href="{{ path('network_index', {'identerprise': identerprise}) }}">Regresar al listado de redes sociales</a>
+
+	</div>
 {% endblock %}

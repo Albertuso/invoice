@@ -36,8 +36,8 @@
 							<td>{{ invoice.total }}</td>
 							<td>
 								<a href="{{ path('invoice_print', {'id': invoice.id}) }}"><img src="{{ asset('img/print.png')}}" width="25px"></a>
-								<a href="{{ path('invoice_show', {'id': invoice.id}) }}">Mostrar</a>
-								<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
+								<a class="buttonize" class="buttonize" href="{{ path('invoice_show', {'id': invoice.id}) }}">Mostrar</a>
+								<a class="buttonize" class="buttonize" href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
 							</td>
 						</tr>
 					{% endif %}

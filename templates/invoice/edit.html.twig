@@ -14,7 +14,7 @@
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-					<h1>Editar nueva factura</h1>
+					<h1>Editar factura</h1>
 				</div>
 			</div>
 			<div class="row">
@@ -56,11 +56,12 @@
 						</tr>
 						{% set count = 0 %}
 						{% for line in lines %}
-                        {% set count = count + 1 %}
-                        {% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+							{% set count = count + 1 %}
+							{% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
 							<tr>
 								<td><input class="itemRow" type="checkbox"></td>
-								<td><input required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
+								<td><input required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div>
+								</td>
 								<td><input required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
 								<td><input required type="number" value="{{line.price}}" step="any" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
 								<td><input required type="number" value="{{line.vat}}" step="any" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
@@ -93,28 +94,28 @@
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<div class="input-group">
-						<label>Tasa Impuestos:</label>
-						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" step="any" placeholder="Tasa de Impuestos">
-						<div class="input-group-addon">%</div>
-					</div>
-					<div class="input-group">
-						<label>Subtotal:</label>
+						<label>Subtotal (€):</label>
 						{{ form_widget(form.subtotal)}}
-						<div class="input-group-addon">euros</div>
+				
 					</div>
 					<div class="input-group">
-						<label>total:</label>
+						<label>IVA (€):</label>
+						<input type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" step="any" placeholder="Tasa de Impuestos">
+			
+					</div>
+
+					<div class="input-group">
+						<label>Total (€):</label>
 						{{ form_widget(form.total)}}
-						<div class="input-group-addon">euros</div>
+				
 					</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
 		</div>
 
-	{{ form_end(form) }}
+		{{ form_end(form) }}
 	</div>
-	{# <a href="{{ path('invoice_index') }}">Regresar al listado</a> #}
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Network;
 use App\Form\NetworkType;
-use App\Repository\EnterpriseRepository;
+use App\Entity\Enterprise;
 use App\Repository\NetworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,11 +34,13 @@ class NetworkController extends AbstractController
     /**
      * @Route("/new/{identerprise}", name="network_new", methods={"GET","POST"})
      */
-    public function new(Request $request,$identerprise): Response
+    public function new(Request $request, $identerprise): Response
     {
         $network = new Network();
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -52,7 +54,9 @@ class NetworkController extends AbstractController
         return $this->render('network/new.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
-            'identerprise' => $identerprise,            
+            'identerprise' => $identerprise,
+            'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
@@ -71,8 +75,6 @@ class NetworkController extends AbstractController
      */
     public function edit(Request $request, Network $network): Response
     {
-        
-
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
 
@@ -94,9 +96,9 @@ class NetworkController extends AbstractController
      */
     public function delete(Request $request, Network $network): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$network->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $network->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-             $network->setVisible(false);
+            $network->setVisible(false);
             // $entityManager->remove($network);
             $entityManager->flush();
         }

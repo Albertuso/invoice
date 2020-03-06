@@ -1,0 +1,75 @@
+date/time         : 2020-03-06, 14:00:36, 47ms
+computer name     : LENOVO-E9OFP3L
+user name         : ruben
+registered owner  : ruben.segura@outlook.es
+operating system  : Windows NT New x64 build 9200
+system language   : Spanish
+system up time    : 16 hours 41 minutes
+program up time   : 59 milliseconds
+processors        : 8x Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
+physical memory   : 8176/16259 MB (free/total)
+free disk space   : (C:) 152,90 GB
+display mode      : 1536x864, 32 bit
+process id        : $b20
+allocated memory  : 21,92 MB
+command line      : "C:\xampp\sendmail\sendmail.exe" -t
+executable        : sendmail.exe
+exec. date/time   : 2012-04-16 18:30
+compiled with     : Delphi 2006/07
+madExcept version : 3.0l
+callstack crc     : $205f8196, $419d6944, $419d6944
+exception number  : 1
+exception class   : EInOutError
+exception message : I/O error 6.
+
+main thread ($380c):
+004b675c +18a8 sendmail.exe sendmail 922 +440 initialization
+77534221 +0021 ntdll.dll                      KiUserExceptionDispatcher
+0040474d +001d sendmail.exe System   262   +0 @AfterConstruction
+75766357 +0017 KERNEL32.DLL                   BaseThreadInitThunk
+
+thread $35ec:
+75766357 +17 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $4280:
+75766357 +17 KERNEL32.DLL  BaseThreadInitThunk
+
+thread $3cc8:
+75766357 +17 KERNEL32.DLL  BaseThreadInitThunk
+
+stack dump:
+0019f6c0  5c 67 4b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  \gK.............
+0019f6d0  d4 f6 19 00 5c 67 4b 00 - a0 ca 4d 02 5c 67 4b 00  ....\gK...M.\gK.
+0019f6e0  5c 67 4b 00 f0 fd 19 00 - 70 ff 19 00 f0 f6 19 00  \gK.....p.......
+0019f6f0  00 00 00 00 64 30 40 00 - 00 00 00 00 50 4f 4d 02  ....d0@.....POM.
+0019f700  5c 67 4b 00 00 00 00 00 - ca 59 4b 00 50 4f 4d 02  \gK......YK.POM.
+0019f710  28 f8 19 00 3c f7 19 00 - 48 f7 19 00 00 00 00 00  (...<...H.......
+0019f720  00 00 00 00 00 00 00 00 - b2 8d 54 77 28 f8 19 00  ..........Tw(...
+0019f730  f0 fd 19 00 78 f8 19 00 - b4 f7 19 00 e4 fd 19 00  ....x...........
+0019f740  d0 8d 54 77 f0 fd 19 00 - 10 f8 19 00 84 8d 54 77  ..Tw..........Tw
+0019f750  28 f8 19 00 f0 fd 19 00 - 78 f8 19 00 b4 f7 19 00  (.......x.......
+0019f760  1c 67 4b 00 f0 fd 19 00 - 28 f8 19 00 00 00 00 00  .gK.....(.......
+0019f770  5f 81 52 77 28 f8 19 00 - f0 fd 19 00 78 f8 19 00  _.Rw(.......x...
+0019f780  b4 f7 19 00 1c 67 4b 00 - b4 4e 4b 00 b4 4e 4b 00  .....gK..NK..NK.
+0019f790  28 f8 19 00 00 00 00 00 - 78 f8 19 00 f0 fd 19 00  (.......x.......
+0019f7a0  32 00 00 00 00 c0 19 00 - 00 00 1a 00 00 00 00 00  2...............
+0019f7b0  00 00 00 00 00 00 00 00 - 00 00 00 00 86 f9 19 00  ................
+0019f7c0  00 00 00 00 ff ff ff ff - 9f 0e 00 00 00 00 00 00  ................
+0019f7d0  f5 00 00 00 00 00 00 00 - 00 00 00 00 91 0e 53 00  ..............S.
+0019f7e0  00 00 00 00 ae a3 47 f6 - e8 fb 19 00 c2 5c 3a 77  ......G......\:w
+0019f7f0  f0 d0 6e 00 01 00 00 08 - 80 f8 19 00 03 00 00 00  ..n.............
+
+disassembling:
+[...]
+004b6742       mov     edx, [ebp-$15c]
+004b6748       mov     eax, [$4bd968]
+004b674d       call    -$b0c2a ($405b28)      ; System.@Write0LString
+004b6752       call    -$b297b ($403ddc)      ; System.@WriteLn
+004b6757       call    -$b36bc ($4030a0)      ; System.@_IOTest
+004b675c 922 > mov     eax, [ebx+4]
+004b675f       call    -$3b3c ($4b2c28)       ; sendmail.errorLog
+004b6764 924   call    -$b1a55 ($404d14)      ; System.@RaiseAgain
+004b6769       call    -$b1a06 ($404d68)      ; System.@DoneExcept
+004b676e 931   xor     eax, eax
+004b6770       pop     edx
+[...]
