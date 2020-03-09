@@ -15,8 +15,11 @@ class BudgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class)
+            ->add('date', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('description', TextareaType::class, array('attr' => array('maxlength' => '255', 'rows' => '6', 'class' => 'form-control txt')))
+            ->add('descriptionbudget', TextareaType::class, array('label' => 'Condiciones del contrato:' ,'attr' => array('rows' => '6', 'class' => 'form-control txt')))
             ->add('footer', TextareaType::class, array('label' => "Pie de página", 'attr' => array('maxlength' => '255', 'rows' => '2', 'class' => 'form-control txt w-100')))
             ->add('subtotal', NumberType::class, array('attr' => array('readonly' => true, 'step' => "any", 'class' => 'form-control w-100')))
             ->add('total', NumberType::class, array('attr' => array('readonly' => true, 'step' => "any", 'class' => 'form-control w-100')));

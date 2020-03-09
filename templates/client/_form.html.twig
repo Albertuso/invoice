@@ -1,4 +1,5 @@
 {{ form_start(form) }}
+
 {{ form_row(form.name, {'label': 'Nombre'}) }}
 {{ form_row(form.address, {'label': 'Dirección'}) }}
 {{ form_row(form.nif, {'label': 'DNI'}) }}
@@ -19,11 +20,14 @@
 	var number = document.querySelector("#supervisor\\[\\]").options.length;
 for (i = 0; i < number; i ++) {
 {% if client.supervisor.name is defined %}
-	if ("{{ client.supervisor.name }}" == document.querySelector("#supervisor\\[\\]").options[i].text) {
-	document.querySelector("#supervisor\\[\\]").s}electedIndex = i;
+if ("{{ client.supervisor.name }}" == document.querySelector("#supervisor\\[\\]").options[i].text) {
+document.querySelector("#supervisor\\[\\]").selectedIndex = i;
+}
 {% endif %}
 }
 </script>
+<script src="{{ asset('js/validate.js')}}">
+</script>
 {# {{ dump (client.supervisor.name)}} #}
-<button class="btn">{{ button_label|default('Guardar') }}</button>
+{# <button class="btn">{{ button_label|default('Guardar') }}</button> #}
 {{ form_end(form) }}

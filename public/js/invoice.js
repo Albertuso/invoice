@@ -53,24 +53,6 @@ $(document).ready(function () {
 	$(document).on('blur', "#taxRate", function () {
 		calculateTotal();
 	});
-	// $(document).on('click', '.deleteInvoice', function () {
-	// 	var id = $(this).attr("id");
-	// 	if (confirm("Are you sure you want to remove this?")) {
-	// 		$.ajax({
-	// 			url: "action.php",
-	// 			method: "POST",
-	// 			dataType: "json",
-	// 			data: { id: id, action: 'delete_invoice' },
-	// 			success: function (response) {
-	// 				if (response.status == 1) {
-	// 					$('#' + id).closest("tr").remove();
-	// 				}
-	// 			}
-	// 		});
-	// 	} else {
-	// 		return false;
-	// 	}
-	// });
 });
 
 function decimales(x) {
@@ -91,10 +73,6 @@ function calculateTotal() {
 			}
 		});
 
-
-
-
-
 		var id = $(this).attr('id');
 		id = id.replace("price_", '');
 		var price = $('#price_' + id).val();
@@ -113,11 +91,14 @@ function calculateTotal() {
 		sumTotal += total; //suma de totales
 	});
 	$('#invoice_subtotal').val(parseFloat(subTotal));
+	$('#budget').val(parseFloat(subTotal));
 
 	$('#taxAmount').val(decimales(sumVat));
 	$('#taxRate').val(decimales(sumVat));
 	$('#invoice_total').val(decimales(sumTotal));
+	$('#budget_total').val(decimales(sumTotal));
 	$('#invoice_subtotal').val(decimales(subTotal));
+	$('#budget_subtotal').val(decimales(subTotal));
 
 }
 

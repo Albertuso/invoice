@@ -91,6 +91,8 @@ class ClientController extends AbstractController
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
+        $enterpriseRepository = $this->getDoctrine()->getRepository(Enterprise::class);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -111,6 +113,7 @@ class ClientController extends AbstractController
             'client' => $client,
             'form' => $form->createView(),
             'enterprise' => $client->getEnterprise(),
+            'enterprises' => $enterpriseRepository->findByUser($this->getUser()),
             'supervisors' => $client->getEnterprise()->getSupervisors(),
         ]);
     }

@@ -58,7 +58,7 @@
 						{% set count = 0 %}
 						{% for line in lines %}
 							{% set count = count + 1 %}
-							{% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+							{% set total = (line.price * line.quantity) + (line.price * line.quantity * (line.vat/100))%}
 							<tr>
 								<td><input readonly required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div>
 								</td>

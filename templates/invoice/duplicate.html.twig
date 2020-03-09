@@ -44,30 +44,33 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<table class="table table-striped" id="invoiceItem">
-						<tr>
-							<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
-							<th width="100px">Nombre Producto</th>
-							{# <th width="250px">Descripci&oacute;n</th> #}
-							<th width="40px">Cantidad</th>
-							<th width="80px">Precio</th>
-							<th width="40px">%IVA</th>
-							<th width="80px">Total</th>
-						</tr>
-						{% set count = 0 %}
-						{% for line in lines %}
-                        {% set count = count + 1 %}
-                        {% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+					<div class="table-responsive text-nowrap">
+						<table class="table table-striped" id="invoiceItem">
 							<tr>
-								<td><input class="itemRow" type="checkbox"></td>
-								<td><input required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div></td>
-								<td><input required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
-								<td><input required type="number" value="{{line.price}}" step="any" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
-								<td><input required type="number" value="{{line.vat}}" step="any" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
-								<td><input required type="number" disabled value="{{total}}" step="any" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
+								<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
+								<th width="100px">Nombre Producto</th>
+								{# <th width="250px">Descripci&oacute;n</th> #}
+								<th width="40px">Cantidad</th>
+								<th width="80px">Precio</th>
+								<th width="40px">%IVA</th>
+								<th width="80px">Total</th>
 							</tr>
-						{% endfor %}
-					</table>
+							{% set count = 0 %}
+							{% for line in lines %}
+								{% set count = count + 1 %}
+								{% set total = (line.price * line.quantity) + (line.price * line.quantity * (line.vat/100))%}
+								<tr>
+									<td><input class="itemRow" type="checkbox"></td>
+									<td><input required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div>
+									</td>
+									<td align="right"><input required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
+									<td align="right"><input required type="number" value="{{line.price}}" step="any" name="price[]" id="price_{{count}}" class="form-control price" autocomplete="off"></td>
+									<td align="right"><input required type="number" value="{{line.vat}}" step="any" name="VAT[]" id="vat_{{ count }}" class="form-control price" autocomplete="off"></td>
+									<td align="right"><input required type="number" disabled value="{{total}}" step="any" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -111,7 +114,7 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-	{{ form_end(form) }}
+		{{ form_end(form) }}
 	</div>
 {% endblock %}
 {% block javascripts %}

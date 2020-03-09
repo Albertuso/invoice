@@ -8,7 +8,7 @@
 	<div class="container" id="tableArea">
 		<div class="row justify-content-center">
 			<div class="col-9">
-				<h1>Listado de facturas</h1>
+				<h1>Listado de facturas Empresa</h1>
 			</div>
 			<div class="col-3 text-right">
 				{{form_start(form)}}
@@ -17,54 +17,58 @@
 			</div>
 		</div>
 		<div class="row mt-2">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Nº Factura</th>
-						<th>Fecha</th>
-						<th>Descripción</th>
-						<th>Cliente</th>
-						<th>Subtotal</th>
-						<th>Total</th>
-						<th>acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% set sumSubtotal = 0 %}
-					{% set sumTotal = 0 %}
-					{% for invoiceseterprise in invoiceseterprises  %}
-						{% if invoiceseterprise.visible %}
-							<tr>
-								<td>{{ invoiceseterprise.invoicenumber}}</td>
-								<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
-								<td>{{ invoiceseterprise.description }}</td>
-								<td>{{ invoiceseterprise.client }}</td>
-								<td>{{ invoiceseterprise.subtotal }}€</td>
-								<td>{{ invoiceseterprise.total }}€</td>
-								<td>
-									<a class="buttonize" href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">elegir</a>
-									<a class="buttonize" href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">editar</a>
-								</td>
-								{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
-								{% set sumTotal = sumTotal + invoiceseterprise.total %}
-							</tr>
-						{% endif %}
-					{% else %}
+			<div class="table-responsive text-nowrap">
+				<table class="table table-striped">
+					<thead>
 						<tr>
-							<td colspan="8">No se han encontrado resultados</td>
+							<th>Nº Factura</th>
+							<th>Fecha</th>
+							<th width="400px">Descripción</th>
+							<th>Cliente</th>
+							<th>Subtotal</th>
+							<th>Total</th>
+							<th>acciones</th>
 						</tr>
-					{% endfor %}
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>{{sumSubtotal}}€</td>
-						<td>{{sumTotal}}€</td>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% set sumSubtotal = 0 %}
+						{% set sumTotal = 0 %}
+						{% for invoiceseterprise in invoiceseterprises  %}
+								<tr>
+									<td align="right">{{ invoiceseterprise.invoicenumber}}</td>
+									<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
+									<td>{{ invoiceseterprise.description }}</td>
+									<td>
+									{% if invoiceseterprise.client.id != 0 %}
+									{{ invoiceseterprise.client }}
+									{% endif %}
+									</td>
+									<td align="right">{{ invoiceseterprise.subtotal }}€</td>
+									<td align="right">{{ invoiceseterprise.total }}€</td>
+									<td>
+										<a class="buttonize" href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">elegir</a>
+										<a class="buttonize" href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">editar</a>
+									</td>
+									{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
+									{% set sumTotal = sumTotal + invoiceseterprise.total %}
+								</tr>
+						{% else %}
+							<tr>
+								<td colspan="7">No se han encontrado resultados</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td align="right"><strong>Total</strong></td>
+							<td align="right"><strong>{{sumSubtotal}}€</strong)></td>
+							<td align="right"><strong>{{sumTotal}}€</strong)></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<a class="buttonize" href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
 	</div>

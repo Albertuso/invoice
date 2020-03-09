@@ -4,40 +4,45 @@
 {% endblock %}
 {% block title %}Listado de productos
 {% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+{% endblock %}
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de productos</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Precio</th>
-					<th>IVA</th>
-					<th>Descripcion</th>
-					<th>acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for product in products %}
-					{% if product.visible %}
-						<tr>
-							<td>{{ product.name }}</td>
-							<td>{{ product.price }}</td>
-							<td>{{ product.vat }}</td>
-							<td>{{ product.description }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('product_show', {'id': product.id}) }}">Mostrar</a>
-								<a class="buttonize" href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="6">No se han encontrado resultados</td>
+						<th>Nombre</th>
+						<th>Precio</th>
+						<th>IVA</th>
+						<th width="400px">Descripción</th>
+						<th>acciones</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for product in products %}
+						{% if product.visible %}
+							<tr>
+								<td>{{ product.name }}</td>
+								<td align="right">{{ product.price }}€</td>
+								<td align="right">{{ product.vat }}€</td>
+								<td>{{ product.description }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('product_show', {'id': product.id}) }}">Mostrar</a>
+									<a class="buttonize" href="{{ path('product_edit', {'id': product.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="6">No se han encontrado resultados</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<a class="buttonize" href="{{ path('product_new', {'idempresa': id_empresa}) }}">Crear nuevo producto</a>
 	</div>
 {% endblock %}

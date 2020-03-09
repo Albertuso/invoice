@@ -7,44 +7,46 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de empresas</h1>
-		<table class="table table-striped table-light">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Direccion</th>
-					<th>Telefono</th>
-					<th>E-mail</th>
-					<th>Web</th>
-					<th>DNI</th>
-					<th>Logo</th>
-					<th>Pie de pag</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for enterprise in enterprises %}
-					{% if enterprise.visible %}
-						<tr>
-							<td>{{ enterprise.name }}</td>
-							<td>{{ enterprise.address }}</td>
-							<td>{{ enterprise.telephone }}</td>
-							<td>{{ enterprise.email }}</td>
-							<td>{{ enterprise.web }}</td>
-							<td>{{ enterprise.nif }}</td>
-							<td>{{ enterprise.logo }}</td>
-							<td>{{ enterprise.footer }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Mostrar</a>
-								<a class="buttonize" href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped table-light">
+				<thead>
 					<tr>
-						<td colspan="9">No se han encontrado registros</td>
+						<th>Nombre</th>
+						<th>Direccion</th>
+						<th>Telefono</th>
+						<th>E-mail</th>
+						<th>Web</th>
+						<th>DNI</th>
+						<th>Logo</th>
+						<th>Pie de pag</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for enterprise in enterprises %}
+						{% if enterprise.visible %}
+							<tr>
+								<td>{{ enterprise.name }}</td>
+								<td>{{ enterprise.address }}</td>
+								<td>{{ enterprise.telephone }}</td>
+								<td>{{ enterprise.email }}</td>
+								<td>{{ enterprise.web }}</td>
+								<td>{{ enterprise.nif }}</td>
+								<td>{{ enterprise.logo }}</td>
+								<td>{{ enterprise.footer }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Mostrar</a>
+									<a class="buttonize" href="{{ path('enterprise_edit', {'id': enterprise.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="9">No se han encontrado registros</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<a class="buttonize" href="{{ path('enterprise_new') }}">Crear nuevo</a>
 {% endblock %}

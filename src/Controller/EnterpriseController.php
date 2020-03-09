@@ -42,7 +42,6 @@ class EnterpriseController extends AbstractController
             }
         }
 
-
         if ($user->getMax() > $visibles) {
             $enterprise = new Enterprise();
             $form = $this->createForm(EnterpriseType::class, $enterprise);
@@ -113,7 +112,7 @@ class EnterpriseController extends AbstractController
 
         return $this->render('enterprise/edit.html.twig', [
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
             'form' => $form->createView(),
         ]);
     }
@@ -168,7 +167,7 @@ class EnterpriseController extends AbstractController
             'invoiceseterprises' => $invoicesenterprise,
             'form' => $form->createView(),
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 }

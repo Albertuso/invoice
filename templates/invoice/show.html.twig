@@ -11,32 +11,34 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Ver factura</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nº factura</th>
-					<th>Fecha</th>
-					<th>Descripción</th>
-					<th>Pie de página</th>
-					<th>Subtotal</th>
-					<th>Total</th>
-					<th>acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>{{ invoice.invoicenumber}}</td>
-					<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
-					<td>{{ invoice.description }}</td>
-					<td>{{ invoice.footer }}</td>
-					<td>{{ invoice.subtotal }}</td>
-					<td>{{ invoice.total }}</td>
-					<td>
-						<a class="buttonize" href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nº factura</th>
+						<th>Fecha</th>
+						<th width="400px">Descripción</th>
+						<th>Pie de página</th>
+						<th>Subtotal</th>
+						<th>Total</th>
+						<th>acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ invoice.invoicenumber}}</td>
+						<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
+						<td>{{ invoice.description }}</td>
+						<td>{{ invoice.footer }}</td>
+						<td>{{ invoice.subtotal }}</td>
+						<td>{{ invoice.total }}</td>
+						<td>
+							<a class="buttonize" href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
 			<button class="btn">Duplicar</button>
 		</form>

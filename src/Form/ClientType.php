@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ClientType extends AbstractType
 {
@@ -19,6 +20,7 @@ class ClientType extends AbstractType
             ->add('email', TextType::class, array('attr' => array('label' => 'Email', 'class' => 'form-control txt')))
             ->add('telephone', TextType::class, array('attr' => array('label' => 'Telefono', 'class' => 'form-control txt')))
             ->add('web', TextType::class, array('attr' => array('label' => 'Web', 'class' => 'form-control txt')))
+            ->add('submit', SubmitType::class, array('label' => 'Actualizar', 'attr' => array('class' => 'form-control txt mt-4', 'onsubmit' => 'return validateDNI()')))
             // ->add('supervisor',null, array('label' => 'Supervisor'))
         ;
     }

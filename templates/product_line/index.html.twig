@@ -4,38 +4,40 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de detalles de factura</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Descripcion</th>
-					<th>Cantidad</th>
-					<th>Precio</th>
-					<th>IVA</th>
-					<th>Nombre</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for product_line in product_lines %}
-					{% if product_line.visible %}
-						<tr>
-							<td>{{ product_line.description }}</td>
-							<td>{{ product_line.quantity }}</td>
-							<td>{{ product_line.price }}</td>
-							<td>{{ product_line.vat }}</td>
-							<td>{{ product_line.name }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
-								<a class="buttonize" href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="7">No se han encontrado detalles de factura</td>
+						<th>Descripcion</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>IVA</th>
+						<th>Nombre</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for product_line in product_lines %}
+						{% if product_line.visible %}
+							<tr>
+								<td>{{ product_line.description }}</td>
+								<td>{{ product_line.quantity }}</td>
+								<td>{{ product_line.price }}</td>
+								<td>{{ product_line.vat }}</td>
+								<td>{{ product_line.name }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('product_line_show', {'id': product_line.id}) }}">Mostrar</a>
+									<a class="buttonize" href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="7">No se han encontrado detalles de factura</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<a class="buttonize" href="{{ path('product_line_new') }}">Crear nuevo detalle de factura</a>
 	</div>
 {% endblock %}

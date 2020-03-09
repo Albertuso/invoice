@@ -19,11 +19,6 @@ class Budget
     private $id;
 
     /**
-     * @ORM\Column(type="bigint")
-     */
-    private $budgetnumber;
-
-    /**
      * @ORM\Column(type="date")
      */
     private $date;
@@ -76,30 +71,28 @@ class Budget
     private $DescriptionBudget;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=1)
      */
     private $sold;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    private $passwd;
 
     public function __construct()
     {
         $this->line = new ArrayCollection();
+        $this->passwd = $this->randompasswd();
+    }
+    public function randompasswd(): string
+    {
+        return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 15);
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBudgetnumber(): ?int
-    {
-        return $this->budgetnumber;
-    }
-
-    public function setBudgetnumber(int $budgetnumber): self
-    {
-        $this->budgetnumber = $budgetnumber;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -241,14 +234,26 @@ class Budget
         return $this;
     }
 
-    public function getSold(): ?bool
+    public function getSold(): ?string
     {
         return $this->sold;
     }
 
-    public function setSold(bool $sold): self
+    public function setSold(string $sold): self
     {
         $this->sold = $sold;
+
+        return $this;
+    }
+
+    public function getPasswd(): ?string
+    {
+        return $this->passwd;
+    }
+
+    public function setPasswd(string $passwd): self
+    {
+        $this->passwd = $passwd;
 
         return $this;
     }

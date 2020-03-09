@@ -7,29 +7,31 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Indice de redes sociales</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>URL</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for social_network in social_networks %}
-					{% if social_network.visible %}
-						<tr>
-							<td>{{ social_network.url }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="3">No se han encontrado registros</td>
+						<th>URL</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for social_network in social_networks %}
+						{% if social_network.visible %}
+							<tr>
+								<td>{{ social_network.url }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="3">No se han encontrado registros</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<a class="buttonize" class="buttonize" href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

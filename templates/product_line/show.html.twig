@@ -4,32 +4,34 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Detalle de factura</h1>
-		<table class="table table-striped">
-			<tbody>
-				<tr>
-					<th>Descripcion</th>
-					<td>{{ product_line.description }}</td>
-				</tr>
-				<tr>
-					<th>Cantidad</th>
-					<td>{{ product_line.quantity }}</td>
-				</tr>
-				<tr>
-					<th>Precio</th>
-					<td>{{ product_line.price }}</td>
-				</tr>
-				<tr>
-					<th>IVA</th>
-					<td>{{ product_line.vat }}</td>
-				</tr>
-				<tr>
-					<th>Nombre</th>
-					<td>{{ product_line.name }}</td>
-				</tr>
-			</tbody>
-		</table>
-	<a class="buttonize" href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
-	<a class="buttonize" href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
-	{{ include('product_line/_delete_form.html.twig') }}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<th>Descripcion</th>
+						<td>{{ product_line.description }}</td>
+					</tr>
+					<tr>
+						<th>Cantidad</th>
+						<td>{{ product_line.quantity }}</td>
+					</tr>
+					<tr>
+						<th>Precio</th>
+						<td>{{ product_line.price }}</td>
+					</tr>
+					<tr>
+						<th>IVA</th>
+						<td>{{ product_line.vat }}</td>
+					</tr>
+					<tr>
+						<th>Nombre</th>
+						<td>{{ product_line.name }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a class="buttonize" href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
+		<a class="buttonize" href="{{ path('product_line_edit', {'id': product_line.id}) }}">Editar</a>
+		{{ include('product_line/_delete_form.html.twig') }}
 	</div>
 {% endblock %}

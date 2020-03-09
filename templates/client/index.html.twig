@@ -7,44 +7,49 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de clientes</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Direccion</th>
-					<th>DNI</th>
-					<th>E-mail</th>
-					<th>Telefono</th>
-					<th>Web</th>
-					<th>Responsable</th>
-					<th>acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for client in clients %}
-					{% if client.visible %}
-						<tr>
-							<td>{{ client.name }}</td>
-							<td>{{ client.address }}</td>
-							<td>{{ client.nif }}</td>
-							<td>{{ client.email }}</td>
-							<td>{{ client.telephone }}</td>
-							<td>{{ client.web }}</td>
-							<td>{{ client.supervisor }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
-								<a class="buttonize" href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
-								<a class="buttonize" href="{{ path('invoice_new', {'idclient': client.id}) }}">Nueva Factura</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<i class="fa fa-glass"></i>
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="8">No se han encontrado resultados</td>
+						<th>Nombre</th>
+						<th>Direccion</th>
+						<th>DNI</th>
+						<th>E-mail</th>
+						<th>Telefono</th>
+						<th>Web</th>
+						<th>Responsable</th>
+						<th>acciones</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for client in clients %}
+						{% if client.visible and client.id != 0 %}
+							<tr>
+								<td>{{ client.name }}</td>
+								<td>{{ client.address }}</td>
+								<td>{{ client.nif }}</td>
+								<td>{{ client.email }}</td>
+								<td>{{ client.telephone }}</td>
+								<td>{{ client.web }}</td>
+								<td>{{ client.supervisor }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('client_show', {'client': client.id, 'idempresa': enterprise.id}) }}">Mostrar</a>
+									<a class="buttonize" href="{{ path('client_edit', {'id': client.id}) }}">Editar</a>
+									<a class="buttonize" href="{{ path('invoice_new', {'idclient': client.id}) }}">Nueva Factura</a>
+									<a class="buttonize" href="{{ path('budget_new', {'idclient': client.id, 'identerprise': enterprise.id}) }}">Nuevo Presupuesto</a>
+									<a class="buttonize" href="{{ path('invoice_index', {'idclient': client.id, 'identerprise': enterprise.id}) }}">Ver Facturas</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="8">No se han encontrado resultados</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<a class="buttonize" href="{{ path('client_new', {'idempresa': id_empresa}) }}">Crear nuevo cliente</a>
 	</div>
 {% endblock %}

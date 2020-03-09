@@ -47,4 +47,13 @@ class BudgetLineRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByBudget($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.budget = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

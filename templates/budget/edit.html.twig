@@ -3,18 +3,21 @@
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
 {% endblock %}
-{% block title %}Editar factura
+{% block title %}Editar presupuesto
 {% endblock %}
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 {% block body %}
 	{{ form_start(form) }}
-	<div class="container content-invoice">
+
+	<div class="container content-invoice border">
 		<div class="load-animate animated fadeInUp">
+
 			<div class="row">
+
 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-					<h1>Editar factura</h1>
+					<h1>Editar presupuesto</h1>
 				</div>
 			</div>
 			<div class="row">
@@ -22,9 +25,9 @@
 					Fecha:
 					{{ form_widget(form.date)}}
 				</div>
-				<div class="col-4">
-					Nº de Factura:
-					{{ invoice.invoicenumber }}
+				<div class="col-3">
+					Nº de Presupuesto:
+					{{ budget.id }}
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<h3>Cliente,</h3>
@@ -45,15 +48,15 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="table-responsive text-nowrap">
-						<table class="table table-striped" id="invoiceItem">
+						<table class="table table-striped mt-4" id="invoiceItem">
 							<tr>
 								<th width="20px"><input id="checkAll" class="formcontrol" type="checkbox"></th>
 								<th width="100px">Nombre Producto</th>
 								{# <th width="250px">Descripci&oacute;n</th> #}
 								<th width="40px">Cantidad</th>
-								<th width="80px">Precio</th>
-								<th width="40px">%VAT</th>
-								<th width="80px">Total</th>
+								<th width="80px">Precio (€)</th>
+								<th width="40px">IVA (%)</th>
+								<th width="80px">Total (€)</th>
 							</tr>
 							{% set count = 0 %}
 							{% for line in lines %}
@@ -91,7 +94,6 @@
 					<br>
 					<div class="form-group">
 						<input type="hidden" value="<?php echo $_SESSION['userid']; ?>" class="form-control" name="userId">
-						<input data-loading-text="Guardando factura..." type="submit" name="invoice_btn" value="Guardar Factura" class="btn btn-success submit_btn invoice-save-btm">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -115,8 +117,19 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-
-		{{ form_end(form) }}
+		{{ form_widget(form.footer)}}
+	</div>
+	<div class="row w-100">
+		<div class="container-fluid p-4 m-0">
+			<h3>Condiciones del presupuesto:</h3>
+			{{ form_widget(form.descriptionbudget)}}
+		</div>
+		<div class="row">
+			<div class="col-12" style="margin:auto;">
+				<input data-loading-text="Guardando presupuesto..." type="submit" name="invoice_btn" value="Guardar Presupuesto" class="btn btn-success submit_btn invoice-save-btm">
+				{{ form_end(form) }}
+			</div>
+		</div>
 	</div>
 {% endblock %}
 {% block javascripts %}

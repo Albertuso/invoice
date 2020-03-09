@@ -47,4 +47,36 @@ class BudgetRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByIdPasswd($id, $passwd): ?Budget
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('b.passwd = :passwd')
+            ->setParameter('passwd', $passwd)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByEnterprise($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.enterprise = :val')
+            ->setParameter('val', $value)
+            ->andWhere('b.visible = :valu')
+            ->setParameter('valu', true)
+            ->orderBy('b.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findOneById($value): ?Budget
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block nav %}
-	{{ include('navbar/simplenavbar.html.twig') }}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 {% block title %}Editar Cliente
 {% endblock %}
@@ -9,8 +9,9 @@
 		<div class="row">
 			<div class="col-md-9">
 				<h1>Editar Cliente</h1>
-				{{ include('client/_form.html.twig', {'button_label': 'Actualizar'}) }}
+				{{ include('client/_form.html.twig') }}
+				{{ include('client/_delete_form.html.twig') }}
 			</div>
 		</div>
-	{{ include('client/_delete_form.html.twig') }}
+	
 </div>{% endblock %}

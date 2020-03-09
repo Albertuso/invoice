@@ -7,30 +7,32 @@
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de redes</h1>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for network in networks %}
-					{% if network.visible %}
-						<tr>
-							<td>{{ network.name }}</td>
-							<td>
-								<a class="buttonize" href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="3">No se han encontrado resultados</td>
+						<th>Name</th>
+						<th></th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for network in networks %}
+						{% if network.visible %}
+							<tr>
+								<td>{{ network.name }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="3">No se han encontrado resultados</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 		<a class="buttonize" href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}
