@@ -80,7 +80,7 @@ thead {
   border-bottom-width: 0px;
 }
 
-.buttonize {
+.buttonize {  
   background-color: rgba(240, 240, 240);
   color: #000;
   cursor: pointer;
@@ -106,4 +106,8 @@ thead {
   min-width: 250px;
   max-width: 250px;
   margin-top: 20px;
+}
+
+i {
+  font-size: large;
 }

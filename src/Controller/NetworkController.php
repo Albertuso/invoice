@@ -23,9 +23,16 @@ class NetworkController extends AbstractController
      */
     public function index(NetworkRepository $networkRepository, $identerprise): Response
     {
-        $enterprise = $networkRepository->findOneById($identerprise);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
+
+        // return $this->render('debug.html.twig', [
+        //     'debug' => $enterprise,
+        // ]);
+
         return $this->render('network/index.html.twig', [
             'networks' => $networkRepository->findAll(),
+            'idinterprise' => $identerprise,
             'enterprise' => $enterprise,
             'enterprises' => $this->getUser()->getEnterprises(),
         ]);
@@ -71,10 +78,13 @@ class NetworkController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="network_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{identerprise}", name="network_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Network $network): Response
+    public function edit(Request $request, Network $network,$identerprise): Response
     {
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
+
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
 
@@ -87,7 +97,8 @@ class NetworkController extends AbstractController
         return $this->render('network/edit.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
-            'enterprise' => null,
+            'enterprise' => $enterprise,
+            'idinterprise' => $identerprise,
         ]);
     }
 

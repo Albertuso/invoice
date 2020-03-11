@@ -88,21 +88,22 @@ class BudgetController extends AbstractController
 
 
             // envio el email (no probado al no irme mercury)
-            $to = $client->getEmail();
-            $id = $budget->getId();
-            $passwd =  $budget->getPasswd();
-            $subject = "Factura facil nuevo presupuesto " . $id;
-            $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            $message = "<h1>Presupuesto Factura-Facil</h1>";
-            $message .= "<p>Tienes un presupuesto pendiente</p>";
-            $message .= "<p><a href='http://www.invoice.tld/budget/" . $id . "/paid/" . $passwd . "'>Pulsa aqui para aprobarlo</a></p>
-";
-            $message .= "<p><a href='http://www.invoice.tld/budget/" . $id . "/reject/" . $passwd . "'>Pulsa aqui para rechazarlo</a></p>
-";
+            //             $to = $client->getEmail();
+            //             $id = $budget->getId();
+            //             $passwd =  $budget->getPasswd();
+            //             $subject = "Factura facil nuevo presupuesto " . $id;
+            //             $headers = "MIME-Version: 1.0" . "\r\n";
+            //             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            //             $message = "<h1>Presupuesto Factura-Facil</h1>";
+            //             $message .= "<p>Tienes un presupuesto pendiente</p>";
 
-            echo ($to . $subject . $message . $headers);
-            // mail($to, $subject, $message, $headers);
+            //             $message .= "<p><a href='http://www.invoice.tld/budget/" . $id . "/paid/" . $passwd . "'>Pulsa aqui para aprobarlo</a></p>
+            // ";
+            //             $message .= "<p><a href='http://www.invoice.tld/budget/" . $id . "/reject/" . $passwd . "'>Pulsa aqui para rechazarlo</a></p>
+            // ";
+
+            //             echo ($to . $subject . $message . $headers);
+            //             mail($to, $subject, $message, $headers);
 
             return $this->redirectToRoute('budget_view', ['identerprise' => $identerprise]);
         }
@@ -125,10 +126,10 @@ class BudgetController extends AbstractController
         $repositoryBudget = $this->getDoctrine()->getRepository(Budget::class);
         $budget = $repositoryBudget->findByIdPasswd($id, $passwd);
         if ($budget) {
-            if ($budget->getSold() == 'N') {
+            if ($budget->getSold() == 'S') {
                 $entityManager = $this->getDoctrine()->getManager();
                 $budget->getId($id);
-                $budget->setSold('S');
+                $budget->setSold('P');
 
                 $invoice = new Invoice();
                 // Copio sus datos
@@ -165,12 +166,15 @@ class BudgetController extends AbstractController
                 $entityManager->flush();
 
                 return $this->redirectToRoute('budget_view', ['identerprise' => $budget->getEnterprise()->getId()]);
-            } else throw new Exception("El presupuesto ya fue pagado", 1);
+            } elseif ($budget->getSold() == 'N') {
+                $entityManager = $this->getDoctrine()->getManager();
+                $budget->setSold('S');
+                $entityManager->persist($budget);
+                $entityManager->flush();
+            } elseif ($budget->getSold() == "A") throw new Exception("El presupuesto ya fue pagado", 1);
         }
 
         if ($passwd == null) {
-
-            // throw new Exception("Presupuesto sin contraseña");
 
             $form = $this->createFormBuilder()
                 ->add('passwd', PasswordType::class, array(
@@ -189,9 +193,10 @@ class BudgetController extends AbstractController
                     'form' => $form->createView(),
                 ]);
             }
-        } else {
+        } elseif ($budget->getSold() == "A") {
             throw new Exception("Presupuesto no válido y/o contraseña incorrecta");
         }
+        throw new Exception("Presupuesto aceptado");
     }
 
     /**
@@ -391,14 +396,13 @@ class BudgetController extends AbstractController
         $repositoryBudget = $this->getDoctrine()->getRepository(Budget::class);
         $budget = $repositoryBudget->findOneById($id);
 
-        $idclients = $repositoryClients->findByEnterprise($budget->getEnterprise());
+        // $idclients = $repositoryClients->findByEnterprise($budget->getEnterprise());
 
         $form = $this->createFormBuilder()
             ->add('state', ChoiceType::class, array(
                 'attr' => ['class' => 'form-control'],
                 'choices'  => [
-                    'Pagado' => 'S',
-                    'Pendiente' => 'N',
+                    'Aceptado' => 'S',
                     'Rechazado' => 'R',
                 ],
             ))
@@ -409,14 +413,19 @@ class BudgetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $entityManager = $this->getDoctrine()->getManager();
             if ($form['state']->getData() == "S") {
-                return $this->redirectToRoute('budget_paid', ['id' => $id, 'passwd' => $budget->getPasswd()]);
-            } else
+                $budget->setSold("S");
+            } elseif ($form['state']->getData() == "R") {
+                $budget->setSold("R");
                 return $this->redirectToRoute('budget_view', ['identerprise' => $budget->getEnterprise()->getId()]);
-            // return $this->render('debug.html.twig', [
-            //     'debug' => $form['client']->getData(),
-            // ]);
+            }
+            $entityManager->persist($budget);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('budget_view', ['identerprise' => $budget->getEnterprise()->getId()]);
+            // return $this->redirectToRoute('budget_paid', ['id' => $id, 'passwd' => $budget->getPasswd()]);
+
         }
 
         return $this->render('budget/changestate.html.twig', [

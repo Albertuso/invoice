@@ -20,14 +20,21 @@
 			</div>
 			{% include "invoice/baseinvoice.html.twig" %}
 		</div>
+		<div class="row justify-content-center">
+			<div class="col-2">
+				{{ form_widget(form) }}
+				<button class="form-control txt text-center mt-4 mb-4">{{ button_label|default('Guardar') }}</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
 	</div>
 
 
-	{{ form_widget(form) }}
-	<button class="btn">{{ button_label|default('Guardar') }}</button>
-	{{ form_end(form) }}
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/invoice.js') }}"></script>
+	<script>
+		document.querySelector("#invoice_date").setAttribute("min", "{{ lastdate }}");
+	</script>
 {% endblock %}

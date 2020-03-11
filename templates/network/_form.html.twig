@@ -2,5 +2,10 @@
 
 {{ form_row(form.name, {'label': 'Nombre'}) }}
 {{ form_widget(form.name) }}
-<button class="btn">{{ button_label|default('Guardar') }}</button>
+
+<div class="row justify-content-center">
+	<div class="col-3">
+		<button class="form-control txt text-center mt-4">{{ button_label|default('Guardar') }}</button>
+	</div>
+</div>
 {{ form_end(form) }}

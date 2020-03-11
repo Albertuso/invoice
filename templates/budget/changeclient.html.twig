@@ -17,50 +17,52 @@
 
 		</div>
 		<div class="row">
-			<table id="dtHorizontalExample" class="table table-striped table-sm" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>Cliente actual</th>
-						<th>Fecha</th>
-						<th width="400px">Descripción</th>
-						{# <th>Pie de página</th> #}
-						<th>Subtotal</th>
-						<th>Total</th>
-						<th>Pagado</th>
-						<th>Cliente</th>
-					</tr>
-				</thead>
-				<tbody>
+			<div class="table-responsive text-nowrap">
+				<table id="dtHorizontalExample" class="table table-striped table-sm" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Cliente actual</th>
+							<th>Fecha</th>
+							<th width="400px">Descripción</th>
+							{# <th>Pie de página</th> #}
+							<th>Subtotal</th>
+							<th>Total</th>
+							<th>Pagado</th>
+							<th>Cliente</th>
+						</tr>
+					</thead>
+					<tbody>
 
-					<tr>
-						<td>
-							{% if budget.client.id != 0 %}
-								{{budget.client}}
-							{% else %}
-								Sin cliente
-							{% endif %}
-						</td>
-						<td>{{ budget.date ? budget.date|date('d-m-Y') : '' }}</td>
-						<td>{{ budget.description }}</td>
-						{# <td>{{ budget.footer }}</td> #}
-						<td>{{ budget.subtotal }}</td>
-						<td>{{ budget.total }}</td>
-						<td>
-							{% if budget.sold == "S" %}
-								Pagado
-							{% else %}
-								Pendiente
-							{% endif %}
+						<tr>
+							<td>
+								{% if budget.client.id != 0 %}
+									{{budget.client}}
+								{% else %}
+									Sin cliente
+								{% endif %}
+							</td>
+							<td>{{ budget.date ? budget.date|date('d-m-Y') : '' }}</td>
+							<td>{{ budget.description }}</td>
+							{# <td>{{ budget.footer }}</td> #}
+							<td>{{ budget.subtotal }}</td>
+							<td>{{ budget.total }}</td>
+							<td>
+								{% if budget.sold == "S" %}
+									Pagado
+								{% else %}
+									Pendiente
+								{% endif %}
 
-						</td>
-						<td>
-							{{form_start(form)}}
-							{{form_widget(form.client)}}
+							</td>
+							<td>
+								{{form_start(form)}}
+								{{form_widget(form.client)}}
 
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			{{form_widget(form.cambiar)}}
 			{{form_end(form)}}
 		</div>

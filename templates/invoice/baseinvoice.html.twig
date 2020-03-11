@@ -37,11 +37,11 @@
 				</tr>
 				<tr>
 					<td><input class="itemRow" type="checkbox"></td>
-					<td><input type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_1"></div>
+					<td><input type="text" name="productName[]" id="productName_1" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_1" required ></div>
 					</td>
-					<td><input type="number" name="quantity[]" id="quantity_1" pattern="^[0-9]+" class="form-control quantity" autocomplete="off"></td>
-					<td><input type="number" step="any" name="price[]" id="price_1" min="0" pattern="^[0-9]+" class="form-control price" autocomplete="off"></td>
-					<td><input type="number" step="any" name="VAT[]" id="vat_1" class="form-control price" min="0" max="100" pattern="^[0-9]+" autocomplete="off"></td>
+					<td><input type="number" name="quantity[]" id="quantity_1" pattern="^[0-9]+" class="form-control quantity" autocomplete="off" required></td>
+					<td><input type="number" step="any" name="price[]" id="price_1" min="0" pattern="^[0-9]+" class="form-control price" autocomplete="off" required></td>
+					<td><input type="number" step="any" name="VAT[]" id="vat_1" class="form-control price" min="0" max="100" pattern="^[0-9]+" autocomplete="off" required></td>
 					<td><input type="number" readonly step="any" name="total[]" min="0" pattern="^[0-9]+" id="total_1" class="form-control total" autocomplete="off"></td>
 				</tr>
 			</table>

@@ -26,8 +26,9 @@ document.querySelector("#supervisor\\[\\]").selectedIndex = i;
 {% endif %}
 }
 </script>
-<script src="{{ asset('js/validate.js')}}">
-</script>
-{# {{ dump (client.supervisor.name)}} #}
-{# <button class="btn">{{ button_label|default('Guardar') }}</button> #}
-{{ form_end(form) }}
+<script src="{{ asset('js/validate.js')}}"></script>
+<div class="row justify-content-center">
+	<div class="col-2">
+		{{ form_end(form) }}
+	</div>
+</div>

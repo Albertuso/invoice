@@ -1,5 +1,16 @@
 {{ form_start(form) }}
-	{{ form_row(form.url, {'label': 'URL'}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Guardar') }}</button>
+{{ form_row(form.url, {'label': 'URL'}) }}
+{{ form_widget(form.url) }}
+
+
+{{ form_row(form.network) }}
+{{ form_widget(form.network) }}
+<a href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Añadir red</a>
+
+
+<div class="row justify-content-center">
+	<div class="col-3">
+		<button class="form-control txt text-center mt-4">{{ button_label|default('Guardar') }}</button>
+	</div>
+</div>
 {{ form_end(form) }}

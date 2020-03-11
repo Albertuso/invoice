@@ -1,5 +1,7 @@
-<form method="post" action="{{ path('social_network_delete', {'id': social_network.id, 'identerprise': identerprise}) }}" onsubmit="return confirm('Esta seguro que desea borrar esta red social?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ social_network.id) }}">
-    <button class="btn">Borrar</button>
+<form method="post" action="{{ path('social_network_delete', {'id': social_network.id, 'identerprise': enterprise.id}) }}" onsubmit="return confirm('Esta seguro que desea borrar esta red social?');">
+	<input type="hidden" name="_method" value="DELETE">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ social_network.id) }}">
+	<button class="form-control txt mt-4">
+		<i class="far fa-trash-alt"></i>
+		Eliminar</button>
 </form>

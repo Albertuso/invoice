@@ -1,21 +1,22 @@
 function validateDNI() {
 	valor = document.querySelector("#client_nif").value;
-	var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
-	if (!(/^\d{8}-?([A-Z]|[a-z])/.test(valor))) {
-		alert("problema con el dni");
-		return false;
-	}
-
-	if (valor.charAt(8) == "-") {
-		if (valor.charAt(9).toUpperCase() != letras[(valor.substring(0, 8)) % 23]) {
-			alert("problema con el dni");
+	if (valor) {
+		var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+		if (!(/^\d{8}-?([A-Z]|[a-z])/.test(valor))) {
+			alert("DNI incorrecto");
 			return false;
 		}
-	} else if (valor.charAt(8).toUpperCase() != letras[(valor.substring(0, 8)) % 23]) {
-		alert("problema con el dni");
-		return false;
+		if (valor.charAt(8) == "-") {
+			if (valor.charAt(9).toUpperCase() != letras[(valor.substring(0, 8)) % 23]) {
+				alert("DNI incorrecto");
+				return false;
+			}
+		} else if (valor.charAt(8).toUpperCase() != letras[(valor.substring(0, 8)) % 23]) {
+			alert("DNI incorrecto");
+			return false;
+		}
+		return true;
 	}
-	return true;
 }
 
 function validateCIF(cif) {

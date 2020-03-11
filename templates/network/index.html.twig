@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block nav %}
-	{{ include('navbar/shownavbar.html.twig') }}
+	{{ include('navbar/simplenavbar.html.twig') }}
 {% endblock %}
 {% block title %}Listado de redes
 {% endblock %}
@@ -21,7 +21,7 @@
 							<tr>
 								<td>{{ network.name }}</td>
 								<td>
-									<a class="buttonize" href="{{ path('network_edit', {'id': network.id}) }}">Editar</a>
+									<a class="buttonize" href="{{ path('network_edit', {'id': network.id, 'identerprise':enterprise.id}) }}">Editar</a>
 								</td>
 							</tr>
 						{% endif %}
@@ -33,6 +33,8 @@
 				</tbody>
 			</table>
 		</div>
-		<a class="buttonize" href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva red social</a>
+		<a class="form-control txt text-center" href="{{ path('network_new', {'identerprise': enterprise.id}) }}">Crear nueva social</a>
+		<a class="form-control txt text-center mt-4" href="{{ path('enterprise_show', {'id': enterprise.id}) }}">Regresar a la empresa</a>
+
 	</div>
 {% endblock %}

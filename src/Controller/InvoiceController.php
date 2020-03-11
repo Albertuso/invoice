@@ -81,8 +81,10 @@ class InvoiceController extends AbstractController
         $invoice->setFooter($enterprise->getFooter());
 
         // Recupero la fecha de la ultima factura
-// $enterprise->getNextinvoicenumber();
-        
+        $lastdate = $this->getDoctrine()->getRepository(Invoice::class)->findOneByLastDay($enterprise->getId())[0]['1'];
+        if ($lastdate == null) {
+            $lastdate = $hoy->format('Y-m-d');
+        }
 
         // Creo un array de Productlines
         $this->ProductLine = new ArrayCollection();
@@ -127,7 +129,9 @@ class InvoiceController extends AbstractController
 
             return $this->redirectToRoute('invoice_index', ['idclient' => $idclient]);
         }
-
+        // return $this->render('debug.html.twig', [
+        //     'debug' => $lastdate,
+        // ]);
         return $this->render('invoice/new.html.twig', [
             'invoice' => $invoice,
             'invoicenumber' => $enterprise->getNextinvoicenumber(),
@@ -135,6 +139,7 @@ class InvoiceController extends AbstractController
             'enterprise' => $enterprise,
             'client' => $client,
             'products' => $products,
+            'lastdate' => $lastdate,        
         ]);
     }
 

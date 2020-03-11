@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}Editar red social
 {% endblock %}
+
+{% block nav %}
+	{{ include('navbar/shownavbar.html.twig') }}
+{% endblock %}
 {% block body %}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-12">
 				<h1>Editar red social</h1>
 				{{ include('social_network/_form.html.twig', {'button_label': 'Actualizar'}) }}
 				{{ include('social_network/_delete_form.html.twig') }}

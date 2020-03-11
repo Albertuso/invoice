@@ -14,6 +14,11 @@
 			<li class="nav-item">
 				<a class="nav-link" href="{{ path('enterprise_listinvoices', {'idempresa': enterprise.id}) }}">Facturas empresa</a>
 			</li>
+			{% if budget is defined %}
+			<li class="nav-item">
+				<a class="nav-link" href="{{ path('budget_view', {'identerprise': enterprise.id}) }}">Presupuestos empresa</a>
+			</li>
+			{% endif %}
 		</ul>
 		<li class="nav-item dropdown active list-inline">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,8 +26,6 @@
 			</a>
 			{% if enterprises is defined %}
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
-
 					{% for enterprise in enterprises %}
 						{% if enterprise.visible %}
 							<a class="dropdown-item" href="{{path('enterprise_show', {id: enterprise.id})}}">{{enterprise.name}}</a>

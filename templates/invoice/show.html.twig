@@ -6,7 +6,7 @@
 {% block title %}Ver factura
 {% endblock %}
 {% block nav %}
-	{{ include('invoice/navbar.html.twig') }}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 {% block body %}
 	<div class="container" id="tableArea">
@@ -33,15 +33,24 @@
 						<td>{{ invoice.subtotal }}</td>
 						<td>{{ invoice.total }}</td>
 						<td>
-							<a class="buttonize" href="{{ path('invoice_edit', {'id': invoice.id}) }}">Editar</a>
+							{% if enterprise.nextinvoicenumber -1 == invoice.invoicenumber %}
+								<a title="Editar" href="{{ path('invoice_edit', {'id': invoice.id}) }}">
+									<i class="far fa-edit"></i>
+								</a>
+							{% endif %}
+							<a title="Duplicar" href="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
+								<i class="far fa-clone"></i>
+							</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
-			<button class="btn">Duplicar</button>
-		</form>
+		{# <form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
+			<button class="btn">
+				<i class="far fa-clone"></i>
+			</button>
+		</form> #}
 		{{ include('invoice/_delete_form.html.twig') }}
 	</div>
 {% endblock %}

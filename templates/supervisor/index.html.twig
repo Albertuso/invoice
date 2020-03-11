@@ -27,18 +27,22 @@
 								<td>{{ supervisor.name }}</td>
 								<td>{{ supervisor.telephone }}</td>
 								<td>
-									<a class="buttonize" href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
+									<a title="Editar" href="{{ path('supervisor_edit', {'id': supervisor.id}) }}"><i class="far fa-edit"></i></a>
 								</td>
 							</tr>
 						{% endif %}
 					{% else %}
 						<tr>
-							<td colspan="4">No se han encontrado resultados</td>
+							<td colspan="3">No se han encontrado resultados</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<a class="buttonize" href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+		<div class="row justify-content-center">
+			<div class="col-3">
+				<a class="form-control txt text-center mb-4" href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+			</div>
+		</div>
 	</div>
 {% endblock %}

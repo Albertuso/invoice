@@ -48,10 +48,19 @@ class SocialNetworkRepository extends ServiceEntityRepository
     }
     */
 
-     public function findOneById($value): ?SocialNetwork
+    public function findOneById($value): ?SocialNetwork
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByEnterprise($value): ?SocialNetwork
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.enterprise = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

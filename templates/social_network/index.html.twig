@@ -2,7 +2,7 @@
 {% block title %}Indice de redes sociales
 {% endblock %}
 {% block nav %}
-	{# {{ include('navbar/shownavbar.html.twig') }} #}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
 {% block body %}
 	<div class="container" id="tableArea">
@@ -12,6 +12,7 @@
 				<thead>
 					<tr>
 						<th>URL</th>
+						<th>acciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,12 +27,12 @@
 						{% endif %}
 					{% else %}
 						<tr>
-							<td colspan="3">No se han encontrado registros</td>
+							<td colspan="2">No se han encontrado registros</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<a class="buttonize" class="buttonize" href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
+		<a class="buttonize" class="buttonize" href="{{ path('social_network_new', {'identerprise': enterprise.id }) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

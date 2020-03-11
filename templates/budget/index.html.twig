@@ -25,6 +25,7 @@
 						<th>Cliente</th>
 						<th>Fecha</th>
 						<th width="400px">Condiciones</th>
+						<th>Url</th>
 						{# <th>Pie de página</th> #}
 						<th>Subtotal</th>
 						<th>Total</th>
@@ -42,14 +43,18 @@
 							</td>
 							<td>{{ budget.date ? budget.date|date('d-m-Y') : '' }}</td>
 							<td>{{ budget.descriptionbudget }}</td>
+							{% set urlpass = "http://www.invoice.tld/budget/" ~ budget.id ~ "/paid/" ~ budget.passwd %}
+							<td>{{ urlpass }}</td>
 							{# <td>{{ budget.footer }}</td> #}
 							<td>{{ budget.subtotal }}</td>
 							<td>{{ budget.total }}</td>
 							<td>
 								{% if budget.sold == "S" %}
-									Pagado
+									Aceptado
 								{% elseif budget.sold == "R" %}
 									Rechazado
+								{% elseif budget.sold == "P" %}
+									Pagado
 								{% else %}
 									Pendiente
 								{% endif %}
@@ -57,22 +62,32 @@
 							</td>
 							<td>
 								{% if budget.sold == "N" or budget=="R" %}
-									<a class="buttonize" href="{{ path('budget_paid', {'id': budget.id, 'passwd': budget.passwd }) }}">Pagar</a>
-									<a class="buttonize" href="{{ path('budget_state', {'id': budget.id}) }}">Estado</a>
-									<a class="buttonize" href="{{ path('budget_edit', {'id': budget.id}) }}">Editar</a>
-									<a class="buttonize" href="{{ path('budget_changeclient', {'id': budget.id}) }}">Cambiar cliente</a>
+
+									<a title="Cambiar estado" href="{{ path('budget_state', {'id': budget.id}) }}">
+										<i class="far fa-hand-point-left"></i>
+									</a>
+									<a title="Editar" href="{{ path('budget_edit', {'id': budget.id}) }}">
+										<i class="far fa-edit"></i>
+									</a>
+									<a title="Cambiar cliente" href="{{ path('budget_changeclient', {'id': budget.id}) }}">
+										<i class="fas fa-user-friends"></i>
+									</a>
+								{% elseif budget.sold == "S" %}
+
+									<a title="Pagar" href="{{ path('budget_paid', {'id': budget.id, 'passwd': budget.passwd }) }}">
+										<i class="far fa-thumbs-up"></i>
+									</a>
 								{% endif %}
 							</td>
 						</tr>
-
-					{% else %}
-						<tr>
-							<td colspan="7">No se han encontrado resultados</td>
-						</tr>
-					{% endfor %}
+					</td>
 				</tbody>
-			</table>
-		</div>
-	</div>
-	{# <a href="{{ path('invoice_new', {'idclient': idclient}) }}">Crear nueva</a> #}
-{% endblock %}
+			</tr>
+
+		{% else %}
+			<tr>
+				<td colspan="8">No se han encontrado resultados</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table></div></div>{# <a href="{{ path('invoice_new', {'idclient': idclient}) }}">Crear nueva</a> #}{% endblock %}

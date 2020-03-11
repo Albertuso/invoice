@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('invoice_delete', {'id': invoice.id}) }}" onsubmit="return confirm('Esta seguro que desea borrar esta factura?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ invoice.id) }}">
-    <button class="btn">Delete</button>
+    <button class="form-control txt mt-4"><i class="far fa-trash-alt"></i> Eliminar</button>
 </form>

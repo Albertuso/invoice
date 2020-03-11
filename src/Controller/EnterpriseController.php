@@ -86,6 +86,7 @@ class EnterpriseController extends AbstractController
             'enterprise' => $enterprise,
             'enterprises' => $this->getUser()->getEnterprises(),
             'supervisors' => $enterprise->getSupervisors(),
+            'budget' => " ",
         ]);
     }
 
@@ -156,7 +157,7 @@ class EnterpriseController extends AbstractController
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
 
-            $invoicesenterprise = $repositoryInvoice->findOneByIdJoinedToCategory($data['buscar'],$idempresa);
+            $invoicesenterprise = $repositoryInvoice->findOneByIdJoinedToClient($data['buscar'],$idempresa);
 
             // return $this->render('debug.html.twig', [
             //     'debug' => $invoicesenterprise,
@@ -167,7 +168,7 @@ class EnterpriseController extends AbstractController
             'invoiceseterprises' => $invoicesenterprise,
             'form' => $form->createView(),
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),            
         ]);
     }
 }

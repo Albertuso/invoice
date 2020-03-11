@@ -25,8 +25,8 @@
 							<th>Fecha</th>
 							<th width="400px">Descripción</th>
 							<th>Cliente</th>
-							<th>Subtotal</th>
-							<th>Total</th>
+							<th>Subtotal (€)</th>
+							<th>Total (€)</th>
 							<th>acciones</th>
 						</tr>
 					</thead>
@@ -34,24 +34,30 @@
 						{% set sumSubtotal = 0 %}
 						{% set sumTotal = 0 %}
 						{% for invoiceseterprise in invoiceseterprises  %}
-								<tr>
-									<td align="right">{{ invoiceseterprise.invoicenumber}}</td>
-									<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
-									<td>{{ invoiceseterprise.description }}</td>
-									<td>
+							<tr>
+								<td align="right">{{ invoiceseterprise.invoicenumber}}</td>
+								<td>{{ invoiceseterprise.date ? invoiceseterprise.date|date('Y-m-d') : '' }}</td>
+								<td>{{ invoiceseterprise.description }}</td>
+								<td>
 									{% if invoiceseterprise.client.id != 0 %}
-									{{ invoiceseterprise.client }}
+										{{ invoiceseterprise.client }}
 									{% endif %}
-									</td>
-									<td align="right">{{ invoiceseterprise.subtotal }}€</td>
-									<td align="right">{{ invoiceseterprise.total }}€</td>
-									<td>
-										<a class="buttonize" href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">elegir</a>
-										<a class="buttonize" href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">editar</a>
-									</td>
-									{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
-									{% set sumTotal = sumTotal + invoiceseterprise.total %}
-								</tr>
+								</td>
+								<td align="right">{{ invoiceseterprise.subtotal }}€</td>
+								<td align="right">{{ invoiceseterprise.total }}€</td>
+								<td>
+									{% if enterprise.nextinvoicenumber -1 == invoiceseterprise.invoicenumber %}
+										<a title="Seleccionar" href="{{ path('invoice_show', {'id': invoiceseterprise.id}) }}">
+											<i class="far fa-hand-pointer"></i>
+										</a>
+										<a title="Editar" href="{{ path('invoice_edit', {'id': invoiceseterprise.id}) }}">
+											<i class="far fa-edit"></i>
+										</a>
+									{% endif %}
+								</td>
+								{% set sumSubtotal = sumSubtotal + invoiceseterprise.subtotal %}
+								{% set sumTotal = sumTotal + invoiceseterprise.total %}
+							</tr>
 						{% else %}
 							<tr>
 								<td colspan="7">No se han encontrado resultados</td>
@@ -61,15 +67,21 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td align="right"><strong>Total</strong></td>
-							<td align="right"><strong>{{sumSubtotal}}€</strong)></td>
-							<td align="right"><strong>{{sumTotal}}€</strong)></td>
+							<td align="right">
+								<strong>Total</strong>
+							</td>
+							<td align="right">
+								<strong>{{sumSubtotal}}€</strong)>
+							</td>
+							<td align="right">
+								<strong>{{sumTotal}}€</strong)>
+							</td>
 							<td></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<a class="buttonize" href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a>
+		{# <a class="buttonize" href="{{ path('enterprise_index') }}">Regresar al listado de empresas</a> #}
 	</div>
 {% endblock %}

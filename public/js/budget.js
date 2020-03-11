@@ -23,9 +23,9 @@ $(document).ready(function () {
 		htmlRows += '<td><input class="itemRow" type="checkbox"></td>';
 		htmlRows += '<td><input type="text" name="productName[]" id="productName_' + count + '" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_' + count + '"></div></td>';
 		// htmlRows += '<td><input type="text" name="description[]" id="description_' + count + '" class="form-control" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="quantity[]" min="0" pattern="^[0-9]+" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="price[]" min="0" pattern="^[0-9]+" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
-		htmlRows += '<td><input type="number" name="VAT[]" min="0" pattern="^[0-9]+" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input required type="number" name="quantity[]" min="0" pattern="^[0-9]+" id="quantity_' + count + '" class="form-control quantity" autocomplete="off"></td>';
+		htmlRows += '<td><input required type="number" name="price[]" min="0" pattern="^[0-9]+" id="price_' + count + '" class="form-control price" autocomplete="off"></td>';
+		htmlRows += '<td><input required type="number" name="VAT[]" min="0" pattern="^[0-9]+" id="vat_' + count + '" class="form-control price" autocomplete="off"></td>';
 		htmlRows += '<td><input type="number" readonly min="0" pattern="^[0-9]+" name="total[]" id="total_' + count + '" class="form-control total" autocomplete="off"></td>';
 		htmlRows += '</tr>';
 		htmlRows += '<div id="suggestions_' + count + '</div>';
