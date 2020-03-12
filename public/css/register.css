@@ -11,6 +11,10 @@
     vertical-align: middle;
 }
 
+h1 {
+    color: red;
+}
+
 .btn {
     border-radius: 10px;
     background-color: royalblue;
