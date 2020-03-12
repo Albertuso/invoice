@@ -1,55 +1,56 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Ver factura
 {% endblock %}
-
 {% block nav %}
-	{{ include('invoice/navbar.html.twig') }}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Ver factura</h1>
-
-
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nº factura</th>
-					<th>Fecha</th>
-					<th>Descripción</th>
-					<th>Pie de página</th>
-					<th>Subtotal</th>
-					<th>Total</th>
-					<th>acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>{{ invoice.invoicenumber}}</td>
-					<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
-					<td>{{ invoice.description }}</td>
-					<td>{{ invoice.footer }}</td>
-					<td>{{ invoice.subtotal }}</td>
-					<td>{{ invoice.total }}</td>
-					<td>
-						<a href="{{ path('invoice_edit', {'id': invoice.id}) }}">edit</a>
-
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
-			<button class="btn">Duplicar</button>
-		</form>
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nº factura</th>
+						<th>Fecha</th>
+						<th width="400px">Descripción</th>
+						<th>Pie de página</th>
+						<th>Subtotal</th>
+						<th>Total</th>
+						<th>acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ invoice.invoicenumber}}</td>
+						<td>{{ invoice.date ? invoice.date|date('Y-m-d') : '' }}</td>
+						<td>{{ invoice.description }}</td>
+						<td>{{ invoice.footer }}</td>
+						<td>{{ invoice.subtotal }}</td>
+						<td>{{ invoice.total }}</td>
+						<td>
+							{% if enterprise.nextinvoicenumber -1 == invoice.invoicenumber %}
+								<a title="Editar" href="{{ path('invoice_edit', {'id': invoice.id}) }}">
+									<i class="far fa-edit"></i>
+								</a>
+							{% endif %}
+							<a title="Duplicar" href="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
+								<i class="far fa-clone"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		{# <form method="post" action="{{ path('invoice_duplicate', {'id': invoice.id}) }}">
+			<button class="btn">
+				<i class="far fa-clone"></i>
+			</button>
+		</form> #}
 		{{ include('invoice/_delete_form.html.twig') }}
-
 	</div>
-
 {% endblock %}

@@ -1,17 +1,11 @@
 {{ form_start(form) }}
 
-{{ form_label(form.name) }}
-{{ form_widget(form.name) }}
-{{ form_label(form.address) }}
-{{ form_widget(form.address) }}
-{{ form_label(form.nif) }}
-{{ form_widget(form.nif) }}
-{{ form_label(form.email) }}
-{{ form_widget(form.email) }}
-{{ form_label(form.telephone) }}
-{{ form_widget(form.telephone) }}
-{{ form_label(form.web) }}
-{{ form_widget(form.web) }}
+{{ form_row(form.name, {'label': 'Nombre'}) }}
+{{ form_row(form.address, {'label': 'Dirección'}) }}
+{{ form_row(form.nif, {'label': 'DNI'}) }}
+{{ form_row(form.email, {'label': 'Email'}) }}
+{{ form_row(form.telephone, {'label': 'Teléfono'}) }}
+{{ form_row(form.web, {'label': 'Página web'}) }}
 
 <label for="supervisor[]">Supervisor</label>
 <select class="form-control" id="supervisor[]" name="supervisor[]">
@@ -21,18 +15,20 @@
 			<option value="{{supervisor.id}}">{{supervisor}}</option>
 		{% endif %}
 	{% endfor %}
-
 </select>
-
 <script>
 	var number = document.querySelector("#supervisor\\[\\]").options.length;
-		for (i = 0; i < number; i ++) {
-		if ( "{{client.supervisor.name}}" == document.querySelector("#supervisor\\[\\]").options[i].text  ) {
-		document.querySelector("#supervisor\\[\\]").selectedIndex = i;
+for (i = 0; i < number; i ++) {
+{% if client.supervisor.name is defined %}
+if ("{{ client.supervisor.name }}" == document.querySelector("#supervisor\\[\\]").options[i].text) {
+document.querySelector("#supervisor\\[\\]").selectedIndex = i;
 }
-
+{% endif %}
 }
 </script>
-{# {{ dump (client.supervisor.name)}} #}
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<script src="{{ asset('js/validate.js')}}"></script>
+<div class="row justify-content-center">
+	<div class="col-2">
+		{{ form_end(form) }}
+	</div>
+</div>

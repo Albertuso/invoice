@@ -1,17 +1,12 @@
 {{ form(form) }}
 {{ form_start(form) }}
 
-{{ form_label(form.date) }}
-{{ form_widget(form.date) }}
-{{ form_label(form.descrption) }}
-{{ form_widget(form.description) }}
-{{ form_label(form.footer) }}
-{{ form_widget(form.footer) }}
-{{ form_label(form.subtotal) }}
-{{ form_widget(form.subtotal) }}
-{{ form_label(form.total) }}
-{{ form_widget(form.total) }}
-{{ form_label(form.nif) }}
+	{{ form_row(form.date, {'label': 'Fecha'}) }}
+	{{ form_row(form.description, {'label': 'Descripcion'}) }}
+	{{ form_row(form.nif, {'label': 'DNI'}) }}
+	{{ form_row(form.subtotal, {'label': 'Subtotal'}) }}
+	{{ form_row(form.total, {'label': 'Total'}) }}
+	{{ form_row(form.footer, {'label': 'Pie de pagina'}) }}
 
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

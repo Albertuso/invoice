@@ -7,14 +7,14 @@ use App\Entity\SocialNetwork;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class SocialNetworkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('url', TextType::class, array('label' => 'Dirección HTTP'))
+            ->add('url', UrlType::class, array('attr' => array('label' => 'Dirección HTTP', 'class' => 'form-control txt')))
             ->add('network', null, array('label' => 'Red'));
     }
 

@@ -1,7 +1,7 @@
 // context('Login New User', () => {
 
 // 	it('Login New User, Create Enterprise', () => {
-//             cy.visit('http://localhost:8000/');
+//             cy.visit('http://www.invoice.tld/');
 //             cy.get('[href="/login"]').click();
 //             cy.get('#inputUsername').type('invoiceUser');
 //             cy.get('#inputPassword').type('pcw12345');
@@ -63,7 +63,7 @@
 //             cy.get('tbody > tr > :nth-child(9) > :nth-child(2)').click();
 //             cy.get('body > :nth-child(5) > .btn').click({force:true});
 
-//             cy.visit('http://localhost:8000/enterprise/');
+//             cy.visit('http://www.invoice.tld/enterprise/');
 
 
 

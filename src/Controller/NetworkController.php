@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Network;
 use App\Form\NetworkType;
-use App\Repository\EnterpriseRepository;
+use App\Entity\Enterprise;
 use App\Repository\NetworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +23,16 @@ class NetworkController extends AbstractController
      */
     public function index(NetworkRepository $networkRepository, $identerprise): Response
     {
-        $enterprise = $networkRepository->findOneById($identerprise);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
+
+        // return $this->render('debug.html.twig', [
+        //     'debug' => $enterprise,
+        // ]);
+
         return $this->render('network/index.html.twig', [
             'networks' => $networkRepository->findAll(),
+            'idinterprise' => $identerprise,
             'enterprise' => $enterprise,
             'enterprises' => $this->getUser()->getEnterprises(),
         ]);
@@ -34,11 +41,13 @@ class NetworkController extends AbstractController
     /**
      * @Route("/new/{identerprise}", name="network_new", methods={"GET","POST"})
      */
-    public function new(Request $request,$identerprise): Response
+    public function new(Request $request, $identerprise): Response
     {
         $network = new Network();
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -52,7 +61,9 @@ class NetworkController extends AbstractController
         return $this->render('network/new.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
-            'identerprise' => $identerprise,            
+            'identerprise' => $identerprise,
+            'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
@@ -67,11 +78,12 @@ class NetworkController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="network_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{identerprise}", name="network_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Network $network): Response
+    public function edit(Request $request, Network $network,$identerprise): Response
     {
-        
+        $repositoryEnterprise = $this->getDoctrine()->getRepository(Enterprise::class);
+        $enterprise = $repositoryEnterprise->findOneById($identerprise);
 
         $form = $this->createForm(NetworkType::class, $network);
         $form->handleRequest($request);
@@ -85,7 +97,8 @@ class NetworkController extends AbstractController
         return $this->render('network/edit.html.twig', [
             'network' => $network,
             'form' => $form->createView(),
-            'enterprise' => null,
+            'enterprise' => $enterprise,
+            'idinterprise' => $identerprise,
         ]);
     }
 
@@ -94,9 +107,9 @@ class NetworkController extends AbstractController
      */
     public function delete(Request $request, Network $network): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$network->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $network->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-             $network->setVisible(false);
+            $network->setVisible(false);
             // $entityManager->remove($network);
             $entityManager->flush();
         }

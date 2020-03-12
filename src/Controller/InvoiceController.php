@@ -8,16 +8,18 @@ use App\Entity\Enterprise;
 use App\Entity\Product;
 use App\Entity\ProductLine;
 use App\Form\InvoiceType;
-use App\Repository\EnterpriseRepository;
 use App\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/invoice")
+ * @IsGranted("ROLE_USER")
  */
 class InvoiceController extends AbstractController
 {
@@ -26,6 +28,9 @@ class InvoiceController extends AbstractController
      */
     public function index(InvoiceRepository $invoiceRepository, $idclient): Response
     {
+        // if ($idclient == 0) {
+        //     throw new Exception("Error de usuario");
+        // }
         $repositoryEnterprises = $this->getDoctrine()->getRepository(Enterprise::class);
         // Cargo el cliente (por route)
         $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
@@ -39,9 +44,10 @@ class InvoiceController extends AbstractController
         // $client = $repositoryClient->findOneById($idclient);
         return $this->render('invoice/index.html.twig', [
             'invoices' => $invoiceRepository->findbyClient($idclient),
+            'client' => $client,
             'idclient' => $idclient,
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprises->findAll(),
+            'enterprises' => $repositoryEnterprises->findByUser($this->getUser()),
         ]);
     }
 
@@ -50,7 +56,9 @@ class InvoiceController extends AbstractController
      */
     public function new(Request $request, $idclient): Response
     {
-
+        if ($idclient == 0) {
+            throw new Exception("Error de usuario");
+        }
         // Cargo el cliente (por route)
         $repositoryClient = $this->getDoctrine()->getRepository(Client::class);
         $client = $repositoryClient->findOneById($idclient);
@@ -72,11 +80,19 @@ class InvoiceController extends AbstractController
         $invoice->setVisible(true);
         $invoice->setFooter($enterprise->getFooter());
 
+        // Recupero la fecha de la ultima factura
+        $lastdate = $this->getDoctrine()->getRepository(Invoice::class)->findOneByLastDay($enterprise->getId())[0]['1'];
+        if ($lastdate == null) {
+            $lastdate = $hoy->format('Y-m-d');
+        }
+
         // Creo un array de Productlines
         $this->ProductLine = new ArrayCollection();
 
         // Se genera el formulario con los datos
-        $form = $this->createForm(InvoiceType::class, $invoice);
+        $form = $this->createForm(InvoiceType::class, $invoice, [
+            'min_date' => $hoy->format('Y/m/d'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -108,11 +124,14 @@ class InvoiceController extends AbstractController
             $enterprise->setNextinvoicenumber($enterprise->getNextinvoicenumber() + 1);
 
             $entityManager->persist($invoice);
+            $entityManager->persist($enterprise);
             $entityManager->flush();
 
             return $this->redirectToRoute('invoice_index', ['idclient' => $idclient]);
         }
-
+        // return $this->render('debug.html.twig', [
+        //     'debug' => $lastdate,
+        // ]);
         return $this->render('invoice/new.html.twig', [
             'invoice' => $invoice,
             'invoicenumber' => $enterprise->getNextinvoicenumber(),
@@ -120,6 +139,7 @@ class InvoiceController extends AbstractController
             'enterprise' => $enterprise,
             'client' => $client,
             'products' => $products,
+            'lastdate' => $lastdate,        
         ]);
     }
 
@@ -174,33 +194,17 @@ class InvoiceController extends AbstractController
 
             //Aqui toca comprobar que la nueva factura es válida
 
-            for ($i = 0; $i < count($names); $i++) {
-
-                $newLine = new ProductLine();
-
-                $newLine->setName($names[$i]);
-                $newLine->setQuantity($quantities[$i]);
-                $newLine->setPrice($prices[$i]);
-                $newLine->setVat($vats[$i]);
-
-                $invoice->addLine($newLine);
-            }
-
             //Guardo las lineas 
             for ($i = 0; $i < count($names); $i++) {
-
                 $newLine = new ProductLine();
-
                 $newLine->setName($names[$i]);
                 $newLine->setQuantity($quantities[$i]);
                 $newLine->setPrice($prices[$i]);
                 $newLine->setVat($vats[$i]);
-
                 $invoice->addLine($newLine);
             }
 
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('invoice_index', ['idclient' => $client->getId()]);
         }
 
@@ -208,7 +212,7 @@ class InvoiceController extends AbstractController
             'invoice' => $invoice,
             'form' => $form->createView(),
             'enterprise' => $invoice->getEnterprise(),
-            'enterprises' => $repositoryEnterprises->findAll(),
+            'enterprises' => $repositoryEnterprises->findByUser($this->getUser()),
             'client' => $invoice->getClient(),
             'lines' => $invoice->getLine(),
             'products' => $products,

@@ -42,7 +42,6 @@ class EnterpriseController extends AbstractController
             }
         }
 
-
         if ($user->getMax() > $visibles) {
             $enterprise = new Enterprise();
             $form = $this->createForm(EnterpriseType::class, $enterprise);
@@ -60,7 +59,7 @@ class EnterpriseController extends AbstractController
                 $enterprise->setLogo($file_name);
                 $enterprise->setVisible(true);
 
-                $enterprise->setNextinvoicenumber(0);
+                $enterprise->setNextinvoicenumber(1);
                 $this->getUser()->addEnterprise($enterprise);
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -87,6 +86,7 @@ class EnterpriseController extends AbstractController
             'enterprise' => $enterprise,
             'enterprises' => $this->getUser()->getEnterprises(),
             'supervisors' => $enterprise->getSupervisors(),
+            'budget' => " ",
         ]);
     }
 
@@ -113,7 +113,7 @@ class EnterpriseController extends AbstractController
 
         return $this->render('enterprise/edit.html.twig', [
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
             'form' => $form->createView(),
         ]);
     }
@@ -157,7 +157,7 @@ class EnterpriseController extends AbstractController
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
 
-            $invoicesenterprise = $repositoryInvoice->findOneByIdJoinedToCategory($data['buscar'],$idempresa);
+            $invoicesenterprise = $repositoryInvoice->findOneByIdJoinedToClient($data['buscar'],$idempresa);
 
             // return $this->render('debug.html.twig', [
             //     'debug' => $invoicesenterprise,
@@ -168,7 +168,7 @@ class EnterpriseController extends AbstractController
             'invoiceseterprises' => $invoicesenterprise,
             'form' => $form->createView(),
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),            
         ]);
     }
 }

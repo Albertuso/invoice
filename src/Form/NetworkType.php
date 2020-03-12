@@ -13,7 +13,7 @@ class NetworkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name');
+            ->add('name', TextType::class, array('attr' => array('label' => 'Nombre', 'class' => 'form-control txt')));
     }
 
     public function configureOptions(OptionsResolver $resolver)

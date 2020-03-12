@@ -1,21 +1,13 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Creaci&oacute;n de nuevo cliente
 {% endblock %}
-
 {% block nav %}
 {{ include('navbar/shownavbar.html.twig') }}   
 {% endblock %} 
-
 {% block body %}
-
 	<div class="container">
-
 		<h1>Creaci&oacute;n de nuevo cliente</h1>
-
 		{{ include('client/_form.html.twig') }}
-
-		<a href="{{ path('client_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
-
+		<a class="form-control txt text-center mt-4 mb-4" href="{{ path('client_index', {'idempresa': id_empresa }) }}">Volver al listado</a>
 	</div>
 {% endblock %}

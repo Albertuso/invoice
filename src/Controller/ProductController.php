@@ -61,7 +61,7 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
             'id_empresa' => $idempresa,
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 
@@ -74,7 +74,7 @@ class ProductController extends AbstractController
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'enterprise' => $product->getEnterprise(),
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 
@@ -97,7 +97,7 @@ class ProductController extends AbstractController
             'product' => $product,
             'form' => $form->createView(),
             'enterprise' => $product->getEnterprise(),
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
 
         ]);
     }

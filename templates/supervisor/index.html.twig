@@ -1,50 +1,48 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-
 {% endblock %}
-
 {% block title %}Listado de responsables
 {% endblock %}
-
 {% block nav %}
 	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Listado de responsables</h1>
-
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Tel&eacute;fono</th>
-					<th>acciones</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for supervisor in supervisors %}
-					{% if supervisor.visible %}
-						<tr>
-							<td>{{ supervisor.name }}</td>
-							<td>{{ supervisor.telephone }}</td>
-							<td>
-								<a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="4">No se han encontrado resultados</td>
+						<th>Nombre</th>
+						<th>Tel&eacute;fono</th>
+						<th>acciones</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-		<a href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+				</thead>
+				<tbody>
+					{% for supervisor in supervisors %}
+						{% if supervisor.visible %}
+							<tr>
+								<td>{{ supervisor.name }}</td>
+								<td>{{ supervisor.telephone }}</td>
+								<td>
+									<a title="Editar" href="{{ path('supervisor_edit', {'id': supervisor.id}) }}"><i class="far fa-edit"></i></a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="3">No se han encontrado resultados</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-3">
+				<a class="form-control txt text-center mb-4" href="{{ path('supervisor_new', {identerprise: enterprise.id}) }}">Crear nuevo supervisor</a>
+			</div>
+		</div>
 	</div>
 {% endblock %}

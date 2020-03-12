@@ -6,6 +6,7 @@ use App\Entity\Invoice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 
 /**
  * @method Invoice|null find($id, $lockMode = null, $lockVersion = null)
@@ -74,36 +75,15 @@ class InvoiceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
             ->andWhere('i.enterprise = :val')
             ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
+            ->orderBy('i.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
-
-
-    // public function findByLoQueSea($value)
-    // {
-    //     return $this->createQueryBuilder('c')
-    //         ->innerJoin('client', 'p', Join::ON ,'c.user_id = p.id')
-    //         ->orwhere('c.name = :clientid')
-    //         ->setParameter('clientid', $value)
-    //         ->orwhere('p.description LIKE :val')
-    //         ->setParameter('val', '%' . $value . '%')
-    //         ->orwhere('p.date LIKE :valu')
-    //         ->setParameter('valu', '%' . $value . '%')
-
-    //         ->orderBy('p.id', 'ASC')
-    //         ->setMaxResults(10)
-    //         ->getQuery()
-    //         ->getResult();
-
-    // }
-
-
     public function findByLoQueSea($value)
     {
         return $this->createQueryBuilder('i')
 
-            ->innerJoin('i.client', 'c', Join::ON, 'c.id = i.client')
+            ->innerJoin('i.client', 'c',  'c.id = i.client')
             ->orwhere('c.name = :clientid')
             ->setParameter('clientid', $value)
             ->orwhere('i.description LIKE :val')
@@ -117,46 +97,59 @@ class InvoiceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByIdJoinedToCategory($value, $identerprise)
+    public function findOneByIdJoinedToClient($value, $identerprise)
     {
-        $entityManager = $this->getEntityManager();
+        $query = $this->getEntityManager('c')
+            ->createQuery(
+            'SELECT i , c FROM App:Invoice i 
+            JOIN i.client c 
+            WHERE i.enterprise = :valu
+            AND i.description LIKE :val
+            OR c.name LIKE :val
+            OR c.address LIKE :val
+            OR i.subtotal LIKE :val
+            OR i.total LIKE :val
+            OR i.date LIKE :val
+            OR i.invoicenumber LIKE :val
+            ORDER BY i.invoicenumber ASC '
+            )
+            ->setParameter('val', '%' . $value . '%')
+            ->setParameter('valu', '%' . $identerprise . '%');
 
-        $query = $entityManager->createQuery(
-            'SELECT i 
-                FROM App:Invoice i INNER JOIN App:Client c
-                WHERE i.enterprise = '.$identerprise.'
-                AND i.description LIKE :val
-                OR c.name LIKE :val
-                OR c.address LIKE :val
-                OR i.subtotal LIKE :val
-                OR i.total LIKE :val
-                OR i.date LIKE :val
-                OR i.invoicenumber LIKE :val
-                ORDER BY i.invoicenumber ASC'
-        )
-            ->setParameter('val', '%' . $value . '%');
-
-
-        // SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
-        //     WHERE i.enterprise_id = 1 AND DESCRIPTION LIKE '%ben%'
-        //     OR NAME LIKE '%ben%'
-        //     OR ADDRESS LIKE '%ben%'
-        //     OR SUBTOTAL LIKE '%ben%%'
-        //     OR TOTAL LIKE '%ben%'
-        //     OR DATE LIKE '%ben%'
-        //     OR INVOICENUMBER LIKE '%ben%'
-
-
-        //SELECT * FROM INVOICE I INNER JOIN CLIENT C ON I.CLIENT_ID=C.ID 
-        // WHERE DESCRIPTION LIKE '%ru%' 
-        // OR NAME LIKE '%Ru%'
-        // OR ADDRESS LIKE '%Ru%'
-        // OR SUBTOTAL LIKE '%Ru%'
-        // OR TOTAL LIKE '%Ru%'
-        // OR DATE LIKE '%Ru%'
-        // OR INVOICENUMBER LIKE '%Ru%'
-
+            // throw new Exception($query->getResult());
 
         return $query->getResult();
     }
+
+    public function findOneByLastDay($value): ?array
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+            'SELECT MAX(i.date) FROM App:Invoice i WHERE i.enterprise = :val '            
+            )->setParameter('val', $value );
+        return $query->getResult();
+    }
+    // public function findOneByIdJoinedToCategory($value, $identerprise)
+    // {
+    //     $entityManager = $this->getEntityManager();
+
+    //     $query = $entityManager->createQuery(
+    //         'SELECT i 
+    //             FROM App:Invoice i , App:Client c
+    //             WHERE i.enterprise = ' . $identerprise . '
+    //             AND i.description LIKE :val
+    //             OR c.name LIKE :val
+    //             OR c.address LIKE :val
+    //             OR i.subtotal LIKE :val
+    //             OR i.total LIKE :val
+    //             OR i.date LIKE :val
+    //             OR i.invoicenumber LIKE :val
+    //             ORDER BY i.invoicenumber ASC'
+    //     )
+    //         ->setParameter('val', '%' . $value . '%');
+
+    //     return $query->getResult();
+    // }
+
+
 }

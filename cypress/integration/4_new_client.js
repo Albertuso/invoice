@@ -39,7 +39,7 @@ it('Select Enterprise, New Client', () => {
 
     cy.visit('http://www.invoice.tld/');
     cy.get('body > div.container.mt-2 > div > div > div > div:nth-child(1) > div.card-body.text-center > a').click();
-    cy.get('#navbarNavDropdown > ul:nth-child(1) > li:nth-child(1) > a').click();
+    cy.get('#navbarsExample04 > ul > li:nth-child(1) > a').click();
     
     
 });

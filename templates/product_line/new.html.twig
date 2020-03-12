@@ -1,11 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Nuevo detalle de factura{% endblock %}
-
 {% block body %}
     <h1>Nuevo detalle de factura</h1>
-
     {{ include('product_line/_form.html.twig') }}
-
-    <a href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
+    <a class="buttonize" href="{{ path('product_line_index') }}">Regresar a detalles de factura</a>
 {% endblock %}

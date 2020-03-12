@@ -1,32 +1,40 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheet %}
-    {{parent()}}
-    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}" />
-    
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
 {% endblock %}
-
-{% block title %}Nueva factura{% endblock %}
-
+{% block title %}Nueva factura
+{% endblock %}
 {% block nav %}
-{{ include('invoice/navbar.html.twig') }}
-{% endblock %} 
+	{{ include('invoice/navbar.html.twig') }}
+{% endblock %}
+{% block body %}
+	{{ form_start(form) }}
 
-{% block body %}  
-    {{ form_start(form) }}
+	<div class="container content-invoice">
+		<div class="load-animate animated fadeInUp">
+			<div class="row">
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					<h1>Crear nueva factura</h1>
+				</div>
+			</div>
+			{% include "invoice/baseinvoice.html.twig" %}
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-2">
+				{{ form_widget(form) }}
+				<button class="form-control txt text-center mt-4 mb-4">{{ button_label|default('Guardar') }}</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
 
-
-    {% include "invoice/baseinvoice.html.twig" %}    
-    
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    {{ form_end(form) }}
-
-    {# <a href="{{ path('invoice_index') }}">back to list</a> #}
 
 {% endblock %}
-
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/invoice.js') }}"></script>    
+	{{ parent() }}
+	<script src="{{ asset('js/invoice.js') }}"></script>
+	<script>
+		document.querySelector("#invoice_date").setAttribute("min", "{{ lastdate }}");
+	</script>
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class EnterpriseType extends AbstractType
 {
@@ -22,7 +23,8 @@ class EnterpriseType extends AbstractType
             ->add('nif', TextType::class, array('attr' => array('label' => 'DNI', 'class' => 'form-control txt')))
             ->add('logo', FileType::class, array('label' => 'Logotipo', 'data_class' => null,  'required' => false))
 
-            ->add('footer', TextType::class, array('attr' => array('label' => 'DNI', 'class' => 'form-control txt')));
+            ->add('footer', TextType::class, array('attr' => array('label' => 'DNI', 'class' => 'form-control txt')))
+            ->add('submit', SubmitType::class, array('label' => 'Actualizar', 'attr' => array('class' => 'form-control txt mt-4', 'onsubmit' => 'return validateDNI()')));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -23,13 +23,18 @@ class SocialNetworkController extends AbstractController
      */
     public function index(SocialNetworkRepository $socialNetworkRepository, $idsocialnetwork): Response
     {
-        $socialNetworkRepository->findOneById($idsocialnetwork);
+        $socialnetwork = $socialNetworkRepository->findOneById($idsocialnetwork);
+        // return $this->render('debug.html.twig', [
+        //             'debug' => $socialNetworkRepository->findOneById($idsocialnetwork)->getEnterprise()->getId(),
+        //         ]);
+        // return $this->render('social_network/index.html.twig', [
+        //     'social_networks' => $socialNetworkRepository->findAll(),
+        //     'enterprise' => $socialNetworkRepository->findOneById($idsocialnetwork)->getEnterprise(),
+        //     'enterprises' => $this->getUser()->getEnterprises(),
 
-        return $this->render('social_network/index.html.twig', [
-            'social_networks' => $socialNetworkRepository->findAll(),
-            'identerprise' => "1",
+        // ]);
 
-        ]);
+        return $this->redirectToRoute('enterprise_show', ['id' => $socialnetwork->getEnterprise()->getId()]);
     }
 
     /**
@@ -77,20 +82,21 @@ class SocialNetworkController extends AbstractController
      */
     public function edit(Request $request, SocialNetwork $socialNetwork): Response
     {
-        $identerprise = $socialNetwork->getEnterprise();
+        $enterprise = $socialNetwork->getEnterprise();
         $form = $this->createForm(SocialNetworkType::class, $socialNetwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('social_network_show', ['id' => $socialNetwork]);
+            return $this->redirectToRoute('social_network_show', ['id' => $socialNetwork->getId()]);
         }
 
         return $this->render('social_network/edit.html.twig', [
             'social_network' => $socialNetwork,
             'form' => $form->createView(),
-            'identerprise' => $identerprise,
+            'enterprise' => $enterprise,
+            'enterprises' => $this->getUser()->getEnterprises(),
         ]);
     }
 
@@ -99,13 +105,13 @@ class SocialNetworkController extends AbstractController
      */
     public function delete(Request $request, SocialNetwork $socialNetwork): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$socialNetwork->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $socialNetwork->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-             $socialNetwork->setVisible(false);
+            $socialNetwork->setVisible(false);
             // $entityManager->remove($socialNetwork);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('enterprise_show' , ['id' => $socialNetwork->getEnterprise()]);
+        return $this->redirectToRoute('enterprise_show', ['id' => $socialNetwork->getEnterprise()->getID()]);
     }
 }

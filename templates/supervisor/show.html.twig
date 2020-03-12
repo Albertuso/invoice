@@ -1,29 +1,25 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Supervisor
 {% endblock %}
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Supervisor</h1>
-
-		<table class="table table-striped">
-			<tbody>
-				<tr>
-					<th>Nombre</th>
-					<td>{{ supervisor.name }}</td>
-				</tr>
-				<tr>
-					<th>Telefono</th>
-					<td>{{ supervisor.telephone }}</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<a href="{{ path('supervisor_index') }}">Regreso a listado de supervisores</a>
-
-		<a href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
-
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<th>Nombre</th>
+						<td>{{ supervisor.name }}</td>
+					</tr>
+					<tr>
+						<th>Telefono</th>
+						<td>{{ supervisor.telephone }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<a class="buttonize" href="{{ path('supervisor_index') }}">Regreso a listado de supervisores</a>
+		<a class="buttonize" href="{{ path('supervisor_edit', {'id': supervisor.id}) }}">Editar</a>
 		{{ include('supervisor/_delete_form.html.twig') }}
 	</div>
 {% endblock %}

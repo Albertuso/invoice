@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Supervisor;
 use App\Entity\Enterprise;
 use App\Form\SupervisorType;
-use App\Repository\EnterpriseRepository;
 use App\Repository\SupervisorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +31,9 @@ class SupervisorController extends AbstractController
 
         return $this->render('supervisor/index.html.twig', [
             'supervisors' => $supervisorRepository->findByEnterprise($identerprise),
+            'identerprise' => $enterprise->getId(),
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 
@@ -63,7 +63,7 @@ class SupervisorController extends AbstractController
             'supervisor' => $supervisor,
             'form' => $form->createView(),
             'enterprise' => $enterprise,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 
@@ -76,7 +76,7 @@ class SupervisorController extends AbstractController
 
         return $this->render('supervisor/show.html.twig', [
             'supervisor' => $supervisor,
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 
@@ -93,14 +93,15 @@ class SupervisorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('supervisor_index');
+            return $this->redirectToRoute('supervisor_index', ['identerprise' => $supervisor->getEnterprise()->getId()]);
         }
 
         return $this->render('supervisor/edit.html.twig', [
             'supervisor' => $supervisor,
             'form' => $form->createView(),
+            'identerprise' => $supervisor->getEnterprise()->getId(),
             'enterprise' => $supervisor->getEnterprise(),
-            'enterprises' => $repositoryEnterprise->findAll(),
+            'enterprises' => $repositoryEnterprise->findByUser($this->getUser()),
         ]);
     }
 

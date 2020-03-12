@@ -1,21 +1,12 @@
 {% extends 'base.html.twig' %}
-
-
 {% block stylesheet %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('css/toPrint.css') }}"/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+	<link rel="stylesheet" href="{{ asset('css/toPrint.css') }}"/>	
 {% endblock %}
-
 {% block title %}Imprimir factura
 {% endblock %}
-
 {% block body %}
-
-
 	<div class="container content-invoice dina4" id="printableArea">
 		<div class="load-animate animated fadeInUp">
 			<div class="row">
@@ -26,26 +17,19 @@
 					<p id="fecha" readonly>
 						Fecha:
 						{{ form_widget(form.date)}}
-
 					</p>
-
 				</div>
 				<div class="col-4">
 					Nº de Factura:
 					{{ invoice.invoicenumber }}
 				</div>
-
-
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
-
 					<h3>Cliente</h3>
 					{{client.name}}<br>
 					{{client.address}}<br>
 					{{client.telephone}}<br>
 					{{client.email}}<br>
 				</div>
-
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right">
 					<h3>Empresa</h3>
 					<p id="idempresa" style="display: none">{{enterprise.id}}</p>
@@ -65,20 +49,17 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table class="table table-striped" id="invoiceItem">
 						<tr>
-
 							<th width="100px">Nombre Producto</th>
-
 							<th width="40px">Cantidad</th>
 							<th width="80px">Precio</th>
-							<th width="40px">%VAT</th>
+							<th width="40px">%IVA</th>
 							<th width="80px">Total</th>
 						</tr>
 						{% set count = 0 %}
 						{% for line in lines %}
 							{% set count = count + 1 %}
-							{% set total = (line.price * line.quantity) - (line.price * line.quantity * (line.vat/100))%}
+							{% set total = (line.price * line.quantity) + (line.price * line.quantity * (line.vat/100))%}
 							<tr>
-
 								<td><input readonly required type="text" value="{{line.name}}" name="productName[]" id="productName_{{count}}" class="form-control" autocomplete="off"><div class="suggestions" id="suggestions_{{ count }}"></div>
 								</td>
 								<td><input readonly required type="number" value="{{line.quantity}}" name="quantity[]" id="quantity_{{ count }}" class="form-control quantity" autocomplete="off"></td>
@@ -87,47 +68,35 @@
 								<td><input readonly required type="number" disabled value="{{total}}" step="any" name="total[]" id="total_{{count}}" class="form-control total" autocomplete="off"></td>
 							</tr>
 						{% endfor %}
-
 					</table>
 				</div>
 			</div>
-
 			<div class="row">
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h3>Descripción:
 					</h3>
 					<div class="form-group">
-
-
 						{{ form_widget(form.description)}}
 					</div>
 					<br>
-
 				</div>
-
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
 					<div class="input-group">
 						<label>Tasa Impuestos:</label>
 						<input readonly type="number" class="form-control w-100" name="taxRate" id="taxRate" value="21" placeholder="Tasa de Impuestos">
-
-						<div class="input-group-addon">%</div>
+						
 					</div>
 					<div class="input-group">
 						<label>Subtotal:</label>
-
 						{{ form_widget(form.subtotal)}}
-
-						<div class="input-group-addon">euros</div>
+						
 					</div>
 					<div class="input-group">
 						<label>total:</label>
 						{{ form_widget(form.total)}}
-
-						<div class="input-group-addon">euros</div>
+						
 					</div>
 				</div>
-
 			</div>
 			<div class="clearfix"></div>
 			<br>
@@ -145,13 +114,13 @@
 		<div class="col-12 text-center mt-2 mb-5">
 			<input type="button" class="btn btn-danger" onclick="window.history.back();" value="Cancelar"/>
 		</div>
-
 	</div>
 {% endblock %}
-
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/invoice.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		function printDiv(divName) {
 var printContents = document.getElementById(divName).innerHTML;

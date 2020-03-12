@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/invoice.css') }}"/>
+{% endblock %}
+{% block title %}Listado de presupuestos
+{% endblock %}
+{% block nav %}
+	{{ include('navbar/shownavbar.html.twig') }}
+{% endblock %}
+{% block body %}
+	<div class="container" id="tableArea">
+		<div class="row">
+			<div class="col-6">
+				<h1>Listado de presupuestos</h1>
+			</div>
+			<div class="col-6">
+				<a class="buttonize float-right" href="{{ path('budget_new', {'identerprise': identerprise, 'idclient': '0'}) }}">Añadir</a>
+			</div>
+		</div>
+		<div class="row">
+			<table id="dtHorizontalExample" class="table table-striped table-sm" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th>Cliente</th>
+						<th>Fecha</th>
+						<th width="400px">Condiciones</th>
+						<th>Url</th>
+						{# <th>Pie de página</th> #}
+						<th>Subtotal</th>
+						<th>Total</th>
+						<th>Pagado</th>
+						<th>acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for budget in budgets %}
+						<tr>
+							<td>
+								{% if budget.client.id != 0%}
+									{{ budget.client}}
+								{% endif %}
+							</td>
+							<td>{{ budget.date ? budget.date|date('d-m-Y') : '' }}</td>
+							<td>{{ budget.descriptionbudget }}</td>
+							{% set urlpass = "http://www.invoice.tld/budget/" ~ budget.id ~ "/paid/" ~ budget.passwd %}
+							<td>{{ urlpass }}</td>
+							{# <td>{{ budget.footer }}</td> #}
+							<td>{{ budget.subtotal }}</td>
+							<td>{{ budget.total }}</td>
+							<td>
+								{% if budget.sold == "S" %}
+									Aceptado
+								{% elseif budget.sold == "R" %}
+									Rechazado
+								{% elseif budget.sold == "P" %}
+									Pagado
+								{% else %}
+									Pendiente
+								{% endif %}
+
+							</td>
+							<td>
+								{% if budget.sold == "N" or budget=="R" %}
+
+									<a title="Cambiar estado" href="{{ path('budget_state', {'id': budget.id}) }}">
+										<i class="far fa-hand-point-left"></i>
+									</a>
+									<a title="Editar" href="{{ path('budget_edit', {'id': budget.id}) }}">
+										<i class="far fa-edit"></i>
+									</a>
+									<a title="Cambiar cliente" href="{{ path('budget_changeclient', {'id': budget.id}) }}">
+										<i class="fas fa-user-friends"></i>
+									</a>
+								{% elseif budget.sold == "S" %}
+
+									<a title="Pagar" href="{{ path('budget_paid', {'id': budget.id, 'passwd': budget.passwd }) }}">
+										<i class="far fa-thumbs-up"></i>
+									</a>
+								{% endif %}
+							</td>
+						</tr>
+					</td>
+				</tbody>
+			</tr>
+
+		{% else %}
+			<tr>
+				<td colspan="8">No se han encontrado resultados</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table></div></div>{# <a href="{{ path('invoice_new', {'idclient': idclient}) }}">Crear nueva</a> #}{% endblock %}

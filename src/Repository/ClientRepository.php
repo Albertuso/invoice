@@ -56,9 +56,18 @@ class ClientRepository extends ServiceEntityRepository
             ->andWhere('c.visible = :valu')
             ->setParameter('valu', true)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+    }
+        public function findOneByEnterprise($value): ?Client
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.enterprise = :val')
+            ->setParameter('val', $value)
+            ->andWhere('c.visible = :valu')
+            ->setParameter('valu', true)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function findOneByid($value): ?Client

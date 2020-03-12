@@ -21,7 +21,6 @@
 					{{enterprise.name}}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
 					{% for enterprise in enterprises %}
 						{% if enterprise.visible %}
 							<a class="dropdown-item" href="{{path('enterprise_show', {id: enterprise.id})}}">{{enterprise.name}}</a>

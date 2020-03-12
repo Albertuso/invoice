@@ -1,41 +1,38 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Indice de redes sociales
 {% endblock %}
 {% block nav %}
-	{# {{ include('navbar/shownavbar.html.twig') }} #}
+	{{ include('navbar/shownavbar.html.twig') }}
 {% endblock %}
-
-
 {% block body %}
 	<div class="container" id="tableArea">
 		<h1>Indice de redes sociales</h1>
-
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>URL</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for social_network in social_networks %}
-					{% if social_network.visible %}
-						<tr>
-							<td>{{ social_network.url }}</td>
-							<td>
-								<a href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
-							</td>
-						</tr>
-					{% endif %}
-
-				{% else %}
+		<div class="table-responsive text-nowrap">
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td colspan="3">No se han encontrado registros</td>
+						<th>URL</th>
+						<th>acciones</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-		<a href="{{ path('social_network_new', {'identerprise': identerprise}) }}">Crear nueva red social</a>
+				</thead>
+				<tbody>
+					{% for social_network in social_networks %}
+						{% if social_network.visible %}
+							<tr>
+								<td>{{ social_network.url }}</td>
+								<td>
+									<a class="buttonize" href="{{ path('social_network_edit', {'id': social_network.id}) }}">Editar</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="2">No se han encontrado registros</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<a class="buttonize" class="buttonize" href="{{ path('social_network_new', {'identerprise': enterprise.id }) }}">Crear nueva red social</a>
 	</div>
 {% endblock %}

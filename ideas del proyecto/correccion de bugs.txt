@@ -3,14 +3,13 @@ https://es.stackoverflow.com/questions/93416/c%C3%B3mo-permitir-%C3%BAnicamente-
 
 2. Una vez creada una factura podemos eliminarla solo si es la más reciente, si no NO.
 
-3. Podemos crear una factura a partir de otra. Es decir, crear un borrador de factura cargando los datos de otra ya existente, aunque la fecha y el número de factura serán los que correspondan (fecha de hoy y numero siguiente). El resto de datos aparecerán editables (cliente, descripcion y lineas de factura).
-
 4. Tendremos una vista de listado de facturas, donde podremos buscar por número, cliente o incluso descripcion de lineas de pedido. También por intervalo de fechas. En el resultado de la búsqueda debe informar de la sumatoria de los importes totales y de los importes de iva de esa selección.
 
 5. A los listados podremos editar la factura SOLO SI ES LA ÚLTIMA EMITIDA, crear una nueva a partir de ella, mandarla por mail o guardarla como pdf/imprimirla.
 
-6. mirar NETWORK bug
 
-7. No calcula bien los subtotales
 
-8. Editar cliente no coge el supervisor por defecto
+la idea es podais hacer que la aplicacione pueda hacer presuspuestos que son iguales que las facturas y ademas un texto (contatro ) que se le explica lo que vams a vender
+
+
+creamos un presupuesto igual que la factura pero con un texto muy grande se envia a una forma al cliente (copiar el enlace por email) intentar poner una contraseña (se la creamos desde el enviar al correo)... cuando acepte el link, lo ponemos como aceptado... listado de albaranes aceptados, un boton para convertilos en factura
