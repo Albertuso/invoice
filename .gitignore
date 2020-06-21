@@ -17,3 +17,4 @@
 
 ###Adding DS
 .DS_Store
+/nbproject/private/
